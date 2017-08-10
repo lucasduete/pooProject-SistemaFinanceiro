@@ -6,4 +6,4 @@ O projeto consiste no desenvolvimento de um sistema de gerenciamento financeiro,
 
 ### Integrantes: 
   * Lucas Monteiro Duete: https://github.com/lucasduete;
-  * Kaique Augusto de Sousa:https://github.com/KaiqueSousa;
+  * Kaique Augusto de Sousa: https://github.com/KaiqueSousa;
