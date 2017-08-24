@@ -78,9 +78,17 @@ public class Usuario implements Comparable<Usuario>{
 	public List<MovimentacaoFinanceira> getMovimentacoes() {
 		return movimentacoes;
 	}
+	
+	public MovimentacaoFinanceira getMovimentacao(int index) {
+		return movimentacoes.get(index);
+	}
 
 	public void setMovimentacoes(List<MovimentacaoFinanceira> movimentacoes) {
 		this.movimentacoes = movimentacoes;
+	}
+	
+	public void setMovimentacao(MovimentacaoFinanceira mf) {
+		movimentacoes.add(mf);
 	}
 
 	public int getId() {
