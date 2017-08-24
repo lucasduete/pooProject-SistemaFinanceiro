@@ -8,11 +8,11 @@ public class MovimentacaoFinanceira {
 	private final int id;
 	private String descricao;
 	private LocalDate data;
-	private double valor;
+	private Double valor;
 	private String tipo;
 	private String Categoria;
 	
-	public MovimentacaoFinanceira(String descricao, LocalDate data, double valor, String tipo,
+	public MovimentacaoFinanceira(String descricao, LocalDate data, Double valor, String tipo,
 			String categoria) {
 		super();
 		id = ++countFM;
@@ -39,11 +39,11 @@ public class MovimentacaoFinanceira {
 		this.data = data;
 	}
 
-	public double getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
