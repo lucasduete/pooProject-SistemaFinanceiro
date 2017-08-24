@@ -2,7 +2,7 @@ package com.github.SistemaFinanceiro.model;
 
 import java.time.LocalDate;
 
-public class movimentacaoFinanceira {
+public class MovimentacaoFinanceira {
 	
 	private static int countFM;
 	private final int id;
@@ -12,7 +12,7 @@ public class movimentacaoFinanceira {
 	private String tipo;
 	private String Categoria;
 	
-	public movimentacaoFinanceira(String descricao, LocalDate data, double valor, String tipo,
+	public MovimentacaoFinanceira(String descricao, LocalDate data, double valor, String tipo,
 			String categoria) {
 		super();
 		id = ++countFM;
@@ -89,7 +89,7 @@ public class movimentacaoFinanceira {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		movimentacaoFinanceira other = (movimentacaoFinanceira) obj;
+		MovimentacaoFinanceira other = (MovimentacaoFinanceira) obj;
 		if (Categoria == null) {
 			if (other.Categoria != null)
 				return false;

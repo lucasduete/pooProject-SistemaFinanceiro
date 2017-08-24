@@ -1,16 +1,16 @@
-package edu.com.ifpb.pooProjectSistemaFinanceiro.Visao;
+package com.github.SistemaFinanceiro.View;
 
-import edu.com.ifpb.pooProjectSistemaFinanceiro.controle.usuarioController;
-import edu.com.ifpb.pooProjectSistemaFinanceiro.modelo.ModeloDeUsuario;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 import java.util.Scanner;
+
+import com.github.SistemaFinanceiro.controllers.UsuarioController;
+import com.github.SistemaFinanceiro.model.Usuario;
 
 public class App {
     
     public static void main(String args[]){
-        usuarioController novoUser = new usuarioController();
+        UsuarioController novoUser = new UsuarioController();
         int escolha = 0;
         Scanner scanner = new Scanner(System.in);
         while(escolha != 6){
@@ -24,7 +24,7 @@ public class App {
             switch(escolha){
                 //Case 1: Cadastrando um novo Usuário
                 case 1:{
-                    ModeloDeUsuario novo = new ModeloDeUsuario();
+                    Usuario novo = new Usuario();
                     
                     System.out.println("Digite o seu E-mail: ");
                     novo.setEmail(scanner.next());
@@ -82,7 +82,7 @@ public class App {
                         break;
                     }else {
 
-                        ModeloDeUsuario novo = new ModeloDeUsuario();
+                        Usuario novo = new Usuario();
                         System.out.println("Digite seu NOVO E-amil: ");
                         novo.setEmail(scanner.next());
                         
