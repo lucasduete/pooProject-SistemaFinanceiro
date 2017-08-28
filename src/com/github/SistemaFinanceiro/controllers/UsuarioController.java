@@ -45,9 +45,9 @@ public class UsuarioController {
     }
     
     //Atualizando dados do Usuario
-    public boolean atualizar(Usuario user) {
+    public boolean atualizar(Usuario user, int idUsuario) {
         for(int i = 0; i < contas.size(); i++) {
-            if(contas.get(i).getEmail().equals(user.getEmail())) {
+            if(contas.get(i).getId() == idUsuario) {
                 contas.set(i, user);
                 return true;
             }
