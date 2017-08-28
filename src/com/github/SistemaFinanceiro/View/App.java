@@ -59,19 +59,13 @@ public class App {
                     cadastro();
                     break;
                 case 2 :
-                	//IMPLEMENTAR
+                    atualizarUmPerfil();    
                     break;
                 case 3 :
-                	System.out.println("Digite seu E-mail: ");
-                    String email = scanner.next();
-                    System.out.println("Digite sua Senha: ");
-                    String password = scanner.next();
-                    if(userController.removerConta(email, password) == true){
-                        System.out.println("O usuário removido com Sucesso! ");
-                    }else System.out.println("O usuário não foi encontrado! ");
+                    remover();
                     break;
                 case 4 :
-                	System.out.println("Digite seu email: ");
+                    System.out.println("Digite seu e-mail: ");
                     String myEmail = scanner.next();
                     
                     System.out.println("Digite sua senha: ");
@@ -93,7 +87,10 @@ public class App {
     }
         
     private static boolean login() {
-    	System.out.println("Digite seu email: ");
+        System.out.println();
+        System.out.println("Digite seu email e sua senha para fazer o login!");
+    	System.out.println();
+        System.out.println("Digite seu email: ");
         String email = scanner.next();
         
         System.out.println("Digite sua senha: ");
@@ -137,6 +134,46 @@ public class App {
         }
     }
     
+    public static void atualizarUmPerfil(){
+        Usuario novo = new Usuario();
+        
+        System.out.println("Digite o email do usuário que deseja atualizar: ");
+        String email = scanner.next();
+        
+        System.out.println("Digite sua senha: ");
+        String password = scanner.next();
+        
+        if (userController.userLogin(email, password) == false) {
+            System.out.println("Dados Inválidos!");
+        }else if(userController.localizar(email, password) == null)
+            System.out.println("Não existe usuario cadastrado com esse email! ");
+        else{
+            int idUsuario = userController.localizar(email, password).getId();
+            System.out.println("Digite seu NOVO E-amil: ");
+            novo.setEmail(scanner.next());
+
+            System.out.println("Digite sua NOVA Senha: ");
+            novo.setPassword(scanner.next());
+
+            System.out.println("Digite seu NOVO Nome de Usuário: ");
+            novo.setNome(scanner.next());
+
+            System.out.println("Digite 'F' ou 'M' para seu Sexo: ");
+            novo.setSexo(scanner.next().charAt(0));
+
+            System.out.println("Digite sua Data de Nascimento: ");
+            String dataNascimento = scanner.next();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate nascimento = LocalDate.parse(dataNascimento, formatter);
+            novo.setDataNasc(nascimento);
+
+            userController.atualizar(novo, idUsuario);
+            System.out.println("Dados atualizados com sucesso! ");
+            }
+        
+    }
+    
     public static void atualizarPerfil(String myEmail, String myPassword) {
     	Usuario novo = new Usuario();
             
@@ -167,5 +204,14 @@ public class App {
         userController.atualizar(novo, idUsuario);
         System.out.println("Dados atualizados com sucesso! ");
     }
-  
+    
+    private static void remover(){
+        System.out.println("Digite seu E-mail: ");
+                    String email = scanner.next();
+                    System.out.println("Digite sua Senha: ");
+                    String password = scanner.next();
+                    if(userController.removerConta(email, password) == true){
+                        System.out.println("O usuário removido com Sucesso! ");
+                    }else System.out.println("O usuário não foi encontrado! ");
+    } 
 }
