@@ -17,10 +17,10 @@ public class App {
         int escolha = 0;
         scanner = new Scanner(System.in);
         
-        System.out.println("Digite 1 para fazer login.");
+       System.out.println("Digite 1 para fazer login.");
         	
         //Se não houver contas cadastradas então pode-se cadastrar-se para realizar o login
-        if (userController.getContas() == null)
+        if (userController.getContas().isEmpty() == true)
         	System.out.println("Digite 2 para se cadastro.");
             
          escolha = scanner.nextInt();
@@ -35,7 +35,7 @@ public class App {
             case 2:
             	//Se for não houver contas libera o cadastro para previnir que o usuario tente 
             		//burlar a segurança da aplicação
-            	if (userController.getContas() == null)
+            	if (userController.getContas().isEmpty() == true)
             		cadastro();
             	login();
             	break;
@@ -102,7 +102,7 @@ public class App {
         if (userController.userLogin(email, password) == true) {
            System.out.println("Login feito com Sucesso!");
            return true;
-        } else if (userController.userLogin(email, password) == false) {
+        } else {
         	System.out.println("Usuário não cadastrado!");
         }
         return false;
