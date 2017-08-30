@@ -10,112 +10,125 @@ import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import com.github.SistemaFinanceiro.model.Usuario;
 
 public class App {
-	
-	private static UsuarioController userController;
-        private static MovimentacaoController movimenController;
-	private static Scanner scanner; 
-    
+
+    private static UsuarioController userController;
+    private static MovimentacaoController movimenController;
+    private static Scanner scanner;
+
     public static void main(String args[]) {
         userController = new UsuarioController();
         movimenController = new MovimentacaoController();
         int escolha = 0;
         scanner = new Scanner(System.in);
-        
-       System.out.println("Digite 1 para fazer login.");
-        	
+
+        System.out.println("Digite 1 para fazer login.");
+
         //Se não houver contas cadastradas então pode-se cadastrar-se para realizar o login
-        if (userController.getContas().isEmpty() == true)
-        	System.out.println("Digite 2 para se cadastro.");
-            
-         escolha = scanner.nextInt();
-            
-         switch (escolha) {
-         	case 1 :
-            	while(login() == false) {
-            		System.out.println("Dados Inválidos.");
-            		login();
-            	}
-            	break;
+        if (userController.getContas().isEmpty() == true) {
+            System.out.println("Digite 2 para se cadastro.");
+        }
+
+        escolha = scanner.nextInt();
+
+        switch (escolha) {
+            case 1:
+                while (login() == false) {
+                    System.out.println("Dados Inválidos.");
+                    login();
+                }
+                break;
             case 2:
-            	//Se for não houver contas libera o cadastro para previnir que o usuario tente 
-            		//burlar a segurança da aplicação
-            	if (userController.getContas().isEmpty() == true)
-            		cadastro();
-            	login();
-            	break;
+                //Se for não houver contas libera o cadastro para previnir que o usuario tente 
+                //burlar a segurança da aplicação
+                if (userController.getContas().isEmpty() == true) {
+                    cadastro();
+                }
+                login();
+                break;
             default:
-            	System.out.println("Opção Inválida, Finalizando Aplicação");
-            	System.exit(0);
-         }
-        
-         //Repete infinitamente, a saida do programa é feita pelo bloco default do switch
-        while(true) {
+                System.out.println("Opção Inválida, Finalizando Aplicação");
+                System.exit(0);
+        }
+
+        //Repete infinitamente, a saida do programa é feita pelo bloco default do switch
+        while (true) {
             System.out.println("Digite 1 para cadastra um novo usuário.");
             System.out.println("Digite 2 para atualizar um usuário.");
             System.out.println("Digite 3 para remover um usuário.");
             System.out.println("Digite 4 para atualizar seu usuário.");
             System.out.println("Digite 5 para Movimentações.");
             System.out.println("Digite qualquer outro número para sair.");
-            
+
             escolha = scanner.nextInt();
 
             switch (escolha) {
-                case 1 :
+                case 1:
                     cadastro();
                     break;
-                case 2 :
-                    atualizarUmPerfil();    
+                case 2:
+                    atualizarUmPerfil();
                     break;
-                case 3 :
+                case 3:
                     remover();
                     break;
-                case 4 :
+                case 4:
                     System.out.println("Digite seu e-mail: ");
                     String myEmail = scanner.next();
-                    
+
                     System.out.println("Digite sua senha: ");
                     String myPassword = scanner.next();
-                    
+
                     //Valida se usuario realmente sabe sua senha e email
                     if (userController.userLogin(myEmail, myPassword) == false) {
                         System.out.println("Dados Inválidos!");
                         break;
                     }
                     //Atualiza dados
-                	atualizarPerfil(myEmail, myPassword);
+                    atualizarPerfil(myEmail, myPassword);
                     break;
                 case 5:
-                    movimentacoes();
+                     System.out.println("Digite seu e-mail: ");
+                    String email = scanner.next();
+
+                    System.out.println("Digite sua senha: ");
+                    String password = scanner.next();
+
+                    //Valida se usuario realmente sabe sua senha e email
+                    if (userController.userLogin(email, password) == false) {
+                        System.out.println("Dados Inválidos!");
+                        break;
+                    }
+                    movimentacoes(userController.localizar(email, password));
                     break;
                 default:
-                	scanner.close();
-                	System.exit(0);                	
+                    scanner.close();
+                    System.exit(0);
             }
         }
     }
-        
+
     private static boolean login() {
         System.out.println();
         System.out.println("Digite seu email e sua senha para fazer o login!");
-    	System.out.println();
+        System.out.println();
         System.out.println("Digite seu email: ");
         String email = scanner.next();
-        
+
         System.out.println("Digite sua senha: ");
         String password = scanner.next();
-        
+
         if (userController.userLogin(email, password) == true) {
-           System.out.println("Login feito com Sucesso!");
-           return true;
+            System.out.println("Login feito com Sucesso!");
+            return true;
         } else {
-        	System.out.println("Usuário não cadastrado!");
+            System.out.println("Usuário não cadastrado!");
         }
         return false;
     }
-    
+
     private static void cadastro() {
-    	Usuario novo = new Usuario();
-        
+        Usuario novo = new Usuario();
+
         System.out.println("Digite o seu E-mail: ");
         novo.setEmail(scanner.next());
 
@@ -130,32 +143,32 @@ public class App {
 
         System.out.println("Digite sua Data de Nascimento: ");
         String dataNascimento = scanner.next();
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate nascimento = LocalDate.parse(dataNascimento, formatter);
         novo.setDataNasc(nascimento);
 
         if (userController.adicionar(novo) == false) {
-           System.out.println("Usuário já está cadastrado! "); 
+            System.out.println("Usuário já está cadastrado! ");
         } else {
-        	System.out.println("Usuário cadastrado com Sucesso!");
+            System.out.println("Usuário cadastrado com Sucesso!");
         }
     }
-    
-    public static void atualizarUmPerfil(){
+
+    public static void atualizarUmPerfil() {
         Usuario novo = new Usuario();
-        
+
         System.out.println("Digite o email do usuário que deseja atualizar: ");
         String email = scanner.next();
-        
+
         System.out.println("Digite sua senha: ");
         String password = scanner.next();
-        
+
         if (userController.userLogin(email, password) == false) {
             System.out.println("Dados Inválidos!");
-        }else if(userController.localizar(email, password) == null)
+        } else if (userController.localizar(email, password) == null) {
             System.out.println("Não existe usuario cadastrado com esse email! ");
-        else{
+        } else {
             int idUsuario = userController.localizar(email, password).getId();
             System.out.println("Digite seu NOVO E-amil: ");
             novo.setEmail(scanner.next());
@@ -178,24 +191,24 @@ public class App {
 
             userController.atualizar(novo, idUsuario);
             System.out.println("Dados atualizados com sucesso! ");
-            }
-        
+        }
+
     }
-    
+
     public static void atualizarPerfil(String myEmail, String myPassword) {
-    	Usuario novo = new Usuario();
-            
-        int idUsuario = 
-        		userController
-            		.localizar(myEmail, myPassword)
-            		.getId();
-            
+        Usuario novo = new Usuario();
+
+        int idUsuario
+                = userController
+                .localizar(myEmail, myPassword)
+                .getId();
+
         System.out.println("Digite seu NOVO E-amil: ");
         novo.setEmail(scanner.next());
-            
+
         System.out.println("Digite sua NOVA Senha: ");
         novo.setPassword(scanner.next());
-           
+
         System.out.println("Digite seu NOVO Nome de Usuário: ");
         novo.setNome(scanner.next());
 
@@ -204,7 +217,7 @@ public class App {
 
         System.out.println("Digite sua Data de Nascimento: ");
         String dataNascimento = scanner.next();
-            
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate nascimento = LocalDate.parse(dataNascimento, formatter);
         novo.setDataNasc(nascimento);
@@ -212,8 +225,8 @@ public class App {
         userController.atualizar(novo, idUsuario);
         System.out.println("Dados atualizados com sucesso! ");
     }
-    
-    private static void movimentacoes(){
+
+    private static void movimentacoes(Usuario user) {
         int opicao = 0;
         System.out.println();
         System.out.println("Digite 1 para adicionar uma movimentação: ");
@@ -221,21 +234,21 @@ public class App {
         System.out.println("Digite 3 para remover uma movimentação: ");
         System.out.println("Digite qualquer outro número para sair: ");
         opicao = scanner.nextInt();
-        
-        switch (opicao){
-            case 1: 
+
+        switch (opicao) {
+            case 1:
                 MovimentacaoFinanceira movimentacao = new MovimentacaoFinanceira();
-       
+
                 System.out.println("Digite seu email: ");
                 String email = scanner.next();
-                    
+
                 System.out.println("Digite sua senha: ");
                 String password = scanner.next();
-                
-                if(userController.localizar(email, password)== null){
+
+                if (userController.localizar(email, password) == null) {
                     System.out.println("Usuário não cadastrado!");
-                }else {
-                    
+                } else {
+
                     System.out.println("Digite uma destrição para sua movimentação: ");
                     String descricao = scanner.next();
 
@@ -256,34 +269,60 @@ public class App {
 
                     Usuario usuario = userController.localizar(email, password);
 
-                    if(usuario == null){
+                    if (usuario == null) {
                         System.out.println("Usuario não cadastrado!");
-                    }else {
+                    } else {
                         usuario.setMovimentacao(movimenController.criarMovimentacao(descricao, movimentar, valorMovimentacao, tipoMovimentacao, categoria));
-                    }  
+                    }
                 }
-            System.out.println(userController.getContas());
-            break;
-            
-            case 2 :
-                //IMPLEMENTAR
+                System.out.println(userController.getContas());
                 break;
-            case 3 : 
-                //IMPLEMENTAR
+
+            case 2:
+                MovimentacaoFinanceira atualizaMovimentacao = new MovimentacaoFinanceira();
+                
+                System.out.println("Digite a NOVA destrição para sua movimentação: ");
+                String descricao = scanner.next();
+
+                System.out.println("Digite a NOVA data da movimentação: ");
+                String dataMovimentacao = scanner.next();
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate movimentar = LocalDate.parse(dataMovimentacao, formatter);
+
+                System.out.println("Digite o NOVO valor da movimentação: ");
+                double valorMovimentacao = scanner.nextDouble();
+
+                System.out.println("Digite o NOVO tipo de movimentação: ");
+                String tipoMovimentacao = scanner.next();
+
+                System.out.println("Digite a NOVA categoria da movimentação: ");
+                String categoria = scanner.next();
+
+                movimenController.atualizarMovimentacao(user,user.getMovimentacao(user.getId()),descricao,movimentar,valorMovimentacao,tipoMovimentacao,categoria);
+                System.out.println("Movimentação Atualizada com sucesso!");
+                System.out.println(userController.getContas());
+                break;
+            case 3:         
+                movimenController.deletarMovimentacao(user,user.getMovimentacao(user.getId()));
+                System.out.println("Movimentação removida com Sucesso!");
+                System.out.println(userController.getContas());
                 break;
             default:
-              	scanner.close();
-               	System.exit(0);
+                scanner.close();
+                System.exit(0);
         }
     }
-    
-    private static void remover(){
+
+    private static void remover() {
         System.out.println("Digite seu E-mail: ");
-                    String email = scanner.next();
-                    System.out.println("Digite sua Senha: ");
-                    String password = scanner.next();
-                    if(userController.removerConta(email, password) == true){
-                        System.out.println("O usuário removido com Sucesso! ");
-                    }else System.out.println("O usuário não foi encontrado! ");
-    } 
+        String email = scanner.next();
+        System.out.println("Digite sua Senha: ");
+        String password = scanner.next();
+        if (userController.removerConta(email, password) == true) {
+            System.out.println("O usuário removido com Sucesso! ");
+        } else {
+            System.out.println("O usuário não foi encontrado! ");
+        }
+    }
 }
