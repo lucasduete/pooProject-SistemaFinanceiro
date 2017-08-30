@@ -23,6 +23,15 @@ public class MovimentacaoFinanceira {
 		Categoria = categoria;
 	}
 
+    public MovimentacaoFinanceira() {
+        id = ++countFM;
+        descricao = null;
+	data = null;
+	valor = null;
+        tipo = null;
+        Categoria = null;
+    }
+
 	public String getDescricao() {
 		return descricao;
 	}
