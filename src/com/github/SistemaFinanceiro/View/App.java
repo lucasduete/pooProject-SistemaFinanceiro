@@ -1,19 +1,23 @@
 package com.github.SistemaFinanceiro.View;
 
+import com.github.SistemaFinanceiro.controllers.MovimentacaoController;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import com.github.SistemaFinanceiro.controllers.UsuarioController;
+import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import com.github.SistemaFinanceiro.model.Usuario;
 
 public class App {
 	
 	private static UsuarioController userController;
+        private static MovimentacaoController movimenController;
 	private static Scanner scanner; 
     
     public static void main(String args[]) {
         userController = new UsuarioController();
+        movimenController = new MovimentacaoController();
         int escolha = 0;
         scanner = new Scanner(System.in);
         
@@ -50,6 +54,7 @@ public class App {
             System.out.println("Digite 2 para atualizar um usuário.");
             System.out.println("Digite 3 para remover um usuário.");
             System.out.println("Digite 4 para atualizar seu usuário.");
+            System.out.println("Digite 5 para Movimentações.");
             System.out.println("Digite qualquer outro número para sair.");
             
             escolha = scanner.nextInt();
@@ -78,6 +83,9 @@ public class App {
                     }
                     //Atualiza dados
                 	atualizarPerfil(myEmail, myPassword);
+                    break;
+                case 5:
+                    movimentacoes();
                     break;
                 default:
                 	scanner.close();
@@ -203,6 +211,70 @@ public class App {
 
         userController.atualizar(novo, idUsuario);
         System.out.println("Dados atualizados com sucesso! ");
+    }
+    
+    private static void movimentacoes(){
+        int opicao = 0;
+        System.out.println();
+        System.out.println("Digite 1 para adicionar uma movimentação: ");
+        System.out.println("Digite 2 para atualizar uma movimentação: ");
+        System.out.println("Digite 3 para remover uma movimentação: ");
+        System.out.println("Digite qualquer outro número para sair: ");
+        opicao = scanner.nextInt();
+        
+        switch (opicao){
+            case 1: 
+                MovimentacaoFinanceira movimentacao = new MovimentacaoFinanceira();
+       
+                System.out.println("Digite seu email: ");
+                String email = scanner.next();
+                    
+                System.out.println("Digite sua senha: ");
+                String password = scanner.next();
+                
+                if(userController.localizar(email, password)== null){
+                    System.out.println("Usuário não cadastrado!");
+                }else {
+                    
+                    System.out.println("Digite uma destrição para sua movimentação: ");
+                    String descricao = scanner.next();
+
+                    System.out.println("Digite a data da movimentação: ");
+                    String dataMovimentacao = scanner.next();
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate movimentar = LocalDate.parse(dataMovimentacao, formatter);
+
+                    System.out.println("Digite o valor da movimentação: ");
+                    double valorMovimentacao = scanner.nextDouble();
+
+                    System.out.println("Digite o tipo de movimentação: ");
+                    String tipoMovimentacao = scanner.next();
+
+                    System.out.println("Digite a categoria da movimentação: ");
+                    String categoria = scanner.next();
+
+                    Usuario usuario = userController.localizar(email, password);
+
+                    if(usuario == null){
+                        System.out.println("Usuario não cadastrado!");
+                    }else {
+                        usuario.setMovimentacao(movimenController.criarMovimentacao(descricao, movimentar, valorMovimentacao, tipoMovimentacao, categoria));
+                    }  
+                }
+            System.out.println(userController.getContas());
+            break;
+            
+            case 2 :
+                //IMPLEMENTAR
+                break;
+            case 3 : 
+                //IMPLEMENTAR
+                break;
+            default:
+              	scanner.close();
+               	System.exit(0);
+        }
     }
     
     private static void remover(){
