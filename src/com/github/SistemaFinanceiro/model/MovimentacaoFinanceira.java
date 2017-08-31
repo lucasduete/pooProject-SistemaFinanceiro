@@ -2,7 +2,7 @@ package com.github.SistemaFinanceiro.model;
 
 import java.time.LocalDate;
 
-public class MovimentacaoFinanceira {
+public class MovimentacaoFinanceira implements Comparable<MovimentacaoFinanceira>{
 	
 	private static int countFM;
 	private final int id;
@@ -126,5 +126,18 @@ public class MovimentacaoFinanceira {
 		return "movimentacaoFinanceira [id=" + id + ", descricao=" + descricao + ", valor=" + valor + ", tipo=" + tipo
 				+ ", Categoria=" + Categoria + "]";
 	}
+
+	@Override
+	public int compareTo(MovimentacaoFinanceira mf) {
+		if (getDescricao().equals(mf.getDescricao()) && getData().equals(mf.getData())
+				&& getValor().equals(mf.getValor()) && getTipo().equals(mf.getTipo())
+				&& getCategoria().equals(mf.getCategoria())) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
+	
 
 }

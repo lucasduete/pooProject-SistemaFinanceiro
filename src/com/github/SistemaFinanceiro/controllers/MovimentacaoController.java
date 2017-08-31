@@ -8,14 +8,14 @@ import com.github.SistemaFinanceiro.model.Usuario;
 
 public class MovimentacaoController {
 	
-	//Criar uma movimentaÃ§Ã£o nova
+	//Criar uma Movimentação nova
 	public MovimentacaoFinanceira criarMovimentacao(String descricao, LocalDate data, double valor, String tipo,
 			String categoria) {
 		MovimentacaoFinanceira fm = new MovimentacaoFinanceira(descricao, data, valor, tipo, categoria);
 		return fm;
 	}
 	
-	//Encontrar movimentaÃ§Ã£o com base na data
+	//Encontrar Movimentação com base na data
 	public MovimentacaoFinanceira encontrarPorData(List<MovimentacaoFinanceira> movimentacoes, LocalDate dataInicio, LocalDate dataFim) {
 		for(MovimentacaoFinanceira mf : movimentacoes) {
 			if(mf.getData().isAfter(dataInicio) && mf.getData().isBefore(dataFim))
@@ -25,30 +25,29 @@ public class MovimentacaoController {
 	}
 	
 	
-	public boolean atualizarMovimentacao(Usuario user, MovimentacaoFinanceira fm, String descricao, LocalDate data, Double valor,
-			String tipo, String categoria) {
+	public boolean atualizarMovimentacao(Usuario user, MovimentacaoFinanceira fm, MovimentacaoFinanceira nova) {
 		List<MovimentacaoFinanceira> movimentacoes = user.getMovimentacoes();
 		
 		for(int i = 0; i < movimentacoes.size(); i++) {
 			if(movimentacoes.get(i).equals(fm)) {
-				if(descricao != null) {
-					fm.setDescricao(descricao);
+				if(nova.getDescricao() != null) {
+					fm.setDescricao(nova.getDescricao());
 				}
 				
-				if(data != null) {
-					fm.setData(data);
+				if(nova.getData() != null) {
+					fm.setData(nova.getData());
 				}
 				
-				if(valor == null) {
-					fm.setValor(valor);
+				if(nova.getValor() == null) {
+					fm.setValor(nova.getValor());
 				}
 				
-				if(tipo != null) {
-					fm.setTipo(tipo);
+				if(nova.getTipo() != null) {
+					fm.setTipo(nova.getTipo());
 				}
 				
-				if(categoria != null) {
-					fm.setCategoria(categoria);
+				if(nova.getCategoria() != null) {
+					fm.setCategoria(nova.getCategoria());
 				}
 				return true;
 			}

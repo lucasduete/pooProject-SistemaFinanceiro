@@ -14,16 +14,19 @@ public class App {
     private static UsuarioController userController;
     private static MovimentacaoController movimenController;
     private static Scanner scanner;
+    
+  //Variavel que controla o usuario logado
+    private static Usuario user = null;
 
     public static void main(String args[]) {
         userController = new UsuarioController();
         movimenController = new MovimentacaoController();
         int escolha = 0;
         scanner = new Scanner(System.in);
-
+        
         System.out.println("Digite 1 para fazer login.");
 
-        //Se nÃ£o houver contas cadastradas entÃ£o pode-se cadastrar-se para realizar o login
+        //Se não houver contas cadastradas então pode-se cadastrar-se para realizar o login
         if (userController.getContas().isEmpty() == true) {
             System.out.println("Digite 2 para se cadastro.");
         }
@@ -33,45 +36,39 @@ public class App {
         switch (escolha) {
             case 1:
                 while (login() == false) {
-                    System.out.println("Dados InvÃ¡lidos.");
+                    System.out.println("Dados Inválidos.");
                     login();
                 }
                 break;
             case 2:
-                //Se for nÃ£o houver contas libera o cadastro para previnir que o usuario tente 
-                //burlar a seguranÃ§a da aplicaÃ§Ã£o
+                //Se for não houver contas libera o cadastro para previnir que o usuario tente 
+                //burlar a segurança da aplicação
                 if (userController.getContas().isEmpty() == true) {
                     cadastro();
                 }
                 login();
                 break;
             default:
-                System.out.println("OpÃ§Ã£o InvÃ¡lida, Finalizando AplicaÃ§Ã£o");
+                System.out.println("Opção Inválida, Finalizando Aplicação");
                 System.exit(0);
-        }
-
+        }       
+        
         //Repete infinitamente, a saida do programa Ã© feita pelo bloco default do switch
         while (true) {
-            System.out.println("Digite 1 para cadastra um novo usuÃ¡rio.");
-            System.out.println("Digite 2 para atualizar um usuÃ¡rio.");
-            System.out.println("Digite 3 para remover um usuÃ¡rio.");
-            System.out.println("Digite 4 para atualizar seu usuÃ¡rio.");
-            System.out.println("Digite 5 para MovimentaÃ§Ãµes.");
-            System.out.println("Digite qualquer outro nÃºmero para sair.");
+            System.out.println("Digite 1 para remover seu perfil de usuário.");
+            System.out.println("Digite 2 para atualizar seu usuário.");
+            System.out.println("Digite 3 para adicionar uma Movimenção.");
+            System.out.println("Digite 4 para atualizar uma Movimenção.");
+            System.out.println("Digite 5 para remover uma Movimenção.");
+            System.out.println("Digite qualquer outro número para sair.");
 
             escolha = scanner.nextInt();
 
             switch (escolha) {
                 case 1:
-                    cadastro();
-                    break;
+                    removerPerfil();
+                break;
                 case 2:
-                    atualizarUmPerfil();
-                    break;
-                case 3:
-                    remover();
-                    break;
-                case 4:
                     System.out.println("Digite seu e-mail: ");
                     String myEmail = scanner.next();
 
@@ -80,26 +77,21 @@ public class App {
 
                     //Valida se usuario realmente sabe sua senha e email
                     if (userController.userLogin(myEmail, myPassword) == false) {
-                        System.out.println("Dados InvÃ¡lidos!");
+                        System.out.println("Dados Inválidos!");
                         break;
                     }
                     //Atualiza dados
                     atualizarPerfil(myEmail, myPassword);
-                    break;
-                case 5:
-                     System.out.println("Digite seu e-mail: ");
-                    String email = scanner.next();
-
-                    System.out.println("Digite sua senha: ");
-                    String password = scanner.next();
-
-                    //Valida se usuario realmente sabe sua senha e email
-                    if (userController.userLogin(email, password) == false) {
-                        System.out.println("Dados InvÃ¡lidos!");
-                        break;
-                    }
-                    movimentacoes(userController.localizar(email, password));
-                    break;
+                break;
+                case 3:
+                    adicionarMovimentacao();
+                break;
+                case 4:
+                    atualizarMovimentacao();
+                break;
+                case 5:         
+                    removerMovimentacao();
+                break;
                 default:
                     scanner.close();
                     System.exit(0);
@@ -119,9 +111,13 @@ public class App {
 
         if (userController.userLogin(email, password) == true) {
             System.out.println("Login feito com Sucesso!");
+            
+            //Define qual usuario fez login
+            user = userController.localizar(email, password);
+            		
             return true;
         } else {
-            System.out.println("UsuÃ¡rio nÃ£o cadastrado!");
+            System.out.println("Usuário não cadastrado!");
         }
         return false;
     }
@@ -149,50 +145,18 @@ public class App {
         novo.setDataNasc(nascimento);
 
         if (userController.adicionar(novo) == false) {
-            System.out.println("UsuÃ¡rio jÃ¡ estÃ¡ cadastrado! ");
+            System.out.println("Usuário não está cadastrado! ");
         } else {
-            System.out.println("UsuÃ¡rio cadastrado com Sucesso!");
+            System.out.println("Usuário cadastrado com Sucesso!");
         }
     }
-
-    public static void atualizarUmPerfil() {
-        Usuario novo = new Usuario();
-
-        System.out.println("Digite o email do usuÃ¡rio que deseja atualizar: ");
-        String email = scanner.next();
-
-        System.out.println("Digite sua senha: ");
-        String password = scanner.next();
-
-        if (userController.userLogin(email, password) == false) {
-            System.out.println("Dados InvÃ¡lidos!");
-        } else if (userController.localizar(email, password) == null) {
-            System.out.println("NÃ£o existe usuario cadastrado com esse email! ");
-        } else {
-            int idUsuario = userController.localizar(email, password).getId();
-            System.out.println("Digite seu NOVO E-amil: ");
-            novo.setEmail(scanner.next());
-
-            System.out.println("Digite sua NOVA Senha: ");
-            novo.setPassword(scanner.next());
-
-            System.out.println("Digite seu NOVO Nome de UsuÃ¡rio: ");
-            novo.setNome(scanner.next());
-
-            System.out.println("Digite 'F' ou 'M' para seu Sexo: ");
-            novo.setSexo(scanner.next().charAt(0));
-
-            System.out.println("Digite sua Data de Nascimento: ");
-            String dataNascimento = scanner.next();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate nascimento = LocalDate.parse(dataNascimento, formatter);
-            novo.setDataNasc(nascimento);
-
-            userController.atualizar(novo, idUsuario);
-            System.out.println("Dados atualizados com sucesso! ");
-        }
-
+    
+    private static void removerPerfil() {
+    	if (userController.removerConta(user.getEmail(), user.getPassword()) == true) {
+    		System.out.println("O Usuário foi removido com sucesso.");
+    	} else {
+    		System.out.println("Não Foi Possível Remover o Usuário.");
+    	}
     }
 
     public static void atualizarPerfil(String myEmail, String myPassword) {
@@ -209,7 +173,7 @@ public class App {
         System.out.println("Digite sua NOVA Senha: ");
         novo.setPassword(scanner.next());
 
-        System.out.println("Digite seu NOVO Nome de UsuÃ¡rio: ");
+        System.out.println("Digite seu NOVO Nome de Usuário: ");
         novo.setNome(scanner.next());
 
         System.out.println("Digite 'F' ou 'M' para seu Sexo: ");
@@ -226,103 +190,87 @@ public class App {
         System.out.println("Dados atualizados com sucesso! ");
     }
 
-    private static void movimentacoes(Usuario user) {
-        int opicao = 0;
-        System.out.println();
-        System.out.println("Digite 1 para adicionar uma movimentaÃ§Ã£o: ");
-        System.out.println("Digite 2 para atualizar uma movimentaÃ§Ã£o: ");
-        System.out.println("Digite 3 para remover uma movimentaÃ§Ã£o: ");
-        System.out.println("Digite qualquer outro nÃºmero para sair: ");
-        opicao = scanner.nextInt();
+    public static int escolherMovimentacao() {
+    	//Lista todas as movimentações para que o usuario escolha uma
+    	//count controla a id das enquetes, id é o valor que o usuario digitara
+    	int cont = 0, id = 1;
+    	
+    	//Variavel que controla se usuario escolheu corretamente
+    	boolean aux = false;
+    	
+    	//Repete ate id valida
+    	do {
+    		System.out.println("Escolha uma Movimentacao");
+    		//Lista Movimentacoes
+        	for(MovimentacaoFinanceira mf: user.getMovimentacoes()) {
+        		System.out.println(cont++ + "{" + mf.toString() + "}");
+        	}
+        	
+        	id = scanner.nextInt();
+        	//Se digitar id > cont ou menor que zero então é inválido
+        	if(id > cont || id < 0)
+        		System.out.println("Valor de ID inválido");
+        	else
+        		aux = true;
+        	
+    	} while (aux == false);
+    	
+    	return id;
+    }
+    
+    private static void removerMovimentacao() {
+    	int id = escolherMovimentacao();
+    	movimenController.deletarMovimentacao(user,user.getMovimentacao(id));
+        System.out.println("Movimentação removida com Sucesso!");
+    }
+    
+    private static void adicionarMovimentacao() {
+    	System.out.println("Digite uma descrição para sua Movimentação: ");
+        String descricao = scanner.next();
 
-        switch (opicao) {
-            case 1:
-                MovimentacaoFinanceira movimentacao = new MovimentacaoFinanceira();
+        System.out.println("Digite a data da Movimentação: ");
+        String dataMovimentacao = scanner.next();
 
-                System.out.println("Digite seu email: ");
-                String email = scanner.next();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate movimentar = LocalDate.parse(dataMovimentacao, formatter);
 
-                System.out.println("Digite sua senha: ");
-                String password = scanner.next();
+        System.out.println("Digite o valor da Movimentação: ");
+        double valorMovimentacao = scanner.nextDouble();
 
-                if (userController.localizar(email, password) == null) {
-                    System.out.println("UsuÃ¡rio nÃ£o cadastrado!");
-                } else {
+        System.out.println("Digite o tipo de Movimentação: ");
+        String tipoMovimentacao = scanner.next();
 
-                    System.out.println("Digite uma destriÃ§Ã£o para sua movimentaÃ§Ã£o: ");
-                    String descricao = scanner.next();
-
-                    System.out.println("Digite a data da movimentaÃ§Ã£o: ");
-                    String dataMovimentacao = scanner.next();
-
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    LocalDate movimentar = LocalDate.parse(dataMovimentacao, formatter);
-
-                    System.out.println("Digite o valor da movimentaÃ§Ã£o: ");
-                    double valorMovimentacao = scanner.nextDouble();
-
-                    System.out.println("Digite o tipo de movimentaÃ§Ã£o: ");
-                    String tipoMovimentacao = scanner.next();
-
-                    System.out.println("Digite a categoria da movimentaÃ§Ã£o: ");
-                    String categoria = scanner.next();
-
-                    Usuario usuario = userController.localizar(email, password);
-
-                    if (usuario == null) {
-                        System.out.println("Usuario nÃ£o cadastrado!");
-                    } else {
-                        usuario.setMovimentacao(movimenController.criarMovimentacao(descricao, movimentar, valorMovimentacao, tipoMovimentacao, categoria));
-                    }
-                }
-                System.out.println(userController.getContas());
-                break;
-
-            case 2:
-                MovimentacaoFinanceira atualizaMovimentacao = new MovimentacaoFinanceira();
-                
-                System.out.println("Digite a NOVA destriÃ§Ã£o para sua movimentaÃ§Ã£o: ");
-                String descricao = scanner.next();
-
-                System.out.println("Digite a NOVA data da movimentaÃ§Ã£o: ");
-                String dataMovimentacao = scanner.next();
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate movimentar = LocalDate.parse(dataMovimentacao, formatter);
-
-                System.out.println("Digite o NOVO valor da movimentaÃ§Ã£o: ");
-                double valorMovimentacao = scanner.nextDouble();
-
-                System.out.println("Digite o NOVO tipo de movimentaÃ§Ã£o: ");
-                String tipoMovimentacao = scanner.next();
-
-                System.out.println("Digite a NOVA categoria da movimentaÃ§Ã£o: ");
-                String categoria = scanner.next();
-
-                movimenController.atualizarMovimentacao(user,user.getMovimentacao(user.getId()),descricao,movimentar,valorMovimentacao,tipoMovimentacao,categoria);
-                System.out.println("MovimentaÃ§Ã£o Atualizada com sucesso!");
-                System.out.println(userController.getContas());
-                break;
-            case 3:         
-                movimenController.deletarMovimentacao(user,user.getMovimentacao(user.getId()));
-                System.out.println("MovimentaÃ§Ã£o removida com Sucesso!");
-                System.out.println(userController.getContas());
-                break;
-            default:
-                scanner.close();
-                System.exit(0);
-        }
+        System.out.println("Digite a categoria da Movimentação: ");
+        String categoria = scanner.next();
+            
+        user.setMovimentacao(movimenController.criarMovimentacao(descricao, movimentar, valorMovimentacao, tipoMovimentacao, categoria));
     }
 
-    private static void remover() {
-        System.out.println("Digite seu E-mail: ");
-        String email = scanner.next();
-        System.out.println("Digite sua Senha: ");
-        String password = scanner.next();
-        if (userController.removerConta(email, password) == true) {
-            System.out.println("O usuÃ¡rio removido com Sucesso! ");
-        } else {
-            System.out.println("O usuÃ¡rio nÃ£o foi encontrado! ");
-        }
+    private static void atualizarMovimentacao() {
+    	
+    	int id = escolherMovimentacao();
+    	
+    	MovimentacaoFinanceira nova = new MovimentacaoFinanceira();
+        
+        System.out.println("Digite a NOVA descrição para sua Movimentação: ");
+        nova.setDescricao(scanner.next());
+
+        System.out.println("Digite a NOVA data da Movimentação: ");
+        String dataMovimentacao = scanner.next();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        nova.setData(LocalDate.parse(dataMovimentacao, formatter));
+
+        System.out.println("Digite o NOVO valor da Movimentação: ");
+        nova.setValor(scanner.nextDouble());
+
+        System.out.println("Digite o NOVO tipo de Movimentação: ");
+        nova.setTipo(scanner.next());
+
+        System.out.println("Digite a NOVA categoria da Movimentação: ");
+        nova.setCategoria(scanner.next());
+
+        movimenController.atualizarMovimentacao(user,user.getMovimentacao(id), nova);
+        System.out.println("Movimentação Atualizada com sucesso!");
     }
 }
