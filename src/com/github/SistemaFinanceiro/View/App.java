@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import org.omg.CORBA.INTERNAL;
+
 import com.github.SistemaFinanceiro.controllers.UsuarioController;
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import com.github.SistemaFinanceiro.model.Usuario;
@@ -157,6 +159,10 @@ public class App {
     	} else {
     		System.out.println("Não Foi Possível Remover o Usuário.");
     	}
+    	//Deleta o usuario e reEstarta a aplicação
+    	System.out.printf("\n\n\nREINICIANDO APLICAÇÃO.\n\n\n");
+    	main(null);
+    	System.exit(0);
     }
 
     public static void atualizarPerfil(String myEmail, String myPassword) {
@@ -190,10 +196,15 @@ public class App {
         System.out.println("Dados atualizados com sucesso! ");
     }
 
-    public static int escolherMovimentacao() {
+    public static Integer escolherMovimentacao() {
+    	//Retorna null se nao houver nenhuma movimentação cadastrada
+    	if(user.getMovimentacoes().isEmpty()) {
+    		return null;
+    	}
+    	
     	//Lista todas as movimentações para que o usuario escolha uma
     	//count controla a id das enquetes, id é o valor que o usuario digitara
-    	int cont = 0, id = 1;
+    	Integer cont = 0, id = 1;
     	
     	//Variavel que controla se usuario escolheu corretamente
     	boolean aux = false;
@@ -219,7 +230,14 @@ public class App {
     }
     
     private static void removerMovimentacao() {
-    	int id = escolherMovimentacao();
+    	Integer id = escolherMovimentacao();
+    	
+    	//Caso id seja null entao não ha movimentações então da um return para sair do metodo
+    	if(id == null) {
+    		System.out.println("Não há Movimentações Cadastradas!!");
+    		return;
+    	}
+    	//Remove Movimentação
     	movimenController.deletarMovimentacao(user,user.getMovimentacao(id));
         System.out.println("Movimentação removida com Sucesso!");
     }
@@ -248,7 +266,13 @@ public class App {
 
     private static void atualizarMovimentacao() {
     	
-    	int id = escolherMovimentacao();
+    	Integer id = escolherMovimentacao();
+    	
+    	//Caso id seja null entao não ha movimentações então da um return para sair do metodo
+    	if(id == null) {
+    		System.out.println("Não há Movimentações Cadastradas!!");
+    		return;
+    	}
     	
     	MovimentacaoFinanceira nova = new MovimentacaoFinanceira();
         
