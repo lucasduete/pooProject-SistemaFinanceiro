@@ -26,34 +26,42 @@ public class App {
         int escolha = 0;
         scanner = new Scanner(System.in);
         
-        System.out.println("Digite 1 para fazer login.");
+        //Enquanto não conhecer o usuario
+        while(user == null) {
+        	System.out.println("Digite 1 para fazer login.");
 
-        //Se não houver contas cadastradas então pode-se cadastrar-se para realizar o login
-        if (userController.getContas().isEmpty() == true) {
-            System.out.println("Digite 2 para se cadastro.");
-        }
+            //Se não houver contas cadastradas então pode-se cadastrar-se para realizar o login
+            if (userController.getContas().isEmpty() == true) {
+                System.out.println("Digite 2 para se cadastro.");
+            }
 
-        escolha = scanner.nextInt();
-
-        switch (escolha) {
-            case 1:
-                while (login() == false) {
-                    System.out.println("Dados Inválidos.");
+            escolha = scanner.nextInt();
+            switch (escolha){
+                case 1:
+                	int count = 0;
+                    while (login() == false) {
+                        System.out.println("Dados Inválidos.");
+                        //login();
+                        if(++count == 5) {
+                        	System.out.printf("\nNúmero de Tentativas Execidada, recomece o processo.\n\n");
+                        	break;
+                        }
+                        	
+                    }
+                    break;
+                case 2:
+                    //Se for não houver contas libera o cadastro para previnir que o usuario tente 
+                    //burlar a segurança da aplicação
+                    if (userController.getContas().isEmpty() == true) {
+                        cadastro();
+                    }
                     login();
-                }
-                break;
-            case 2:
-                //Se for não houver contas libera o cadastro para previnir que o usuario tente 
-                //burlar a segurança da aplicação
-                if (userController.getContas().isEmpty() == true) {
-                    cadastro();
-                }
-                login();
-                break;
-            default:
-                System.out.println("Opção Inválida, Finalizando Aplicação");
-                System.exit(0);
-        }       
+                    break;
+                default:
+                    System.out.println("Opção Inválida, Finalizando Aplicação");
+                    System.exit(0);
+            }       
+        }
         
         //Repete infinitamente, a saida do programa Ã© feita pelo bloco default do switch
         while (true) {
