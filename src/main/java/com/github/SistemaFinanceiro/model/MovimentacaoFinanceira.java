@@ -1,8 +1,9 @@
 package com.github.SistemaFinanceiro.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class MovimentacaoFinanceira implements Comparable<MovimentacaoFinanceira>{
+public class MovimentacaoFinanceira implements Comparable<MovimentacaoFinanceira>, Serializable {
 	
 	private static int countFM;
 	private final int id;
