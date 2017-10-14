@@ -1,10 +1,11 @@
 package com.github.SistemaFinanceiro.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario implements Comparable<Usuario>{
+public class Usuario implements Comparable<Usuario>, Serializable{
     static int contUser;
     private final int id;
     private String email;
