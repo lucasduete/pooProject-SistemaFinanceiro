@@ -1,4 +1,4 @@
-package com.github.SistemaFinanceiro.View;
+package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.MovimentacaoController;
 import java.time.LocalDate;
@@ -26,11 +26,11 @@ public class App {
         int escolha = 0;
         scanner = new Scanner(System.in);
         
-        //Enquanto não conhecer o usuario
+        //Enquanto nï¿½o conhecer o usuario
         while(user == null) {
         	System.out.println("Digite 1 para fazer login.");
 
-            //Se não houver contas cadastradas então pode-se cadastrar-se para realizar o login
+            //Se nï¿½o houver contas cadastradas entï¿½o pode-se cadastrar-se para realizar o login
             if (userController.getContas().isEmpty() == true) {
                 System.out.println("Digite 2 para se cadastro.");
             }
@@ -40,37 +40,37 @@ public class App {
                 case 1:
                 	int count = 0;
                     while (login() == false) {
-                        System.out.println("Dados Inválidos.");
+                        System.out.println("Dados Invï¿½lidos.");
                         //login();
                         if(++count == 5) {
-                        	System.out.printf("\nNúmero de Tentativas Execidada, recomece o processo.\n\n");
+                        	System.out.printf("\nNï¿½mero de Tentativas Execidada, recomece o processo.\n\n");
                         	break;
                         }
                         	
                     }
                     break;
                 case 2:
-                    //Se for não houver contas libera o cadastro para previnir que o usuario tente 
-                    //burlar a segurança da aplicação
+                    //Se for nï¿½o houver contas libera o cadastro para previnir que o usuario tente 
+                    //burlar a seguranï¿½a da aplicaï¿½ï¿½o
                     if (userController.getContas().isEmpty() == true) {
                         cadastro();
                     }
                     login();
                     break;
                 default:
-                    System.out.println("Opção Inválida, Finalizando Aplicação");
+                    System.out.println("Opï¿½ï¿½o Invï¿½lida, Finalizando Aplicaï¿½ï¿½o");
                     System.exit(0);
             }       
         }
         
         //Repete infinitamente, a saida do programa Ã© feita pelo bloco default do switch
         while (true) {
-            System.out.println("Digite 1 para remover seu perfil de usuário.");
-            System.out.println("Digite 2 para atualizar seu usuário.");
-            System.out.println("Digite 3 para adicionar uma Movimenção.");
-            System.out.println("Digite 4 para atualizar uma Movimenção.");
-            System.out.println("Digite 5 para remover uma Movimenção.");
-            System.out.println("Digite qualquer outro número para sair.");
+            System.out.println("Digite 1 para remover seu perfil de usuï¿½rio.");
+            System.out.println("Digite 2 para atualizar seu usuï¿½rio.");
+            System.out.println("Digite 3 para adicionar uma Movimenï¿½ï¿½o.");
+            System.out.println("Digite 4 para atualizar uma Movimenï¿½ï¿½o.");
+            System.out.println("Digite 5 para remover uma Movimenï¿½ï¿½o.");
+            System.out.println("Digite qualquer outro nï¿½mero para sair.");
 
             escolha = scanner.nextInt();
 
@@ -87,7 +87,7 @@ public class App {
 
                     //Valida se usuario realmente sabe sua senha e email
                     if (userController.userLogin(myEmail, myPassword) == false) {
-                        System.out.println("Dados Inválidos!");
+                        System.out.println("Dados Invï¿½lidos!");
                         break;
                     }
                     //Atualiza dados
@@ -127,7 +127,7 @@ public class App {
             		
             return true;
         } else {
-            System.out.println("Usuário não cadastrado!");
+            System.out.println("Usuï¿½rio nï¿½o cadastrado!");
         }
         return false;
     }
@@ -155,20 +155,20 @@ public class App {
         novo.setDataNasc(nascimento);
 
         if (userController.adicionar(novo) == false) {
-            System.out.println("Usuário não está cadastrado! ");
+            System.out.println("Usuï¿½rio nï¿½o estï¿½ cadastrado! ");
         } else {
-            System.out.println("Usuário cadastrado com Sucesso!");
+            System.out.println("Usuï¿½rio cadastrado com Sucesso!");
         }
     }
     
     private static void removerPerfil() {
     	if (userController.removerConta(user.getEmail(), user.getPassword()) == true) {
-    		System.out.println("O Usuário foi removido com sucesso.");
+    		System.out.println("O Usuï¿½rio foi removido com sucesso.");
     	} else {
-    		System.out.println("Não Foi Possível Remover o Usuário.");
+    		System.out.println("Nï¿½o Foi Possï¿½vel Remover o Usuï¿½rio.");
     	}
-    	//Deleta o usuario e reEstarta a aplicação
-    	System.out.printf("\n\n\nREINICIANDO APLICAÇÃO.\n\n\n");
+    	//Deleta o usuario e reEstarta a aplicaï¿½ï¿½o
+    	System.out.printf("\n\n\nREINICIANDO APLICAï¿½ï¿½O.\n\n\n");
     	main(null);
     	System.exit(0);
     }
@@ -187,7 +187,7 @@ public class App {
         System.out.println("Digite sua NOVA Senha: ");
         novo.setPassword(scanner.next());
 
-        System.out.println("Digite seu NOVO Nome de Usuário: ");
+        System.out.println("Digite seu NOVO Nome de Usuï¿½rio: ");
         novo.setNome(scanner.next());
 
         System.out.println("Digite 'F' ou 'M' para seu Sexo: ");
@@ -205,13 +205,13 @@ public class App {
     }
 
     public static Integer escolherMovimentacao() {
-    	//Retorna null se nao houver nenhuma movimentação cadastrada
+    	//Retorna null se nao houver nenhuma movimentaï¿½ï¿½o cadastrada
     	if(user.getMovimentacoes().isEmpty()) {
     		return null;
     	}
     	
-    	//Lista todas as movimentações para que o usuario escolha uma
-    	//count controla a id das enquetes, id é o valor que o usuario digitara
+    	//Lista todas as movimentaï¿½ï¿½es para que o usuario escolha uma
+    	//count controla a id das enquetes, id ï¿½ o valor que o usuario digitara
     	Integer cont = 0, id = 1;
     	
     	//Variavel que controla se usuario escolheu corretamente
@@ -226,9 +226,9 @@ public class App {
         	}
         	
         	id = scanner.nextInt();
-        	//Se digitar id > cont ou menor que zero então é inválido
+        	//Se digitar id > cont ou menor que zero entï¿½o ï¿½ invï¿½lido
         	if(id > cont || id < 0)
-        		System.out.println("Valor de ID inválido");
+        		System.out.println("Valor de ID invï¿½lido");
         	else
         		aux = true;
         	
@@ -240,33 +240,33 @@ public class App {
     private static void removerMovimentacao() {
     	Integer id = escolherMovimentacao();
     	
-    	//Caso id seja null entao não ha movimentações então da um return para sair do metodo
+    	//Caso id seja null entao nï¿½o ha movimentaï¿½ï¿½es entï¿½o da um return para sair do metodo
     	if(id == null) {
-    		System.out.println("Não há Movimentações Cadastradas!!");
+    		System.out.println("Nï¿½o hï¿½ Movimentaï¿½ï¿½es Cadastradas!!");
     		return;
     	}
-    	//Remove Movimentação
+    	//Remove Movimentaï¿½ï¿½o
     	movimenController.deletarMovimentacao(user,user.getMovimentacao(id));
-        System.out.println("Movimentação removida com Sucesso!");
+        System.out.println("Movimentaï¿½ï¿½o removida com Sucesso!");
     }
     
     private static void adicionarMovimentacao() {
-    	System.out.println("Digite uma descrição para sua Movimentação: ");
+    	System.out.println("Digite uma descriï¿½ï¿½o para sua Movimentaï¿½ï¿½o: ");
         String descricao = scanner.next();
 
-        System.out.println("Digite a data da Movimentação: ");
+        System.out.println("Digite a data da Movimentaï¿½ï¿½o: ");
         String dataMovimentacao = scanner.next();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate movimentar = LocalDate.parse(dataMovimentacao, formatter);
 
-        System.out.println("Digite o valor da Movimentação: ");
+        System.out.println("Digite o valor da Movimentaï¿½ï¿½o: ");
         double valorMovimentacao = scanner.nextDouble();
 
-        System.out.println("Digite o tipo de Movimentação: ");
+        System.out.println("Digite o tipo de Movimentaï¿½ï¿½o: ");
         String tipoMovimentacao = scanner.next();
 
-        System.out.println("Digite a categoria da Movimentação: ");
+        System.out.println("Digite a categoria da Movimentaï¿½ï¿½o: ");
         String categoria = scanner.next();
             
         user.setMovimentacao(movimenController.criarMovimentacao(descricao, movimentar, valorMovimentacao, tipoMovimentacao, categoria));
@@ -276,33 +276,33 @@ public class App {
     	
     	Integer id = escolherMovimentacao();
     	
-    	//Caso id seja null entao não ha movimentações então da um return para sair do metodo
+    	//Caso id seja null entao nï¿½o ha movimentaï¿½ï¿½es entï¿½o da um return para sair do metodo
     	if(id == null) {
-    		System.out.println("Não há Movimentações Cadastradas!!");
+    		System.out.println("Nï¿½o hï¿½ Movimentaï¿½ï¿½es Cadastradas!!");
     		return;
     	}
     	
     	MovimentacaoFinanceira nova = new MovimentacaoFinanceira();
         
-        System.out.println("Digite a NOVA descrição para sua Movimentação: ");
+        System.out.println("Digite a NOVA descriï¿½ï¿½o para sua Movimentaï¿½ï¿½o: ");
         nova.setDescricao(scanner.next());
 
-        System.out.println("Digite a NOVA data da Movimentação: ");
+        System.out.println("Digite a NOVA data da Movimentaï¿½ï¿½o: ");
         String dataMovimentacao = scanner.next();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         nova.setData(LocalDate.parse(dataMovimentacao, formatter));
 
-        System.out.println("Digite o NOVO valor da Movimentação: ");
+        System.out.println("Digite o NOVO valor da Movimentaï¿½ï¿½o: ");
         nova.setValor(scanner.nextDouble());
 
-        System.out.println("Digite o NOVO tipo de Movimentação: ");
+        System.out.println("Digite o NOVO tipo de Movimentaï¿½ï¿½o: ");
         nova.setTipo(scanner.next());
 
-        System.out.println("Digite a NOVA categoria da Movimentação: ");
+        System.out.println("Digite a NOVA categoria da Movimentaï¿½ï¿½o: ");
         nova.setCategoria(scanner.next());
 
         movimenController.atualizarMovimentacao(user,user.getMovimentacao(id), nova);
-        System.out.println("Movimentação Atualizada com sucesso!");
+        System.out.println("Movimentaï¿½ï¿½o Atualizada com sucesso!");
     }
 }

@@ -8,14 +8,14 @@ import com.github.SistemaFinanceiro.model.Usuario;
 
 public class MovimentacaoController {
 	
-	//Criar uma Movimentação nova
+	//Criar uma MovimentaÃ§o nova
 	public MovimentacaoFinanceira criarMovimentacao(String descricao, LocalDate data, double valor, String tipo,
 			String categoria) {
 		MovimentacaoFinanceira fm = new MovimentacaoFinanceira(descricao, data, valor, tipo, categoria);
 		return fm;
 	}
 	
-	//Encontrar Movimentação com base na data
+	//Encontrar MovimentaÃ§ao com base na data
 	public MovimentacaoFinanceira encontrarPorData(List<MovimentacaoFinanceira> movimentacoes, LocalDate dataInicio, LocalDate dataFim) {
 		for(MovimentacaoFinanceira mf : movimentacoes) {
 			if(mf.getData().isAfter(dataInicio) && mf.getData().isBefore(dataFim))
