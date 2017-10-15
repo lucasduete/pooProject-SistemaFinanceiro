@@ -15,7 +15,8 @@ import javax.swing.JOptionPane;
 
 /**
  * Esta Classe Contem os Metodos que Encapsulam o Acesso aos Arquivos
- * de Backup, Realizando assim todo o CRUD em Arquivos Binarios.
+ * de Backup, Realizando assim todo o CRUD em Arquivos Binarios para o 
+ * Objeto Usuario.
  * @author Lucas Duete e Kaique Augusto.
  * @version 1.0
  * @since 8.0
