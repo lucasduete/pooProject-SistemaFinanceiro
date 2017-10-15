@@ -88,7 +88,7 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
     }
 
     @Override
-    public boolean atualizar(int id, MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
+    public boolean atualizar(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
         String sql = "UPDATE Movimentacao_Financeira SET (Descricao = ?, Data = ?, Valor = ?, "
                 + "Tipo = ?, Categoria = ?) WHERE ID = ?";
         

@@ -78,11 +78,11 @@ public class UsuarioArquivoDao implements DaoInterface<Usuario>{
     }
 
     @Override
-    public boolean atualizar(int idUsuario, Usuario user) throws ClassNotFoundException, IOException, SQLException {
+    public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
         List<Usuario> usuarios = listar();
         
         for(int i = 0; i < usuarios.size(); i++) {
-            if(usuarios.get(i).getId() == idUsuario) {
+            if(usuarios.get(i).getId() == user.getId()) {
                 usuarios.set(i, user);
                 
                 ObjectOutputStream outputSteam = new ObjectOutputStream(new FileOutputStream(users));

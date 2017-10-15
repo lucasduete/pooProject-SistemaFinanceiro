@@ -16,6 +16,6 @@ public interface DaoInterface<T extends Serializable> {
     public boolean salvar(T obj)  throws ClassNotFoundException, IOException, SQLException;
     public List<T> listar() throws ClassNotFoundException, IOException, SQLException;
     public boolean remover(T obj) throws ClassNotFoundException, IOException, SQLException;
-    public boolean atualizar(int id, T obj) throws ClassNotFoundException, IOException, SQLException;
+    public boolean atualizar(T obj) throws ClassNotFoundException, IOException, SQLException;
     
 }

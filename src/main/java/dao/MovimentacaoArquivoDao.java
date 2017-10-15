@@ -83,11 +83,11 @@ public class MovimentacaoArquivoDao implements DaoInterface<MovimentacaoFinancei
     }
 
     @Override
-    public boolean atualizar(int idMovimentacao, MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
+    public boolean atualizar(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
         List<MovimentacaoFinanceira> movimentacoes = listar();
        
         for(int i = 0; i < movimentacoes.size(); i++) {
-            if(movimentacoes.get(i).getId() == idMovimentacao){
+            if(movimentacoes.get(i).getId() == movimentacao.getId()){
                 movimentacoes.set(i, movimentacao);
                 
                 ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(transactions));
