@@ -1,33 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.github.SistemaFinanceiro.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author lucasduete
- */
 public class ConFactory {
-    private final String host;
-    private final String user;
-    private final String password;
+    private static final String url = "jdbc:postgresql://localhost:5432/sistema_financeiro";
+    private static final String usuario = "postgres";
+    private static final String senha = "postgres";
     
-    public ConFactory() {
-        host = "jdbc:postgresql://localhost:5432/pooProject-SistemaFinanceiro";
-        user = "postgres";
-        password = "postgres";
-    }
-    
-    public Connection getConexao() throws ClassNotFoundException, SQLException {
+    public static Connection getConnection() throws SQLException, ClassNotFoundException{
         Class.forName("org.postgresql.Driver");
-        
-        return DriverManager.getConnection(host, user, password);
+        return DriverManager.getConnection(url, usuario, senha);
     }
-    
+
 }

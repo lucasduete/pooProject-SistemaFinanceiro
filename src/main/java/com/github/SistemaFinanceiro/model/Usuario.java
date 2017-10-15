@@ -10,11 +10,11 @@ public class Usuario implements Comparable<Usuario>, Serializable {
     private String email;
     private String nome;
     private LocalDate dataNasc;
-    private char sexo;
+    private String sexo;
     private String password;
 
     public Usuario(int id, String email, String nome, LocalDate dataNasc, 
-            char sexo, String password) {
+            String sexo, String password) {
 	this.id = id;
 	this.email = email;
 	this.nome = nome;
@@ -59,11 +59,11 @@ public class Usuario implements Comparable<Usuario>, Serializable {
         this.dataNasc = dataNasc;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
@@ -78,12 +78,12 @@ public class Usuario implements Comparable<Usuario>, Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + this.id;
-        hash = 11 * hash + Objects.hashCode(this.email);
-        hash = 11 * hash + Objects.hashCode(this.nome);
-        hash = 11 * hash + Objects.hashCode(this.dataNasc);
-        hash = 11 * hash + this.sexo;
-        hash = 11 * hash + Objects.hashCode(this.password);
+        hash = 13 * hash + this.id;
+        hash = 13 * hash + Objects.hashCode(this.email);
+        hash = 13 * hash + Objects.hashCode(this.nome);
+        hash = 13 * hash + Objects.hashCode(this.dataNasc);
+        hash = 13 * hash + Objects.hashCode(this.sexo);
+        hash = 13 * hash + Objects.hashCode(this.password);
         return hash;
     }
 
@@ -102,13 +102,13 @@ public class Usuario implements Comparable<Usuario>, Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if (this.sexo != other.sexo) {
-            return false;
-        }
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
         if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.sexo, other.sexo)) {
             return false;
         }
         if (!Objects.equals(this.password, other.password)) {
@@ -135,7 +135,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
             || getDataNasc().equals(u.getDataNasc())
             || getId() == u.getId() 
             || getPassword().equals(u.getPassword())
-            || getSexo() == u.getSexo()) {
+            || getSexo().equals(u.getSexo())) {
             
                 //Se alguma coisa igual
                 return 1;

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira> {
     
-    private final Connection conn;
+    private Connection conn;
     
     /**
      * Construtor Padrao da Classe MovimentacaoBancoDao Onde e Instanciada a um Objeto do 
@@ -32,7 +33,12 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
      */
     
     public MovimentacaoBancoDao() throws ClassNotFoundException, SQLException {
-        conn = new ConFactory().getConexao();
+        try {
+            conn = ConFactory.getConnection();
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco", 
+                    "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     /**
