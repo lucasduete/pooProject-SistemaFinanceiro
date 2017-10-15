@@ -1,4 +1,4 @@
-package dao;
+package com.github.SistemaFinanceiro.dao;
 
 import java.io.IOException;
 import java.io.Serializable;

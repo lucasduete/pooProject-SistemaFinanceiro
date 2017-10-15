@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
-import dao.MovimentacaoBancoDao;
+import com.github.SistemaFinanceiro.dao.MovimentacaoBancoDao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;

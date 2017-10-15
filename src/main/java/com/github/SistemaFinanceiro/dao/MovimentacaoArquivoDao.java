@@ -1,4 +1,4 @@
-package dao;
+package com.github.SistemaFinanceiro.dao;
 
 import com.github.SistemaFinanceiro.exceptions.NullDirectoryException;
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
