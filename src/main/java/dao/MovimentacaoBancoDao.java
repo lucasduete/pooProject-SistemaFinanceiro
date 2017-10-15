@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
@@ -12,22 +7,46 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
+ * Realizando Assim todo o CRUD para o Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
+ * @version 1.0
+ * @since 8.0
  */
 public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira> {
     
     private final Connection conn;
     
+    /**
+     * Construtor Padrao da Classe MovimentacaoBancoDao Onde e Instanciada a um Objeto do 
+     * Tipo Connection para Realizar as Conexao com o Banco de Dados.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo. 
+     */
+    
     public MovimentacaoBancoDao() throws ClassNotFoundException, SQLException {
         conn = new ConFactory().getConexao();
     }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Adiçao de uma Nova Movimentacao 
+     * Financeira no Banco de Dados.
+     * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que Contem os Dados da Movimentacao 
+     * que Sera Salva no Banco de Dados.
+     * @return True se Salvou com Sucesso no Banco, False se Ocorreu Falha ao Salvar No Banco
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo.
+     */
 
     @Override
     public boolean salvar(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
@@ -55,6 +74,19 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
             return false;
         }
     }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Listagem de Todas 
+     * as Movimentacoes Financeiras Salvas no Banco de Dados.
+     * @return ArrayList de Objetos MovimentacaoFinanceira, Retorna uma Lista Vazia Caso Nao Haja 
+     * Nenhuma Movimentacao Salva.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo
+     * @deprecated
+     */
 
     @Override
     @Deprecated
@@ -65,6 +97,19 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         
         return getMovimentacoes(stmt);
     }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Remoçao de uma Movimentacao 
+     * Financeira no Banco de Dados.
+     * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que Contem a Movimentacao que sera 
+     * Removida do Banco de Dados.
+     * @return True se Removeu com Sucesso no Banco, False se Ocorreu Falha ao Remover No Banco
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo.
+     */
 
     @Override
     public boolean remover(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
@@ -86,6 +131,19 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
             return false;
         }
     }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Atualizaçao de uma Movimentacao 
+     * Financeira no Banco de Dados.
+     * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que Contem os novos dados 
+     * que Seram Atualizados no Banco de Dados.
+     * @return True se Atualizou com Sucesso no Banco, False se Ocorreu Falha ao Atualizar No Banco
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo.
+     */
 
     @Override
     public boolean atualizar(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
@@ -114,6 +172,20 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         }
     }
     
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Listagem de Todas 
+     * as Referentes a um Usuario Movimentacoes Financeiras Salvas no Banco de Dados.
+     * @param idUsuario Variavel Inteira que Contem o ID do Usuario do Qual Seram Listadas as 
+     * Movimentacoes Financeiras.
+     * @return ArrayList de Objetos MovimentacaoFinanceira, Retorna uma Lista Vazia Caso Nao Haja 
+     * Nenhuma Movimentacao Salva.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo
+     */
+    
     public List<MovimentacaoFinanceira> listarByUsuario(int idUsuario) 
                 throws ClassNotFoundException, IOException, SQLException {
                 
@@ -124,6 +196,19 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         
         return getMovimentacoes(stmt);
     }
+    
+    /**
+     * Este Metodo Encapsula a Geraçao de Uma Lista de Movimentacoes Financeiras com Base na 
+     * Execuçao de uma PreparedStatement. Este Metodo Esta Acessivel Apenas a Esta Classe.
+     * @param stmt Objeto do Tipo PreparedStatement Que Contem a Statement que Sera Executada no 
+     * ResultSet.
+     * @return ArrayList de Objetos do Tipo MovimentacaoFinanceira com Base no Statement.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo
+     */
     
     private List<MovimentacaoFinanceira> getMovimentacoes(PreparedStatement stmt) 
                 throws ClassNotFoundException, IOException, SQLException {
