@@ -11,7 +11,7 @@ public class MovimentacaoController {
 	//Criar uma Movimentaço nova
 	public MovimentacaoFinanceira criarMovimentacao(String descricao, LocalDate data, double valor, String tipo,
 			String categoria) {
-		MovimentacaoFinanceira fm = new MovimentacaoFinanceira(descricao, data, valor, tipo, categoria);
+		MovimentacaoFinanceira fm = new MovimentacaoFinanceira(0, descricao, data, valor, tipo, categoria, 0);
 		return fm;
 	}
 	

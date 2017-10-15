@@ -206,9 +206,9 @@ public class App {
 
     public static Integer escolherMovimentacao() {
     	//Retorna null se nao houver nenhuma movimenta��o cadastrada
-    	if(user.getMovimentacoes().isEmpty()) {
-    		return null;
-    	}
+//    	if(user.getMovimentacoes().isEmpty()) {
+//    		return null;
+//    	}
     	
     	//Lista todas as movimenta��es para que o usuario escolha uma
     	//count controla a id das enquetes, id � o valor que o usuario digitara
@@ -221,9 +221,9 @@ public class App {
     	do {
     		System.out.println("Escolha uma Movimentacao");
     		//Lista Movimentacoes
-        	for(MovimentacaoFinanceira mf: user.getMovimentacoes()) {
-        		System.out.println(cont++ + "{" + mf.toString() + "}");
-        	}
+//        	for(MovimentacaoFinanceira mf: user.getMovimentacoes()) {
+//        		System.out.println(cont++ + "{" + mf.toString() + "}");
+//        	}
         	
         	id = scanner.nextInt();
         	//Se digitar id > cont ou menor que zero ent�o � inv�lido
@@ -246,7 +246,7 @@ public class App {
     		return;
     	}
     	//Remove Movimenta��o
-    	movimenController.deletarMovimentacao(user,user.getMovimentacao(id));
+//    	movimenController.deletarMovimentacao(user,user.getMovimentacao(id));
         System.out.println("Movimenta��o removida com Sucesso!");
     }
     
@@ -269,7 +269,7 @@ public class App {
         System.out.println("Digite a categoria da Movimenta��o: ");
         String categoria = scanner.next();
             
-        user.setMovimentacao(movimenController.criarMovimentacao(descricao, movimentar, valorMovimentacao, tipoMovimentacao, categoria));
+//        user.setMovimentacao(movimenController.criarMovimentacao(descricao, movimentar, valorMovimentacao, tipoMovimentacao, categoria));
     }
 
     private static void atualizarMovimentacao() {
@@ -302,7 +302,7 @@ public class App {
         System.out.println("Digite a NOVA categoria da Movimenta��o: ");
         nova.setCategoria(scanner.next());
 
-        movimenController.atualizarMovimentacao(user,user.getMovimentacao(id), nova);
+//        movimenController.atualizarMovimentacao(user,user.getMovimentacao(id), nova);
         System.out.println("Movimenta��o Atualizada com sucesso!");
     }
 }

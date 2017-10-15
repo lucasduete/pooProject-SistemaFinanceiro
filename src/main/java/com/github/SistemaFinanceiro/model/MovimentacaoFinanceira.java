@@ -2,133 +2,145 @@ package com.github.SistemaFinanceiro.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class MovimentacaoFinanceira implements Comparable<MovimentacaoFinanceira>, Serializable {
-	
-	private static int countFM;
-	private final int id;
+
+	private int id;
 	private String descricao;
 	private LocalDate data;
 	private Double valor;
 	private String tipo;
-	private String Categoria;
+	private String categoria;
+        private int idUsuario;
 	
-	public MovimentacaoFinanceira(String descricao, LocalDate data, Double valor, String tipo,
-			String categoria) {
+	public MovimentacaoFinanceira(int id, String descricao, LocalDate data, Double valor, String tipo,
+			String categoria, int idUsuario) {
 		super();
-		id = ++countFM;
+		this.id = id;
 		this.descricao = descricao;
 		this.data = data;
 		this.valor = valor;
 		this.tipo = tipo;
-		Categoria = categoria;
+		this.categoria = categoria;
+                this.idUsuario = idUsuario;
 	}
 
     public MovimentacaoFinanceira() {
-        id = ++countFM;
-        descricao = null;
-	data = null;
-	valor = null;
-        tipo = null;
-        Categoria = null;
+        
     }
 
-	public String getDescricao() {
-		return descricao;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public LocalDate getData() {
-		return data;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public Double getValor() {
-		return valor;
-	}
+    public LocalDate getData() {
+        return data;
+    }
 
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    public Double getValor() {
+        return valor;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
 
-	public String getCategoria() {
-		return Categoria;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setCategoria(String categoria) {
-		Categoria = categoria;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getCategoria() {
+        return categoria;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((Categoria == null) ? 0 : Categoria.hashCode());
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valor);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MovimentacaoFinanceira other = (MovimentacaoFinanceira) obj;
-		if (Categoria == null) {
-			if (other.Categoria != null)
-				return false;
-		} else if (!Categoria.equals(other.Categoria))
-			return false;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (id != other.id)
-			return false;
-		if (tipo == null) {
-			if (other.tipo != null)
-				return false;
-		} else if (!tipo.equals(other.tipo))
-			return false;
-		if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
-			return false;
-		return true;
-	}
+    public int getIdUsuario() {
+        return idUsuario;
+    }
 
-	@Override
-	public String toString() {
-		return "movimentacaoFinanceira [id=" + id + ", descricao=" + descricao + ", valor=" + valor + ", tipo=" + tipo
-				+ ", Categoria=" + Categoria + "]";
-	}
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	@Override
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.descricao);
+        hash = 97 * hash + Objects.hashCode(this.data);
+        hash = 97 * hash + Objects.hashCode(this.valor);
+        hash = 97 * hash + Objects.hashCode(this.tipo);
+        hash = 97 * hash + Objects.hashCode(this.categoria);
+        hash = 97 * hash + this.idUsuario;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MovimentacaoFinanceira other = (MovimentacaoFinanceira) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.idUsuario != other.idUsuario) {
+            return false;
+        }
+        if (!Objects.equals(this.descricao, other.descricao)) {
+            return false;
+        }
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.categoria, other.categoria)) {
+            return false;
+        }
+        if (!Objects.equals(this.data, other.data)) {
+            return false;
+        }
+        if (!Objects.equals(this.valor, other.valor)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "MovimentacaoFinanceira{" + "id=" + id + ", descricao=" + descricao + ", data=" + data + ", valor=" + valor + ", tipo=" + tipo + ", categoria=" + categoria + ", idUsuario=" + idUsuario + '}';
+    }
+    
+    @Override
 	public int compareTo(MovimentacaoFinanceira mf) {
 		if (getDescricao().equals(mf.getDescricao()) && getData().equals(mf.getData())
 				&& getValor().equals(mf.getValor()) && getTipo().equals(mf.getTipo())
@@ -138,7 +150,5 @@ public class MovimentacaoFinanceira implements Comparable<MovimentacaoFinanceira
 			return 0;
 		}
 	}
-	
-	
-
+        
 }
