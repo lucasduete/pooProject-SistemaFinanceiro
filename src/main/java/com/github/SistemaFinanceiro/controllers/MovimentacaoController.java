@@ -7,6 +7,7 @@ import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import dao.MovimentacaoBancoDao;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
@@ -49,31 +50,52 @@ public class MovimentacaoController {
         return bancoDao.salvar(movimentacao);
     }
     
+    
     /**
-     * Este Metodo Realiza a Uma Busca das Movimentacooes de um Usuario dentro de 
-     * um Intervalo de Tempo Estabelecido pelo Mesmo.
+     * Este Metodo Lista todas as Movimentacoes Cadastradas de um Usuario.
      * @param idUsuario Variavel Inteira que contem o Id do Usuario do qual sera procurado as 
      * movimentacoes.
-     * @param dataInicio Variavel do Tipo LocalDate que Indica o Valor Inicial do Intervalo de Busca.
-     * @param dataFim Variavel do Tipo LocalDate que Indica o Valor Final do Intervalo de Busca.
-     * @return Objeto do Tipo MovimentacaoFinanceira que Esta Neste Intervalo.
+     * @return ArrayList de Objetos do Tipo MovimentacaoFinanceira deste Usuario, Tal 
+     * Lista retorna Vazia quando Nao Existem Movimentacoes Cadastradas para Tal Usuario.
      * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
      * a Aplicaçao.
      * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
      * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
      */
     
-    public MovimentacaoFinanceira encontrarPorData(int idUsuario, LocalDate dataInicio, LocalDate dataFim) 
+    public List<MovimentacaoFinanceira> encontrarPorData(int idUsuario) 
             throws ClassNotFoundException, IOException, SQLException{
             
-        List<MovimentacaoFinanceira> movimentacoes = bancoDao.listarByUsuario(idUsuario);
+        return bancoDao.listarByUsuario(idUsuario);
+    }
+    
+    /**
+     * Este Metodo Realiza a Uma Busca das Movimentacoes de um Usuario dentro de 
+     * um Intervalo de Tempo Estabelecido pelo Mesmo.
+     * @param idUsuario Variavel Inteira que contem o Id do Usuario do qual sera procurado as 
+     * movimentacoes.
+     * @param dataInicio Variavel do Tipo LocalDate que Indica o Valor Inicial do Intervalo de Busca.
+     * @param dataFim Variavel do Tipo LocalDate que Indica o Valor Final do Intervalo de Busca.
+     * @return ArrayList de Objetos do Tipo MovimentacaoFinanceira que Estam Neste Intervalo, Tal 
+     * Lista retorna Vazia quando Nao Existem Movimentacoes Neste Intervalo de Tempo.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     */
+    
+    public List<MovimentacaoFinanceira> encontrarPorData(int idUsuario, LocalDate dataInicio, LocalDate dataFim) 
+            throws ClassNotFoundException, IOException, SQLException{
+            
+        List<MovimentacaoFinanceira> transactions = bancoDao.listarByUsuario(idUsuario);
+        List<MovimentacaoFinanceira> movimentacoes = new ArrayList<>();
         
-        for(MovimentacaoFinanceira mf : movimentacoes) {
+        for(MovimentacaoFinanceira mf : transactions) {
             if(mf.getData().isAfter(dataInicio) && mf.getData().isBefore(dataFim))
-                return mf;
+                movimentacoes.add(mf);
         }
             
-        return null;
+        return movimentacoes;
     }
         
     /**
