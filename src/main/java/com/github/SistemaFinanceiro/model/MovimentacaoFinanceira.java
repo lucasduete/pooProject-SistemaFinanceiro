@@ -6,25 +6,25 @@ import java.util.Objects;
 
 public class MovimentacaoFinanceira implements Comparable<MovimentacaoFinanceira>, Serializable {
 
-	private int id;
-	private String descricao;
-	private LocalDate data;
-	private Double valor;
-	private String tipo;
-	private String categoria;
-        private int idUsuario;
+    private int id;
+    private String descricao;
+    private LocalDate data;
+    private Double valor;
+    private String tipo;
+    private String categoria;
+    private int idUsuario;
 	
-	public MovimentacaoFinanceira(int id, String descricao, LocalDate data, Double valor, String tipo,
-			String categoria, int idUsuario) {
-		super();
-		this.id = id;
-		this.descricao = descricao;
-		this.data = data;
-		this.valor = valor;
-		this.tipo = tipo;
-		this.categoria = categoria;
-                this.idUsuario = idUsuario;
-	}
+    public MovimentacaoFinanceira(int id, String descricao, LocalDate data, Double valor, String tipo, 
+            String categoria, int idUsuario) {
+        super();
+        this.id = id;
+        this.descricao = descricao;
+        this.data = data;
+        this.valor = valor;
+        this.tipo = tipo;
+        this.categoria = categoria;
+        this.idUsuario = idUsuario;
+    }
 
     public MovimentacaoFinanceira() {
         

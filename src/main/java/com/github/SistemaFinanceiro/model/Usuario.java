@@ -2,8 +2,6 @@ package com.github.SistemaFinanceiro.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Usuario implements Comparable<Usuario>, Serializable {
@@ -15,15 +13,15 @@ public class Usuario implements Comparable<Usuario>, Serializable {
     private char sexo;
     private String password;
 
-    public Usuario(int id, String email, String nome, LocalDate dataNasc,
-    		char sexo, String password) {
-		this.id = id;
-		this.email = email;
-		this.nome = nome;
-		this.dataNasc = dataNasc;
-		this.sexo = sexo;
-		this.password = password;
-	}
+    public Usuario(int id, String email, String nome, LocalDate dataNasc, 
+            char sexo, String password) {
+	this.id = id;
+	this.email = email;
+	this.nome = nome;
+	this.dataNasc = dataNasc;
+	this.sexo = sexo;
+        this.password = password;
+    }
     
     public Usuario () {
         
