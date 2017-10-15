@@ -1,4 +1,3 @@
-
 package com.github.SistemaFinanceiro.controllers;
 
 import com.github.SistemaFinanceiro.model.Usuario;
@@ -20,7 +19,7 @@ public class UsuarioController {
     //Autenticando o Email e a Senha do usuario
     public boolean userLogin (String email, String password) {
         for(Usuario user : contas) {
-           if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+           if(user.getEmail().equals(email) && user.getPassword().equals(password)) {
                return true;
             }
         }
@@ -30,7 +29,7 @@ public class UsuarioController {
     //Adicionando um novo usuario 
     public boolean adicionar(Usuario u) {
     	//Verifica se já usuario já esta cadastrado
-        for(Usuario user : contas){
+        for(Usuario user : contas) {
             if(user.compareTo(u) == 0) return false;
         }
         return contas.add(u);
@@ -38,7 +37,7 @@ public class UsuarioController {
     
     public boolean adicionarByEmail(Usuario u) {
     	//Verifica se já tem um usuario com este email cadastrado
-        for(Usuario user : contas){
+        for(Usuario user : contas) {
             if(user.getEmail().equals(u.getEmail())) return false;
         }
         return contas.add(u);
@@ -66,16 +65,15 @@ public class UsuarioController {
     
     
     //Remover conta de um Usuario
-    public boolean removerConta (String email, String password){
+    public boolean removerConta (String email, String password) {
         for (int i = 0; i < contas.size(); ++i) {
-        	if (contas.get(i).getEmail().equals(email) &&
-        			contas.get(i).getPassword().equals(password)) {
-        		contas.remove(i);
-        		return true;
-        	}
-                		
+            if (contas.get(i).getEmail().equals(email) &&
+                    contas.get(i).getPassword().equals(password)) {
+                contas.remove(i);
+        	return true;
+            }    		
         }
-    	return false;
+        return false;
     }
     
 }

@@ -19,7 +19,7 @@ public class ConFactory {
     private final String password;
     
     public ConFactory() {
-        host = "jdbc:postgresql://localhost:5432/POO";
+        host = "jdbc:postgresql://localhost:5432/pooProject-SistemaFinanceiro";
         user = "postgres";
         password = "postgres";
     }
