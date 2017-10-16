@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
@@ -33,12 +32,7 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
      */
     
     public MovimentacaoBancoDao() throws ClassNotFoundException, SQLException {
-        try {
-            conn = ConFactory.getConnection();
-        } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco", 
-                    "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        conn = ConFactory.getConnection();
     }
     
     /**
@@ -108,8 +102,8 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
      * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Remoçao de uma Movimentacao 
      * Financeira no Banco de Dados.
      * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que Contem a Movimentacao que sera 
-     * Removida do Banco de Dados.
-     * @return True se Removeu com Sucesso no Banco, False se Ocorreu Falha ao Remover No Banco
+     * Removida do Banco de Dados (Unica Informaçao Realmente Relevante E O Seu Id).
+     * @return True se Removeu com Sucesso no Banco, False se Ocorreu Falha ao Remover No Banco.
      * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
      * a Aplicaçao.
      * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.

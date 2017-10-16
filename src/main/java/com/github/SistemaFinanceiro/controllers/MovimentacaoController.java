@@ -8,6 +8,7 @@ import com.github.SistemaFinanceiro.dao.MovimentacaoBancoDao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class MovimentacaoController {
     
-    private final MovimentacaoBancoDao bancoDao;
+    private MovimentacaoBancoDao bancoDao;
     
     /**
      * Construtor Padrao da Classe MovimentacaoController Onde e Instanciada a um Objeto do 
@@ -30,7 +31,12 @@ public class MovimentacaoController {
      */
     
     public MovimentacaoController() throws ClassNotFoundException, SQLException {
-        bancoDao = new MovimentacaoBancoDao();
+        try {
+            bancoDao = new MovimentacaoBancoDao();
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco", 
+                    "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 	
     /**
