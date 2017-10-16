@@ -21,7 +21,7 @@ import java.util.List;
 
 public class UsuarioBancoDao implements DaoInterface<Usuario>{
 
-    private Connection conn;
+    private final Connection conn;
     
     /**
      * Construtor Padrao da Classe MovimentacaoBancoDao Onde e Instanciada a um Objeto do 
