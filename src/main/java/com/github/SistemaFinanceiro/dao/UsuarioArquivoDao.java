@@ -1,5 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
+import com.github.SistemaFinanceiro.interfaces.AutenticacaoInterface;
 import com.github.SistemaFinanceiro.interfaces.DaoInterface;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ import javax.swing.JOptionPane;
  * @version 1.0
  * @since 8.0
  */
-public class UsuarioArquivoDao implements DaoInterface<Usuario>{
+public class UsuarioArquivoDao implements DaoInterface<Usuario>, AutenticacaoInterface{
     
     private final File diretorio;
     private File users;
@@ -147,5 +148,17 @@ public class UsuarioArquivoDao implements DaoInterface<Usuario>{
         
         return false;        
     }
+
+    @Override
+    public boolean userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
+        List<Usuario> users = listar();
+        
+        for (Usuario user: users)
+            if (user.getEmail().equals(email) && user.getPassword().equals(password))
+                return true;
+        
+        return false;
+    }
+    
     
 }

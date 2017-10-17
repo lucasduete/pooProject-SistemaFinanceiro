@@ -1,5 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
+import com.github.SistemaFinanceiro.interfaces.AutenticacaoInterface;
 import com.github.SistemaFinanceiro.interfaces.DaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.List;
  * @since 8.0
  */
 
-public class UsuarioBancoDao implements DaoInterface<Usuario>{
+public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInterface{
 
     private final Connection conn;
     
@@ -63,15 +64,12 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>{
         stmt.setString(5, user.getPassword());
 
 
-        if(stmt.executeUpdate() > 0) {
-            stmt.close();
-            conn.close();
-            return true;
-        } else {
-            stmt.close();
-            conn.close();
-            return false;
-        }
+        boolean aux = (stmt.executeUpdate() > 0);
+        
+        stmt.close();
+        conn.close();
+        
+        return aux;
     }
     
     /**
@@ -136,15 +134,11 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>{
         stmt.setString(5, user.getPassword());
         stmt.setInt(6, user.getId());
             
-        if(stmt.executeUpdate() > 0) {
-            stmt.close();
-            conn.close();
-            return true;
-        } else {
-            stmt.close();
-            conn.close();
-            return false;
-        }
+        boolean aux = (stmt.executeUpdate() > 0);
+        
+        stmt.close();
+        conn.close();
+        return aux;
     }
     
     /**
@@ -168,15 +162,28 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>{
         
         stmt.setInt(1, user.getId());
 
-        if(stmt.executeUpdate() > 0) {
-            stmt.close();
-            conn.close();
-            return true;
-        } else {
-            stmt.close();
-            conn.close();
-            return false;
-        }
+        boolean aux = (stmt.executeUpdate() > 0);
+        
+        stmt.close();
+        conn.close();
+        
+        return aux;
+    }
+
+    @Override
+    public boolean userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
+        String sql = "SELECT Nome FROM Usuario WHERE Email ILIKE ? AND Password ILIKE ?;";
+        
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        
+        boolean aux = rs.next();
+        
+        rs.close();
+        stmt.close();
+        conn.close();
+        
+        return aux;
     }
 }
    

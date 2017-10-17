@@ -1,5 +1,8 @@
 package com.github.SistemaFinanceiro.interfaces;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  * Esta Interface Defini como Deve ser o Metodo de Login
  * @author Lucas Duete e Kaique Augusto
@@ -8,6 +11,6 @@ package com.github.SistemaFinanceiro.interfaces;
  */
 public interface AutenticacaoInterface {
     
-    public boolean userLogin (String email, String password);
+    public boolean userLogin (String email, String password) throws IOException, ClassNotFoundException, SQLException;
     
 }
