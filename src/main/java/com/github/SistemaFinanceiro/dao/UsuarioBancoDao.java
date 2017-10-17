@@ -1,5 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
+import com.github.SistemaFinanceiro.interfaces.DaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
 import java.sql.Connection;

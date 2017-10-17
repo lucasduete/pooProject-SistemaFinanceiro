@@ -1,5 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
+import com.github.SistemaFinanceiro.interfaces.DaoInterface;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

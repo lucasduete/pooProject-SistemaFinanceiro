@@ -1,81 +1,45 @@
 
 package com.github.SistemaFinanceiro.controllers;
 
+import com.github.SistemaFinanceiro.interfaces.DaoInterface;
+import com.github.SistemaFinanceiro.dao.UsuarioBancoDao;
 import com.github.SistemaFinanceiro.model.Usuario;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 
-public class UsuarioController {
+    public class UsuarioController implements DaoInterface<Usuario> {
     
-    private static List<Usuario> contas;
+    public UsuarioBancoDao bancoDao;
     
     public UsuarioController () {
-        contas = new ArrayList<>();
+        try {
+            bancoDao = new UsuarioBancoDao();
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco", 
+                    "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    public List<Usuario> getContas() {
-        return contas;
+    @Override
+    public boolean salvar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+        return bancoDao.salvar(user);
     }
-    
-    //Autenticando o Email e a Senha do usuario
-    public boolean userLogin (String email, String password) {
-        for(Usuario user : contas) {
-           if(user.getEmail().equals(email) && user.getPassword().equals(password)){
-               return true;
-            }
-        }
-        return false;
-    }  
-    
-    //Adicionando um novo usuario 
-    public boolean adicionar(Usuario u) {
-    	//Verifica se já usuario já esta cadastrado
-        for(Usuario user : contas){
-            if(user.compareTo(u) == 0) return false;
-        }
-        return contas.add(u);
+
+    @Override
+    public List<Usuario> listar() throws ClassNotFoundException, IOException, SQLException {
+        return bancoDao.listar();
     }
-    
-    public boolean adicionarByEmail(Usuario u) {
-    	//Verifica se já tem um usuario com este email cadastrado
-        for(Usuario user : contas){
-            if(user.getEmail().equals(u.getEmail())) return false;
-        }
-        return contas.add(u);
+
+    @Override
+    public boolean remover(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+        return bancoDao.remover(user);
     }
-    
-    //Atualizando dados do Usuario
-    public boolean atualizar(Usuario user, int idUsuario) {
-        for(int i = 0; i < contas.size(); i++) {
-            if(contas.get(i).getId() == idUsuario) {
-                contas.set(i, user);
-                return true;
-            }
-        }
-        return false;
-    }
-    
-     public Usuario localizar(String email, String senha) {
-        for (Usuario user : contas) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(senha)) {
-                return user;
-            }
-        }
-        return null;
-    }
-    
-    
-    //Remover conta de um Usuario
-    public boolean removerConta (String email, String password){
-        for (int i = 0; i < contas.size(); ++i) {
-        	if (contas.get(i).getEmail().equals(email) &&
-        			contas.get(i).getPassword().equals(password)) {
-        		contas.remove(i);
-        		return true;
-        	}
-                		
-        }
-    	return false;
+
+    @Override
+    public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+        return bancoDao.atualizar(user);
     }
     
 }
