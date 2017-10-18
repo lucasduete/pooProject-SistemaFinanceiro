@@ -42,6 +42,7 @@ public class TelaInicial extends javax.swing.JFrame {
         btCadMovimentacoes = new javax.swing.JButton();
         btGerenciarFinan = new javax.swing.JButton();
         btGerenciarPerfil = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -81,6 +82,8 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Loggout");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,6 +95,10 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(btGerenciarFinan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btGerenciarPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +109,9 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(btGerenciarFinan, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btGerenciarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -111,7 +120,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private void btCadMovimentacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadMovimentacoesActionPerformed
         // TODO add your handling code here:
         
-        TelaCadastraMovimentacao cadMovi = new TelaCadastraMovimentacao();
+        TelaCadastraMovimentacao cadMovi = new TelaCadastraMovimentacao(idUsuario);
         cadMovi.setVisible(true);
     }//GEN-LAST:event_btCadMovimentacoesActionPerformed
 
@@ -168,6 +177,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btCadMovimentacoes;
     private javax.swing.JButton btGerenciarFinan;
     private javax.swing.JButton btGerenciarPerfil;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;

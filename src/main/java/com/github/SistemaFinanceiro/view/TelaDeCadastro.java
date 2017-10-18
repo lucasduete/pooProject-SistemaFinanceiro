@@ -12,8 +12,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -202,8 +200,7 @@ public class TelaDeCadastro extends javax.swing.JFrame {
         if  (
                 jDateChooser1.getDate() == null ||
                 nomeCadastro.getText().isEmpty() ||
-                emailcadastro.getText().isEmpty() || 
-                jComboBox1.getSelectedItem() == null ||
+                emailcadastro.getText().isEmpty() ||
                 new String(senhaCadastro.getPassword()).isEmpty() ||
                 new String(senhaConfirma.getPassword()).isEmpty()
                 ) {
@@ -238,6 +235,9 @@ public class TelaDeCadastro extends javax.swing.JFrame {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
             } 
+            
+            JOptionPane.showMessageDialog(null, "Cadastro Concluido Com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+            this.dispose();
         }        
     }//GEN-LAST:event_salvarCadastroActionPerformed
 

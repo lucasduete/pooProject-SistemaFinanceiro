@@ -8,8 +8,6 @@ package com.github.SistemaFinanceiro.view;
 import com.github.SistemaFinanceiro.controllers.UsuarioController;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -135,7 +133,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         
         String email = loginEmail.getText();
         String password = new String(loginSenha.getPassword());
-        int idUsuario = -2;
+        int idUsuario;
         
         try {
             idUsuario = controller.userLogin(email, password);
@@ -145,6 +143,8 @@ public class TelaDeLogin extends javax.swing.JFrame {
                 telaInicial.setVisible(true);
             } else 
                 JOptionPane.showMessageDialog(null, "Dados Invalidos", "Erro no Login", JOptionPane.INFORMATION_MESSAGE);
+            
+            this.dispose();
             
         } catch (IOException ex) {
             ex.printStackTrace();
