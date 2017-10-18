@@ -30,7 +30,7 @@ public class MovimentacaoController {
      * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados. 
      */
     
-    public MovimentacaoController() throws ClassNotFoundException, SQLException {
+    public MovimentacaoController() {
         try {
             bancoDao = new MovimentacaoBancoDao();
         } catch (ClassNotFoundException | SQLException ex) {

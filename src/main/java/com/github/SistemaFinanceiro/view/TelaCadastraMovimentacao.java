@@ -6,8 +6,13 @@
 package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.MovimentacaoController;
+import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -56,8 +61,18 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
 
         jRadioButton1.setText("jRadioButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Movimentações");
+        setBounds(new java.awt.Rectangle(520, 275, 0, 0));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setText("Descrição");
 
@@ -74,6 +89,11 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
         categoriaMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alimentaçao", "Cartao de Credito", "Despesa Doméstica - Aluguel", "Despesa Doméstica - Água", "Despesa Doméstica - Luz", "Despesa Doméstica - Intenet", "Saúde", "Pessoal", "Outros" }));
 
         limparMovimentacao.setText("Limpar Formulario");
+        limparMovimentacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparMovimentacaoActionPerformed(evt);
+            }
+        });
 
         salvarMovimentacao.setText("Salvar");
         salvarMovimentacao.addActionListener(new java.awt.event.ActionListener() {
@@ -173,13 +193,54 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
             
             String descricao = descricaoMovimentacao.getText();
             LocalDate data = dataMovimentacao.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            //Double valor = valorMovimentacao.getText();
+            
+            String temp = valorMovimentacao.getText();
+            temp = temp.replace(",", ".");
+            Double valor = Double.parseDouble(temp);
+            
+            String tipo = tipoMovimentacao.getSelectedItem().toString();
+            String categoria = categoriaMovimentacao.getSelectedItem().toString();
+            
+            MovimentacaoFinanceira movimentacao = new MovimentacaoFinanceira(0, descricao,
+                    data, valor, tipo, categoria, idUsuario);
+            
+            try {
+                controller.salvarMovimentacao(movimentacao);
+                
+                this.dispose();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Backups.", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Bibliotecas Criticas do Sistema", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } 
             
         }
         
-        
-        
     }//GEN-LAST:event_salvarMovimentacaoActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        TelaDeGerenciarFinancas gerencia = new TelaDeGerenciarFinancas();
+        gerencia.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void limparMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparMovimentacaoActionPerformed
+        // TODO add your handling code here:
+        descricaoMovimentacao.setText("");
+        dataMovimentacao.setDate(null);
+        valorMovimentacao.setText("");
+        tipoMovimentacao.setSelectedIndex(0);
+        categoriaMovimentacao.setSelectedIndex(0);        
+    }//GEN-LAST:event_limparMovimentacaoActionPerformed
 
     /**
      * @param args the command line arguments
