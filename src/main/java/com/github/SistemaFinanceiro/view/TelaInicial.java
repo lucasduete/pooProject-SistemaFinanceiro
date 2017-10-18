@@ -15,7 +15,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaInicial
-     */
+     */ 
     public TelaInicial(int idUsuario) {
         initComponents();
         this.idUsuario = idUsuario;

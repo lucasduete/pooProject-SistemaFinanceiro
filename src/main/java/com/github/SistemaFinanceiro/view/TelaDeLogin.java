@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -136,19 +137,26 @@ public class TelaDeLogin extends javax.swing.JFrame {
         
         try {
             idUsuario = controller.userLogin(email, password);
+            
+            if(idUsuario >= 0) {
+                TelaInicial telaInicial = new TelaInicial(1);            
+                telaInicial.setVisible(true);
+            } else 
+                JOptionPane.showMessageDialog(null, "Dados Invalidos", "Erro no Login", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (IOException ex) {
-            Logger.getLogger(TelaDeLogin.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Backups.", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TelaDeLogin.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao Acessar Bibliotecas Criticas do Sistema", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {
-            Logger.getLogger(TelaDeLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+        }    
         
-        if(idUsuario >= 0) {
-            TelaInicial telaInicial = new TelaInicial(1);            
-            telaInicial.setVisible(true);
-        }
-        
+        loginEmail.setText("");
+        loginSenha.setText("");
     }//GEN-LAST:event_btLoginActionPerformed
 
     /**

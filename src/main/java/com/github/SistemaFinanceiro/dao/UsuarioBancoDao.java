@@ -176,6 +176,9 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
         String sql = "SELECT Id FROM Usuario WHERE Email ILIKE ? AND Password ILIKE ?;";
         
         PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, email);
+        stmt.setString(2, password);
+        
         ResultSet rs = stmt.executeQuery();
         
         if(rs.next()) 
