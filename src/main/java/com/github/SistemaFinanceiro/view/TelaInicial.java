@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.github.SistemaFinanceiro.view;
 
 /**
  *
- * @author kaiqueads
+ * @author Lucas Duete e Kaique Augusto
  */
 public class TelaInicial extends javax.swing.JFrame {
     
@@ -127,7 +122,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private void btGerenciarFinanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarFinanActionPerformed
         // TODO add your handling code here:
         
-        TelaDeGerenciarFinancas gerenFinan = new TelaDeGerenciarFinancas();
+        TelaDeGerenciarFinancas gerenFinan = new TelaDeGerenciarFinancas(idUsuario);
         gerenFinan.setVisible(true);
     }//GEN-LAST:event_btGerenciarFinanActionPerformed
 

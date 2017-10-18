@@ -69,7 +69,7 @@ public class MovimentacaoController {
      * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
      */
     
-    public List<MovimentacaoFinanceira> encontrarPorData(int idUsuario) 
+    public List<MovimentacaoFinanceira> encontrarPorUsuario(int idUsuario) 
             throws ClassNotFoundException, IOException, SQLException{
             
         return bancoDao.listarByUsuario(idUsuario);

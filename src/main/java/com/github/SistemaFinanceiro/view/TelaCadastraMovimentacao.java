@@ -10,14 +10,12 @@ import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.time.ZoneId;;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author kaiqueads
+ * @author Lucas Duete e Kaique Augusto
  */
 public class TelaCadastraMovimentacao extends javax.swing.JFrame {
     
@@ -229,8 +227,6 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        TelaDeGerenciarFinancas gerencia = new TelaDeGerenciarFinancas();
-        gerencia.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void limparMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparMovimentacaoActionPerformed
