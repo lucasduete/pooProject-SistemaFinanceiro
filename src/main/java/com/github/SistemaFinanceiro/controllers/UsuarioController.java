@@ -3,13 +3,14 @@ package com.github.SistemaFinanceiro.controllers;
 
 import com.github.SistemaFinanceiro.interfaces.DaoInterface;
 import com.github.SistemaFinanceiro.dao.UsuarioBancoDao;
+import com.github.SistemaFinanceiro.interfaces.AutenticacaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-    public class UsuarioController implements DaoInterface<Usuario> {
+    public class UsuarioController implements DaoInterface<Usuario>, AutenticacaoInterface{
     
     public UsuarioBancoDao bancoDao;
     
@@ -40,6 +41,11 @@ import javax.swing.JOptionPane;
     @Override
     public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
         return bancoDao.atualizar(user);
+    }
+
+    @Override
+    public int userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
+        return bancoDao.userLogin(email, password);
     }
     
 }

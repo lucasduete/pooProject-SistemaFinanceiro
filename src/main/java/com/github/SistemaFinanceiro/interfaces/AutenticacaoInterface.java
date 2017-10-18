@@ -11,6 +11,6 @@ import java.sql.SQLException;
  */
 public interface AutenticacaoInterface {
     
-    public boolean userLogin (String email, String password) throws IOException, ClassNotFoundException, SQLException;
+    public int userLogin (String email, String password) throws IOException, ClassNotFoundException, SQLException;
     
 }

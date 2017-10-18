@@ -148,16 +148,28 @@ public class UsuarioArquivoDao implements DaoInterface<Usuario>, AutenticacaoInt
         
         return false;        
     }
+    
+    /**
+     * Este Metodo Encapsula o Acesso aos Arquivos de Backup Realizando a
+     * Operacao de Autenticaçao de um Usuario. 
+     * @param email String que contem o Email do Usuario que Sera Autenticado
+     * @param password String que contem a Senha do Usuario que Sera Autenticado
+     * @return inteiro >= 0 Se Autenticado com sucesso sendo o retorno o ID do Usuario, 
+     * -1 Se Credenciais Invalidas.
+     * @throws ClassNotFoundException Disparado por Falta de Biblioteca.
+     * @throws IOException Disparado Caso Haja Algum Erro de I/O.
+     * @throws SQLException Nunca e Disparado, Necessario por Implementar a Interface DaoInteface.
+     */
 
     @Override
-    public boolean userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
+    public int userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
         List<Usuario> users = listar();
         
         for (Usuario user: users)
             if (user.getEmail().equals(email) && user.getPassword().equals(password))
-                return true;
+                return user.getId();
         
-        return false;
+        return -1;
     }
     
     

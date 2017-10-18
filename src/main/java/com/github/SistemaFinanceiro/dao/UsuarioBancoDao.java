@@ -171,13 +171,15 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
     }
 
     @Override
-    public boolean userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
-        String sql = "SELECT Nome FROM Usuario WHERE Email ILIKE ? AND Password ILIKE ?;";
+    public int userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
+        int aux = -1;
+        String sql = "SELECT Id FROM Usuario WHERE Email ILIKE ? AND Password ILIKE ?;";
         
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         
-        boolean aux = rs.next();
+        if(rs.next()) 
+            aux = rs.getInt("Id");
         
         rs.close();
         stmt.close();

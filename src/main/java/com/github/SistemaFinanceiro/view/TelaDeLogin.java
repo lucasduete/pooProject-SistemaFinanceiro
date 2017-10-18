@@ -5,6 +5,12 @@
  */
 package com.github.SistemaFinanceiro.view;
 
+import com.github.SistemaFinanceiro.controllers.UsuarioController;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author kaiqueads
@@ -122,8 +128,27 @@ public class TelaDeLogin extends javax.swing.JFrame {
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
         // TODO add your handling code here:
         
-        TelaInicial telaInicial = new TelaInicial();
-        telaInicial.setVisible(true);
+        UsuarioController controller = new UsuarioController();              
+        
+        String email = loginEmail.getText();
+        String password = new String(loginSenha.getPassword());
+        int idUsuario = -2;
+        
+        try {
+            idUsuario = controller.userLogin(email, password);
+        } catch (IOException ex) {
+            Logger.getLogger(TelaDeLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaDeLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaDeLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(idUsuario >= 0) {
+            TelaInicial telaInicial = new TelaInicial(1);            
+            telaInicial.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btLoginActionPerformed
 
     /**

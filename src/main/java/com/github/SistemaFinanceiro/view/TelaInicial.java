@@ -10,12 +10,20 @@ package com.github.SistemaFinanceiro.view;
  * @author kaiqueads
  */
 public class TelaInicial extends javax.swing.JFrame {
+    
+    private final int idUsuario;
 
     /**
      * Creates new form TelaInicial
      */
+    public TelaInicial(int idUsuario) {
+        initComponents();
+        this.idUsuario = idUsuario;
+    }
+    
     public TelaInicial() {
         initComponents();
+        idUsuario = -1;
     }
 
     /**
