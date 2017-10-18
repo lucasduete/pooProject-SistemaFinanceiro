@@ -44,6 +44,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Login");
+        setBounds(new java.awt.Rectangle(500, 275, 0, 0));
         setResizable(false);
 
         jLabel1.setText("E-mail");
@@ -124,6 +125,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         
         TelaDeCadastro telaCad  = new TelaDeCadastro();
         telaCad.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btCadastroActionPerformed
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed

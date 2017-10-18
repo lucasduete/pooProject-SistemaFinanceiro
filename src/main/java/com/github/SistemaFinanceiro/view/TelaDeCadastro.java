@@ -5,6 +5,17 @@
  */
 package com.github.SistemaFinanceiro.view;
 
+import com.github.SistemaFinanceiro.controllers.UsuarioController;
+import com.github.SistemaFinanceiro.model.Usuario;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kaiqueads
@@ -32,7 +43,6 @@ public class TelaDeCadastro extends javax.swing.JFrame {
         emailcadastro = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollBar1 = new javax.swing.JScrollBar();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -43,11 +53,18 @@ public class TelaDeCadastro extends javax.swing.JFrame {
         limparCadastro = new javax.swing.JButton();
         salvarCadastro = new javax.swing.JButton();
         nomeCadastro = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         jPasswordField1.setText("jPasswordField1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro");
+        setBounds(new java.awt.Rectangle(475, 225, 0, 0));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("E-mail");
 
@@ -57,7 +74,7 @@ public class TelaDeCadastro extends javax.swing.JFrame {
 
         jLabel4.setText("Sexo");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -69,8 +86,18 @@ public class TelaDeCadastro extends javax.swing.JFrame {
         jLabel6.setText("Confirma Senha");
 
         limparCadastro.setText("Limpar Formulario");
+        limparCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparCadastroActionPerformed(evt);
+            }
+        });
 
         salvarCadastro.setText("Salvar");
+        salvarCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarCadastroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,8 +127,11 @@ public class TelaDeCadastro extends javax.swing.JFrame {
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(nomeCadastro))
-                                    .addComponent(jLabel3))
-                                .addGap(0, 7, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -112,13 +142,12 @@ public class TelaDeCadastro extends javax.swing.JFrame {
                                     .addComponent(senhaCadastro)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(61, 61, 61))
-                                    .addComponent(limparCadastro, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addComponent(limparCadastro)))
                         .addContainerGap())))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -130,10 +159,13 @@ public class TelaDeCadastro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nomeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -148,12 +180,14 @@ public class TelaDeCadastro extends javax.swing.JFrame {
                     .addComponent(senhaConfirma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(limparCadastro)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salvarCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -161,6 +195,68 @@ public class TelaDeCadastro extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void salvarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarCadastroActionPerformed
+        // TODO add your handling code here:
+        
+        if  (
+                jDateChooser1.getDate() == null ||
+                nomeCadastro.getText().isEmpty() ||
+                emailcadastro.getText().isEmpty() || 
+                jComboBox1.getSelectedItem() == null ||
+                new String(senhaCadastro.getPassword()).isEmpty() ||
+                new String(senhaConfirma.getPassword()).isEmpty()
+                ) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os Dados", "Dados Invalidos", JOptionPane.ERROR_MESSAGE);
+        } else if(LocalDate.now().getYear() -
+                jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()
+                < 18  ) {
+            JOptionPane.showMessageDialog(null, "Apenas Usuarios com +18 Anos podem se Cadastrar", "Idade Invalida", JOptionPane.ERROR_MESSAGE);
+        } else if (!Arrays.equals(senhaCadastro.getPassword(), senhaConfirma.getPassword())) {
+            JOptionPane.showMessageDialog(null, "As Senhas Devem Coincidir", "Senhas Invalidas", JOptionPane.ERROR_MESSAGE);
+        } else {
+            
+            UsuarioController controller = new UsuarioController();
+            
+            String nome = nomeCadastro.getText();
+            String email = emailcadastro.getText();
+            LocalDate nasc = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String sexo = jComboBox1.getSelectedItem().toString();
+            String senha = new String(senhaCadastro.getPassword());
+            
+            Usuario user = new Usuario (0, email, nome, nasc, sexo, senha);
+            
+            try {
+                controller.salvar(user);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Backups.", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Bibliotecas Criticas do Sistema", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } 
+        }        
+    }//GEN-LAST:event_salvarCadastroActionPerformed
+
+    private void limparCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCadastroActionPerformed
+        // TODO add your handling code here:
+        nomeCadastro.setText("");
+        emailcadastro.setText("");
+        jDateChooser1.setDate(null);
+        jComboBox1.setSelectedIndex(0);
+        senhaCadastro.setText("");
+        senhaConfirma.setText("");
+    }//GEN-LAST:event_limparCadastroActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        TelaDeLogin login = new TelaDeLogin();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -200,7 +296,7 @@ public class TelaDeCadastro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailcadastro;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
