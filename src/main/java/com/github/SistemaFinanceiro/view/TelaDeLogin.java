@@ -134,12 +134,11 @@ public class TelaDeLogin extends javax.swing.JFrame {
             idUsuario = controller.userLogin(email, password);
             
             if(idUsuario >= 0) {
-                TelaInicial telaInicial = new TelaInicial(1);            
+                TelaInicial telaInicial = new TelaInicial(idUsuario);            
                 telaInicial.setVisible(true);
+                this.dispose();
             } else 
                 JOptionPane.showMessageDialog(null, "Dados Invalidos", "Erro no Login", JOptionPane.INFORMATION_MESSAGE);
-            
-            this.dispose();
             
         } catch (IOException ex) {
             ex.printStackTrace();

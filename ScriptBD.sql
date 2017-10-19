@@ -20,7 +20,6 @@ CREATE TABLE Movimentacao_Financeira (
 	Categoria VARCHAR(27) NOT NULL,
 	IDUsuario INTEGER NOT NULL,
 	CONSTRAINT PK_MOvimentacaoFinanceira_ID PRIMARY KEY(ID),
-	CONSTRAINT Data_MovimentacaoFinanceira_Valida CHECK (Data <= NOW()),
 	CONSTRAINT Valor_MovimentacaoFinanceira_MaiorIgualZero CHECK (Valor >= 0),
 	CONSTRAINT Tipo_MovimentacaoFinanceira_EntraOUSaida CHECK (Tipo LIKE 'Entrada' OR Tipo LIKE 'Saída'),
 	CONSTRAINT Categoria_MovimentacaoFinanceira_Valida CHECK (

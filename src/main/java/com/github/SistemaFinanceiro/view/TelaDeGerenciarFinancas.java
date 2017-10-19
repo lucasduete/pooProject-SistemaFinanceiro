@@ -4,6 +4,7 @@ import com.github.SistemaFinanceiro.controllers.MovimentacaoController;
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
     
     private final int idUsuario;
+    private List<MovimentacaoFinanceira> movimentacoes = new ArrayList<>();
 
     /**
      * Creates new form TelaDeGerenciarFinancas
@@ -34,7 +36,7 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         MovimentacaoController controller = new MovimentacaoController();
         
         try {
-            List<MovimentacaoFinanceira> movimentacoes = controller.encontrarPorUsuario(idUsuario);
+            movimentacoes = controller.encontrarPorUsuario(idUsuario);
             
             for(int i = 0; i < movimentacoes.size(); i++) {
                 jTable1.setValueAt(movimentacoes.get(i).getDescricao(), i, 0);
@@ -121,6 +123,11 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         });
         jTable1.setColumnSelectionAllowed(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
@@ -184,7 +191,7 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         MovimentacaoController controller = new MovimentacaoController();
         
         try {
-            List<MovimentacaoFinanceira> movimentacoes = controller.encontrarPorUsuario(idUsuario);
+            movimentacoes = controller.encontrarPorUsuario(idUsuario);
             
             for(int i = 0; i < movimentacoes.size(); i++) {
                 jTable1.setValueAt(movimentacoes.get(i).getDescricao(), i, 0);
@@ -205,6 +212,12 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
         } 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+        MovimentacaoFinanceira movimentacao = movimentacoes.get(jTable1.getSelectedRow());
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

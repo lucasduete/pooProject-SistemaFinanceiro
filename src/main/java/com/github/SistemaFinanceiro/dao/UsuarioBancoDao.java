@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,11 +96,13 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()){
+            Date data = rs.getDate("DataNasc");
+            Instant instant = Instant.ofEpochMilli(data.getTime());
             usuarios.add(new Usuario(
                     rs.getInt("Id"),
                     rs.getString("Email"),
                     rs.getString("Nome"),
-                    rs.getDate("DataNasc").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                    LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate(),
                     rs.getString("Sexo"),
                     rs.getString("Password")
             ));

@@ -84,7 +84,7 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
 
         tipoMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Saida" }));
 
-        categoriaMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alimentaçao", "Cartao de Credito", "Despesa Doméstica - Aluguel", "Despesa Doméstica - Água", "Despesa Doméstica - Luz", "Despesa Doméstica - Intenet", "Saúde", "Pessoal", "Outros" }));
+        categoriaMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alimentação", "Cartão de Crédito", "Despesa Doméstica - Aluguel", "Despesa Doméstica - Água", "Despesa Doméstica - Luz", "Despesa Doméstica - Intenet", "Saúde", "Pessoal", "Outros" }));
 
         limparMovimentacao.setText("Limpar Formulario");
         limparMovimentacao.addActionListener(new java.awt.event.ActionListener() {

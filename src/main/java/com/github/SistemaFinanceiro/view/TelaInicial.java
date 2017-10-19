@@ -124,6 +124,7 @@ public class TelaInicial extends javax.swing.JFrame {
         
         TelaDeGerenciarFinancas gerenFinan = new TelaDeGerenciarFinancas(idUsuario);
         gerenFinan.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btGerenciarFinanActionPerformed
 
     private void btGerenciarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarPerfilActionPerformed

@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -219,10 +221,12 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()) {
+            Date data = rs.getDate("Data");
+            Instant instant = Instant.ofEpochMilli(data.getTime());
             movimentacoes.add(new MovimentacaoFinanceira(
                     rs.getInt("Id"),
                     rs.getString("Descricao"),
-                    rs.getDate("Data").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                    LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate(),
                     rs.getDouble("Valor"),
                     rs.getString("Tipo"),
                     rs.getString("Categoria"),
