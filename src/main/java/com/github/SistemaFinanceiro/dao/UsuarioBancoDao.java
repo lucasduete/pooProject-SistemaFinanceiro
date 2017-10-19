@@ -126,8 +126,8 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
     
     @Override
     public boolean atualizar(Usuario user) throws IOException, ClassNotFoundException, SQLException {
-        String sql = "UPDATE Usuario SET (Email = ?, Nome = ?, DataNasc = ?, "
-                + "Sexo = ?, Password = ?) WHERE ID = ?";
+        String sql = "UPDATE Usuario SET Email = ?, Nome = ?, DataNasc = ?, "
+                + "Sexo = ?, Password = ? WHERE ID = ?";
                 
         PreparedStatement stmt = conn.prepareStatement(sql);
             
@@ -197,7 +197,7 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
     
     
     public Usuario getUsuario(int Id) throws IOException, ClassNotFoundException, SQLException {
-        Usuario user = null;
+        Usuario user = new Usuario();
 
         String sql = "SELECT * FROM Usuario WHERE Id = ?;";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -206,17 +206,15 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
 
         ResultSet rs = stmt.executeQuery();
 
-        if(rs.next()){
+        if(rs.next()) {
             Date data = rs.getDate("DataNasc");
             Instant instant = Instant.ofEpochMilli(data.getTime());
-            user = new Usuario(
-                    rs.getInt("Id"),
-                    rs.getString("Email"),
-                    rs.getString("Nome"),
-                    LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate(),
-                    rs.getString("Sexo"),
-                    rs.getString("Password")
-            );
+            user.setId(rs.getInt("Id"));
+            user.setEmail(rs.getString("Email"));
+            user.setNome(rs.getString("Nome"));
+            user.setDataNasc(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            user.setSexo(rs.getString("Sexo"));
+            user.setPassword(rs.getString("Password"));
         }
         
         return user;

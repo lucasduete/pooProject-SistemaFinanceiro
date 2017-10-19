@@ -141,8 +141,8 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btGerenciarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarPerfilActionPerformed
         // TODO add your handling code here:        
-        TelaDeCadastro gerenCad = new TelaDeCadastro();
-        gerenCad.setVisible(true);
+        TelaDePerfil perfil = new TelaDePerfil(idUsuario);
+        perfil.setVisible(true);
     }//GEN-LAST:event_btGerenciarPerfilActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

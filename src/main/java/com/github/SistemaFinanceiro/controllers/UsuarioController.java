@@ -70,11 +70,13 @@ import javax.swing.JOptionPane;
     }
     
     private boolean validarSenha(int Id, String password) throws ClassNotFoundException, IOException, SQLException {
-        Usuario user = new UsuarioBancoDao().getUsuario(Id);
+        Usuario user = bancoDao.getUsuario(Id);
         
         return (user.getPassword().equals(password));
     }
     
-    
+    public Usuario getUsuario(int Id) throws ClassNotFoundException, IOException, SQLException {
+        return bancoDao.getUsuario(Id);
+    }
     
 }

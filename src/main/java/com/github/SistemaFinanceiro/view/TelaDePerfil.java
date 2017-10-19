@@ -4,9 +4,12 @@ import com.github.SistemaFinanceiro.controllers.UsuarioController;
 import com.github.SistemaFinanceiro.exceptions.AtualizacaoUsuarioInvalidaException;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,14 +17,56 @@ import javax.swing.JOptionPane;
  * @author Lucas Duete e Kaique Augusto
  */
 public class TelaDePerfil extends javax.swing.JFrame {
+    
+    private final int idUsuario;
 
     /**
      * Creates new form TelaDeCadastro
      */
     public TelaDePerfil() {
         initComponents();
+        idUsuario = -1;
+        setPerfil();
+    }
+    
+    public TelaDePerfil(int idUsuario) {
+        initComponents();
+        this.idUsuario = idUsuario;
+        setPerfil();
     }
 
+    private void setPerfil() {
+        try {
+            Usuario user = new UsuarioController().getUsuario(idUsuario);
+            
+            nomeCadastro.setText(user.getNome());
+            emailcadastro.setText(user.getEmail());
+            jDateChooser1.setDate(Date.valueOf(user.getDataNasc()));
+            
+            switch (user.getSexo()){
+                case "masculino" :
+                    jComboBox1.setSelectedIndex(0);
+                    break;
+                case "feminino" :
+                    jComboBox1.setSelectedIndex(1);
+                    break;
+            }
+            
+            senhaAtual.setText(user.getPassword());
+            senhaNova.setText("");
+            
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Backups.", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Bibliotecas Criticas do Sistema", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -256,15 +301,18 @@ public class TelaDePerfil extends javax.swing.JFrame {
             LocalDate nasc = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             String sexo = jComboBox1.getSelectedItem().toString();
             String velhaSenha = new String(senhaAtual.getPassword());
-            String novaSenha = new String(this.senhaNova.getPassword());
+            String novaSenha = new String(senhaNova.getPassword());
             
-            Usuario user = new Usuario (0, email, nome, nasc, sexo, velhaSenha);
+            Usuario user = new Usuario (idUsuario, email, nome, nasc, sexo, velhaSenha);
             
             try {
                 if(novaSenha.isEmpty())
                     controller.atualizarSafe(user);
                 else
                     controller.atualizarSafe(user, novaSenha, velhaSenha);
+                
+                JOptionPane.showMessageDialog(null, "Cadastro Concluido Com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+                this.dispose();
             } catch (AtualizacaoUsuarioInvalidaException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "A Senha Antiga Digitada Nao Esta Correta.", "Preencha Corretamente", JOptionPane.ERROR_MESSAGE);
@@ -278,9 +326,6 @@ public class TelaDePerfil extends javax.swing.JFrame {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
             } 
-            
-            JOptionPane.showMessageDialog(null, "Cadastro Concluido Com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
-            this.dispose();
         }        
     }//GEN-LAST:event_salvarCadastroActionPerformed
 
