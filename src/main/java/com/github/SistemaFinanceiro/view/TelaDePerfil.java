@@ -1,12 +1,12 @@
 package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.UsuarioController;
+import com.github.SistemaFinanceiro.exceptions.AtualizacaoUsuarioInvalidaException;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
@@ -41,8 +41,8 @@ public class TelaDePerfil extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        senhaCadastro = new javax.swing.JPasswordField();
-        senhaConfirma = new javax.swing.JPasswordField();
+        senhaAtual = new javax.swing.JPasswordField();
+        senhaNova = new javax.swing.JPasswordField();
         limparCadastro = new javax.swing.JButton();
         nomeCadastro = new javax.swing.JTextField();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
@@ -80,9 +80,9 @@ public class TelaDePerfil extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Senha");
+        jLabel5.setText("Senha Atual");
 
-        jLabel6.setText("Confirma Senha");
+        jLabel6.setText("Nova Senha");
 
         limparCadastro.setFont(new java.awt.Font("Open Sans", 2, 12)); // NOI18N
         limparCadastro.setText("Limpar");
@@ -103,7 +103,7 @@ public class TelaDePerfil extends javax.swing.JFrame {
         });
 
         salvarCadastro.setFont(new java.awt.Font("Open Sans", 1, 12)); // NOI18N
-        salvarCadastro.setText("Salvar");
+        salvarCadastro.setText("Atualizar");
         salvarCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salvarCadastroActionPerformed(evt);
@@ -151,7 +151,7 @@ public class TelaDePerfil extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(senhaCadastro)
+                                    .addComponent(senhaAtual)
                                     .addComponent(jComboBox1, 0, 170, Short.MAX_VALUE)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
@@ -171,11 +171,11 @@ public class TelaDePerfil extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(senhaConfirma, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(senhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addGap(22, 22, 22)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -206,11 +206,11 @@ public class TelaDePerfil extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(senhaCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(senhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(senhaConfirma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(senhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -240,16 +240,13 @@ public class TelaDePerfil extends javax.swing.JFrame {
                 jDateChooser1.getDate() == null ||
                 nomeCadastro.getText().isEmpty() ||
                 emailcadastro.getText().isEmpty() ||
-                new String(senhaCadastro.getPassword()).isEmpty() ||
-                new String(senhaConfirma.getPassword()).isEmpty()
+                new String(senhaAtual.getPassword()).isEmpty()
                 ) {
             JOptionPane.showMessageDialog(null, "Preencha todos os Dados", "Dados Invalidos", JOptionPane.ERROR_MESSAGE);
         } else if(LocalDate.now().getYear() -
                 jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()
                 < 18  ) {
             JOptionPane.showMessageDialog(null, "Apenas Usuarios com +18 Anos podem se Cadastrar", "Idade Invalida", JOptionPane.ERROR_MESSAGE);
-        } else if (!Arrays.equals(senhaCadastro.getPassword(), senhaConfirma.getPassword())) {
-            JOptionPane.showMessageDialog(null, "As Senhas Devem Coincidir", "Senhas Invalidas", JOptionPane.ERROR_MESSAGE);
         } else {
             
             UsuarioController controller = new UsuarioController();
@@ -258,12 +255,19 @@ public class TelaDePerfil extends javax.swing.JFrame {
             String email = emailcadastro.getText();
             LocalDate nasc = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             String sexo = jComboBox1.getSelectedItem().toString();
-            String senha = new String(senhaCadastro.getPassword());
+            String velhaSenha = new String(senhaAtual.getPassword());
+            String novaSenha = new String(this.senhaNova.getPassword());
             
-            Usuario user = new Usuario (0, email, nome, nasc, sexo, senha);
+            Usuario user = new Usuario (0, email, nome, nasc, sexo, velhaSenha);
             
             try {
-                controller.salvar(user);
+                if(novaSenha.isEmpty())
+                    controller.atualizarSafe(user);
+                else
+                    controller.atualizarSafe(user, novaSenha, velhaSenha);
+            } catch (AtualizacaoUsuarioInvalidaException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "A Senha Antiga Digitada Nao Esta Correta.", "Preencha Corretamente", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Backups.", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
@@ -286,8 +290,8 @@ public class TelaDePerfil extends javax.swing.JFrame {
         emailcadastro.setText("");
         jDateChooser1.setDate(null);
         jComboBox1.setSelectedIndex(0);
-        senhaCadastro.setText("");
-        senhaConfirma.setText("");
+        senhaAtual.setText("");
+        senhaNova.setText("");
     }//GEN-LAST:event_limparCadastroActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -301,8 +305,6 @@ public class TelaDePerfil extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        TelaDeLogin login = new TelaDeLogin();
-        login.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
     /**
@@ -358,7 +360,7 @@ public class TelaDePerfil extends javax.swing.JFrame {
     private javax.swing.JButton limparCadastro;
     private javax.swing.JTextField nomeCadastro;
     private javax.swing.JButton salvarCadastro;
-    private javax.swing.JPasswordField senhaCadastro;
-    private javax.swing.JPasswordField senhaConfirma;
+    private javax.swing.JPasswordField senhaAtual;
+    private javax.swing.JPasswordField senhaNova;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,7 +51,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="senhaCadastro" max="32767" attributes="0"/>
+                                  <Component id="senhaAtual" max="32767" attributes="0"/>
                                   <Component id="jComboBox1" pref="170" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -77,17 +77,17 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel6" linkSize="2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="senhaConfirma" min="-2" pref="170" max="-2" attributes="0"/>
+                                  <Component id="senhaNova" min="-2" pref="170" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
               <Component id="jScrollBar1" min="-2" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -123,12 +123,12 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="senhaCadastro" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="senhaAtual" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="senhaConfirma" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="senhaNova" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -191,17 +191,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Senha"/>
+        <Property name="text" type="java.lang.String" value="Senha Atual"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Confirma Senha"/>
+        <Property name="text" type="java.lang.String" value="Nova Senha"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="senhaCadastro">
+    <Component class="javax.swing.JPasswordField" name="senhaAtual">
     </Component>
-    <Component class="javax.swing.JPasswordField" name="senhaConfirma">
+    <Component class="javax.swing.JPasswordField" name="senhaNova">
     </Component>
     <Component class="javax.swing.JButton" name="limparCadastro">
       <Properties>
@@ -267,7 +267,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Open Sans" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Salvar"/>
+            <Property name="text" type="java.lang.String" value="Atualizar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvarCadastroActionPerformed"/>

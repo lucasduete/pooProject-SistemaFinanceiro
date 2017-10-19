@@ -194,6 +194,33 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
         
         return aux;
     }
+    
+    
+    public Usuario getUsuario(int Id) throws IOException, ClassNotFoundException, SQLException {
+        Usuario user = null;
+
+        String sql = "SELECT * FROM Usuario WHERE Id = ?;";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        
+        stmt.setInt(1, Id);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if(rs.next()){
+            Date data = rs.getDate("DataNasc");
+            Instant instant = Instant.ofEpochMilli(data.getTime());
+            user = new Usuario(
+                    rs.getInt("Id"),
+                    rs.getString("Email"),
+                    rs.getString("Nome"),
+                    LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate(),
+                    rs.getString("Sexo"),
+                    rs.getString("Password")
+            );
+        }
+        
+        return user;
+    }
 }
    
 

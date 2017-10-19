@@ -3,6 +3,7 @@ package com.github.SistemaFinanceiro.controllers;
 
 import com.github.SistemaFinanceiro.interfaces.DaoInterface;
 import com.github.SistemaFinanceiro.dao.UsuarioBancoDao;
+import com.github.SistemaFinanceiro.exceptions.AtualizacaoUsuarioInvalidaException;
 import com.github.SistemaFinanceiro.interfaces.AutenticacaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
@@ -39,7 +40,8 @@ import javax.swing.JOptionPane;
     }
 
     @Override
-    public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+    @Deprecated
+    public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {        
         return bancoDao.atualizar(user);
     }
 
@@ -47,5 +49,32 @@ import javax.swing.JOptionPane;
     public int userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
         return bancoDao.userLogin(email, password);
     }
+    
+    public boolean atualizarSafe(Usuario user) 
+            throws ClassNotFoundException, IOException, SQLException, AtualizacaoUsuarioInvalidaException {
+        
+        if (! (validarSenha(user.getId(), user.getPassword())))
+            throw new AtualizacaoUsuarioInvalidaException("Senha Antiga Invalida");
+        
+        return bancoDao.atualizar(user);
+    }
+    
+    public boolean atualizarSafe(Usuario user, String novaSenha, String antigaSenha) 
+            throws ClassNotFoundException, IOException, SQLException, AtualizacaoUsuarioInvalidaException {
+        
+        if (! (validarSenha(user.getId(), antigaSenha)))
+            throw new AtualizacaoUsuarioInvalidaException("Senha Antiga Invalida");
+        
+        user.setPassword(novaSenha);
+        return bancoDao.atualizar(user);
+    }
+    
+    private boolean validarSenha(int Id, String password) throws ClassNotFoundException, IOException, SQLException {
+        Usuario user = new UsuarioBancoDao().getUsuario(Id);
+        
+        return (user.getPassword().equals(password));
+    }
+    
+    
     
 }
