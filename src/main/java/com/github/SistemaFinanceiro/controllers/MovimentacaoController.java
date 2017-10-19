@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
  * Financeiras como o Metodo para Salvar e Listar por Data.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.0
+ * @version 1.1
  * @since 8.0
  */
 
@@ -25,9 +25,6 @@ public class MovimentacaoController {
     /**
      * Construtor Padrao da Classe MovimentacaoController Onde e Instanciada a um Objeto do 
      * Tipo MovimentacaoBancoDao para Realizar as Operacoes em Banco.
-     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
-     * a Aplicaçao.
-     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados. 
      */
     
     public MovimentacaoController() {
@@ -136,6 +133,24 @@ public class MovimentacaoController {
     public boolean deletarMovimentacao(MovimentacaoFinanceira movimentacao) 
             throws ClassNotFoundException, IOException, SQLException {
 	return bancoDao.remover(movimentacao);
+    }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco de Dados Retornando Todas as 
+     * Informaçoes sobre uma Movimentacao Financeira Salva no Banco de Dados.
+     * @param idMovimentacao Variavel Inteira que contem o Id da Movimentacao Financeira cuja 
+     * qual Deseja-se as Informaçoes.
+     * @return Objeto do Tipo MovimentacaoFinanceira Preenchida com Todas as Informaçoes Referentes 
+     * aquela Movimentacao Salva no Banco com tal Id.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     */
+    
+    public MovimentacaoFinanceira getMovimentacao(int idMovimentacao) 
+            throws ClassNotFoundException, IOException, SQLException {        
+        return bancoDao.getMovimentacao(idMovimentacao);        
     }
 
 }

@@ -18,7 +18,7 @@ import java.util.List;
  * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
  * Realizando Assim todo o CRUD para o Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.0
+ * @version 1.1
  * @since 8.0
  */
 public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira> {
@@ -65,17 +65,11 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         stmt.setString(5, movimentacao.getCategoria());
         stmt.setInt(6, movimentacao.getIdUsuario());
         
-        if (stmt.executeUpdate() > 0) {
-            stmt.close();
-            conn.close();
+        boolean aux = (stmt.executeUpdate() > 0);
+        stmt.close();
+        conn.close();
             
-            return true;
-        } else {
-            stmt.close();
-            conn.close();
-            
-            return false;
-        }
+        return aux;
     }
     
     /**
@@ -122,17 +116,11 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         
         stmt.setInt(1, movimentacao.getId());
         
-        if (stmt.executeUpdate() > 0) {
-            stmt.close();
-            conn.close();
-            
-            return true;
-        } else {
-            stmt.close();
-            conn.close();
-            
-            return false;
-        }
+        boolean aux = (stmt.executeUpdate() > 0);
+        stmt.close();
+        conn.close();
+        
+        return aux;
     }
     
     /**
@@ -150,8 +138,8 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
 
     @Override
     public boolean atualizar(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
-        String sql = "UPDATE Movimentacao_Financeira SET (Descricao = ?, Data = ?, Valor = ?, "
-                + "Tipo = ?, Categoria = ?) WHERE ID = ?";
+        String sql = "UPDATE Movimentacao_Financeira SET Descricao = ?, Data = ?, Valor = ?, "
+                + "Tipo = ?, Categoria = ? WHERE ID = ?";
         
         PreparedStatement stmt = conn.prepareStatement(sql);
         
@@ -162,17 +150,11 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         stmt.setString(5, movimentacao.getCategoria());
         stmt.setInt(6, movimentacao.getId());
         
-        if (stmt.executeUpdate() > 0) {
-            stmt.close();
-            conn.close();
-            
-            return true;
-        } else {
-            stmt.close();
-            conn.close();
-            
-            return false;
-        }
+        boolean aux = (stmt.executeUpdate() > 0);
+        stmt.close();
+        conn.close();
+        
+        return aux;
     }
     
     /**
@@ -198,6 +180,31 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         stmt.setInt(1, idUsuario);
         
         return getMovimentacoes(stmt);
+    }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Busca por uma 
+     * Movimentacao Financeira Especifica Salva no Banco de Dados.
+     * @param idMovimentacao Variavel Inteira que Contem o ID da Movimentaçao da Qual Sera Retornada as 
+     * informaçoes.
+     * @return Objeto do Tipo MovimentacaoFinanceira Preenchido com as Informaçoes 
+     * Acossiadas a Id Informada.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo
+     */
+    
+    public MovimentacaoFinanceira getMovimentacao(int idMovimentacao) 
+                throws ClassNotFoundException, IOException, SQLException {
+                
+        String sql = "SELECT * FROM Movimentacao_Financeira WHERE Id = ?";
+        
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, idMovimentacao);
+        
+        return getMovimentacoes(stmt).get(0);
     }
     
     /**

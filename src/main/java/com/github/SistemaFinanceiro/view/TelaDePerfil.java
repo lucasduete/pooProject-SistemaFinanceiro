@@ -8,13 +8,13 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Lucas Duete e Kaique Augusto
+ * @version 1.0
+ * @since 8.0
  */
 public class TelaDePerfil extends javax.swing.JFrame {
     
@@ -98,7 +98,7 @@ public class TelaDePerfil extends javax.swing.JFrame {
         jPasswordField1.setText("jPasswordField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro");
+        setTitle("Perfil");
         setBounds(new java.awt.Rectangle(475, 225, 0, 0));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

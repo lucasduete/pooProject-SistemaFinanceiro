@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
+ * @version 1.0
+ * @since 8.0
  */
 public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
     

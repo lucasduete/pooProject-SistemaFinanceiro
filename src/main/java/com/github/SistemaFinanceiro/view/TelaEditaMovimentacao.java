@@ -19,22 +19,31 @@ import javax.swing.JOptionPane;
  * @version 1.0
  * @since 8.0
  */
-public class TelaCadastraMovimentacao extends javax.swing.JFrame {
+public class TelaEditaMovimentacao extends javax.swing.JFrame {
     
     private final int idUsuario;
+    private final int idMovimentacao;
 
     /**
      * Creates new form TelaCadastraMovimentacao
      */
-    public TelaCadastraMovimentacao() {
+    public TelaEditaMovimentacao() {
         initComponents();
         idUsuario = -1;
+        idMovimentacao = -1;
     }
     
-    public TelaCadastraMovimentacao(int idUsuario) {
+    public TelaEditaMovimentacao(int idUsuario, int idMovimentacao) {
         initComponents();
         this.idUsuario = idUsuario;
+        this.idMovimentacao = idMovimentacao;
+        setMovimentacao();
     }
+    
+    private void setMovimentacao() {
+        
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +67,7 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         salvarMovimentacao = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        excluir = new javax.swing.JButton();
         limparMovimentacao = new javax.swing.JButton();
 
         jRadioButton1.setText("jRadioButton1");
@@ -110,19 +120,29 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
             }
         });
 
+        excluir.setFont(new java.awt.Font("Open Sans", 3, 12)); // NOI18N
+        excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(salvarMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelar, salvarMovimentacao});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelar, excluir, salvarMovimentacao});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,11 +150,12 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelar))
+                    .addComponent(cancelar)
+                    .addComponent(excluir))
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cancelar, salvarMovimentacao});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cancelar, excluir, salvarMovimentacao});
 
         limparMovimentacao.setFont(new java.awt.Font("Open Sans", 2, 12)); // NOI18N
         limparMovimentacao.setText("Limpar");
@@ -174,12 +195,9 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
                             .addComponent(descricaoMovimentacao)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(limparMovimentacao)))
+                        .addComponent(limparMovimentacao))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5});
@@ -240,11 +258,14 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
             String tipo = tipoMovimentacao.getSelectedItem().toString();
             String categoria = categoriaMovimentacao.getSelectedItem().toString();
             
-            MovimentacaoFinanceira movimentacao = new MovimentacaoFinanceira(0, descricao,
+            MovimentacaoFinanceira movimentacao = new MovimentacaoFinanceira(idMovimentacao, descricao,
                     data, valor, tipo, categoria, idUsuario);
             
             try {
-                controller.salvarMovimentacao(movimentacao);
+                controller.atualizarMovimentacao(movimentacao);
+                
+                JOptionPane.showMessageDialog(null, "Movimentaçao Atualiza com Sucesso.", 
+                        "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 
                 this.dispose();
             } catch (IOException ex) {
@@ -284,6 +305,33 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelarActionPerformed
 
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+        // TODO add your handling code here:
+        
+        MovimentacaoController controller = new MovimentacaoController();
+        
+            try {
+                controller.deletarMovimentacao(
+                        new MovimentacaoFinanceira(idMovimentacao, null, 
+                                null, null, null, null, idUsuario)
+                );
+                
+                JOptionPane.showMessageDialog(null, "Movimentaçao Removida com Sucesso.", 
+                        "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                
+                this.dispose();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Backups.", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Bibliotecas Criticas do Sistema", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+    }//GEN-LAST:event_excluirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -301,20 +349,21 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastraMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditaMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastraMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditaMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastraMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditaMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastraMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditaMovimentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastraMovimentacao().setVisible(true);
+                new TelaEditaMovimentacao().setVisible(true);
             }
         });
     }
@@ -324,6 +373,7 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> categoriaMovimentacao;
     private com.toedter.calendar.JDateChooser dataMovimentacao;
     private javax.swing.JTextField descricaoMovimentacao;
+    private javax.swing.JButton excluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
