@@ -76,9 +76,10 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciar Financas");
         setBounds(new java.awt.Rectangle(375, 275, 0, 0));
+        setResizable(false);
 
         jLabel1.setText("Data Inicial");
 

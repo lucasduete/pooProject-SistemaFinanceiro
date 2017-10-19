@@ -81,12 +81,18 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="loginEmail">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Digite seu Email"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginEmailActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btLogin">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Open Sans" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Login"/>
       </Properties>
       <Events>
@@ -95,6 +101,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btCadastro">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Open Sans" size="12" style="3"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cadastrar"/>
       </Properties>
       <Events>
@@ -108,7 +117,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="loginSenha">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
+        <Property name="toolTipText" type="java.lang.String" value="Digite sua Senha"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -44,12 +44,14 @@ public class TelaDeLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Senha");
 
+        loginEmail.setToolTipText("Digite seu Email");
         loginEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginEmailActionPerformed(evt);
             }
         });
 
+        btLogin.setFont(new java.awt.Font("Open Sans", 1, 12)); // NOI18N
         btLogin.setText("Login");
         btLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,6 +59,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
             }
         });
 
+        btCadastro.setFont(new java.awt.Font("Open Sans", 3, 12)); // NOI18N
         btCadastro.setText("Cadastrar");
         btCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,7 +69,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
 
         jLabel3.setText("Não possui cadastro?");
 
-        loginSenha.setText("jPasswordField1");
+        loginSenha.setToolTipText("Digite sua Senha");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

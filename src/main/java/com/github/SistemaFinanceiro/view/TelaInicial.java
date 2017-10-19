@@ -53,8 +53,17 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tela Inicial");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         btCadMovimentacoes.setText("Cadastrar Movimentações");
         btCadMovimentacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +87,11 @@ public class TelaInicial extends javax.swing.JFrame {
         });
 
         jButton1.setText("Loggout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,18 +135,30 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btGerenciarFinanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarFinanActionPerformed
         // TODO add your handling code here:
-        
         TelaDeGerenciarFinancas gerenFinan = new TelaDeGerenciarFinancas(idUsuario);
         gerenFinan.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btGerenciarFinanActionPerformed
 
     private void btGerenciarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarPerfilActionPerformed
-        // TODO add your handling code here:
-        
+        // TODO add your handling code here:        
         TelaDeCadastro gerenCad = new TelaDeCadastro();
         gerenCad.setVisible(true);
     }//GEN-LAST:event_btGerenciarPerfilActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        TelaDeLogin login = new TelaDeLogin();
+        login.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
