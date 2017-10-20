@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
  * Financeiras como o Metodo para Salvar e Listar por Data.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.4
+ * @version 1.5
  * @since 8.0
  */
 
@@ -102,19 +102,20 @@ public class MovimentacaoController {
             
         } else if (dataInicio == null) {
             for(MovimentacaoFinanceira mf : transactions) {
-                if(mf.getData().isBefore(dataFim))
+                if(mf.getData().isBefore(dataFim) || mf.getData().isEqual(dataFim))
                     movimentacoes.add(mf);
             }
             
         } else if (dataFim == null) {
             for(MovimentacaoFinanceira mf : transactions) {
-                if(mf.getData().isAfter(dataInicio))
+                if(mf.getData().isAfter(dataInicio) || mf.getData().isEqual(dataInicio))
                     movimentacoes.add(mf);
             }
             
         } else {
             for(MovimentacaoFinanceira mf : transactions) {
-                if(mf.getData().isAfter(dataInicio) && mf.getData().isBefore(dataFim))
+                if((mf.getData().isAfter(dataInicio) || mf.getData().isEqual(dataFim)) 
+                        && (mf.getData().isBefore(dataFim) || mf.getData().isEqual(dataInicio)))
                     movimentacoes.add(mf);
             }
         }
