@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @version 1.3
  * @since 8.0
  */
-public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
+public class TelaGerenciarFinancas extends javax.swing.JFrame {
     
     private final int idUsuario;
     private List<MovimentacaoFinanceira> movimentacoes = new ArrayList<>();
@@ -24,12 +24,12 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
     /**
      * Creates new form TelaDeGerenciarFinancas
      */
-    public TelaDeGerenciarFinancas() {
+    public TelaGerenciarFinancas() {
         initComponents();
         idUsuario = -1;
     }
     
-    public TelaDeGerenciarFinancas(int idUsuario) {
+    public TelaGerenciarFinancas(int idUsuario) {
         initComponents();
         this.idUsuario = idUsuario;
         setTable();
@@ -270,20 +270,21 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaDeGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaDeGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaDeGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaDeGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaGerenciarFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaDeGerenciarFinancas().setVisible(true);
+                new TelaGerenciarFinancas().setVisible(true);
             }
         });
     }

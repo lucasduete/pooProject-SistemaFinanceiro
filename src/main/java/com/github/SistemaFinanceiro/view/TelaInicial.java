@@ -136,13 +136,13 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btGerenciarFinanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarFinanActionPerformed
         // TODO add your handling code here:
-        TelaDeGerenciarFinancas gerenFinan = new TelaDeGerenciarFinancas(idUsuario);
+        TelaGerenciarFinancas gerenFinan = new TelaGerenciarFinancas(idUsuario);
         gerenFinan.setVisible(true);
     }//GEN-LAST:event_btGerenciarFinanActionPerformed
 
     private void btGerenciarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarPerfilActionPerformed
         // TODO add your handling code here:        
-        TelaDePerfil perfil = new TelaDePerfil(idUsuario);
+        TelaPerfil perfil = new TelaPerfil(idUsuario);
         perfil.setVisible(true);
     }//GEN-LAST:event_btGerenciarPerfilActionPerformed
 
@@ -157,7 +157,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        TelaDeLogin login = new TelaDeLogin();
+        TelaLogin login = new TelaLogin();
         login.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
