@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
+ * @version 1.0
+ * @since 8.0
  */
 public class TelaDeLogin extends javax.swing.JFrame {
 
@@ -37,7 +39,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Login");
-        setBounds(new java.awt.Rectangle(500, 275, 0, 0));
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setResizable(false);
 
         jLabel1.setText("E-mail");
@@ -110,6 +112,7 @@ public class TelaDeLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginEmailActionPerformed

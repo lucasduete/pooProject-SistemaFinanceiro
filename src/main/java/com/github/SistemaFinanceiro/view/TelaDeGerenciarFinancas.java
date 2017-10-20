@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.1
+ * @version 1.2
  * @since 8.0
  */
 public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
@@ -187,6 +187,7 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
