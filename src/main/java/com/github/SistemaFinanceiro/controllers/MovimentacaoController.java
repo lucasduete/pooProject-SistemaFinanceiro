@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
  * Financeiras como o Metodo para Salvar e Listar por Data.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.1
+ * @version 1.3
  * @since 8.0
  */
 
@@ -77,10 +77,13 @@ public class MovimentacaoController {
      * um Intervalo de Tempo Estabelecido pelo Mesmo.
      * @param idUsuario Variavel Inteira que contem o Id do Usuario do qual sera procurado as 
      * movimentacoes.
-     * @param dataInicio Variavel do Tipo LocalDate que Indica o Valor Inicial do Intervalo de Busca.
-     * @param dataFim Variavel do Tipo LocalDate que Indica o Valor Final do Intervalo de Busca.
+     * @param dataInicio Variavel do Tipo LocalDate que Indica o Valor Inicial do Intervalo de Busca, Caso Null nao 
+     * ha Data de Inicio Retornando-se Todas as Movimentacoes Antes da Data de Final
+     * @param dataFim Variavel do Tipo LocalDate que Indica o Valor Final do Intervalo de Busca, Caso Null nao 
+     * ha Data de Termino Retornando-se Todas as Movimentacoes Depois da Data de Inicio.
      * @return ArrayList de Objetos do Tipo MovimentacaoFinanceira que Estam Neste Intervalo, Tal 
-     * Lista retorna Vazia quando Nao Existem Movimentacoes Neste Intervalo de Tempo.
+     * Lista retorna Vazia quando Nao Existem Movimentacoes Neste Intervalo de Tempo e Retorna Todas as 
+     * Movimentacoes Caso DataInicio e DataFim Sejam Null.
      * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
      * a Aplicaçao.
      * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
@@ -92,10 +95,28 @@ public class MovimentacaoController {
             
         List<MovimentacaoFinanceira> transactions = bancoDao.listarByUsuario(idUsuario);
         List<MovimentacaoFinanceira> movimentacoes = new ArrayList<>();
+    
         
-        for(MovimentacaoFinanceira mf : transactions) {
-            if(mf.getData().isAfter(dataInicio) && mf.getData().isBefore(dataFim))
-                movimentacoes.add(mf);
+        if(dataInicio == null && dataFim == null) {
+            movimentacoes = transactions;
+            
+        } else if (dataInicio == null) {
+            for(MovimentacaoFinanceira mf : transactions) {
+                if(mf.getData().isBefore(dataFim))
+                    movimentacoes.add(mf);
+            }
+            
+        } else if (dataFim == null) {
+            for(MovimentacaoFinanceira mf : transactions) {
+                if(mf.getData().isAfter(dataInicio))
+                    movimentacoes.add(mf);
+            }
+            
+        } else {
+            for(MovimentacaoFinanceira mf : transactions) {
+                if(mf.getData().isAfter(dataInicio) && mf.getData().isBefore(dataFim))
+                    movimentacoes.add(mf);
+            }
         }
             
         return movimentacoes;
