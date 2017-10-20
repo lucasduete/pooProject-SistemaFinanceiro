@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.1
+ * @version 1.2
  * @since 8.0
  */
 public class TelaCadastraMovimentacao extends javax.swing.JFrame {
@@ -81,7 +81,7 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
 
         jLabel5.setText("Categoria");
 
-        tipoMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Saida" }));
+        tipoMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Saída" }));
 
         categoriaMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alimentação", "Cartão de Crédito", "Despesa Doméstica - Aluguel", "Despesa Doméstica - Água", "Despesa Doméstica - Luz", "Despesa Doméstica - Intenet", "Saúde", "Pessoal", "Outros" }));
 

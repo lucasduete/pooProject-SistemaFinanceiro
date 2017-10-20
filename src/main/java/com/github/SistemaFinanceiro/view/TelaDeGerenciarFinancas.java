@@ -2,6 +2,8 @@ package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.MovimentacaoController;
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.2
+ * @version 1.3
  * @since 8.0
  */
 public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
@@ -224,6 +226,31 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         MovimentacaoFinanceira movimentacao = movimentacoes.get(jTable1.getSelectedRow());
         TelaEditaMovimentacao editMov = new TelaEditaMovimentacao(idUsuario, movimentacao.getId());
         editMov.setVisible(true);
+        
+        editMov.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+
+            @Override
+            public void windowClosing(WindowEvent e) {}
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                setTable();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+
+            @Override
+            public void windowActivated(WindowEvent e) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**
