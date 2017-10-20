@@ -10,7 +10,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Cadastro de Movimenta&#xe7;&#xf5;es"/>
+    <Property name="title" type="java.lang.String" value="Edi&#xe7;ao de Movimenta&#xe7;&#xf5;es"/>
     <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
       <Rectangle value="[520, 275, 0, 0]"/>
     </Property>
@@ -53,14 +53,9 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="categoriaMovimentacao" max="32767" attributes="0"/>
-                                  <Component id="tipoMovimentacao" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
                           <Component id="valorMovimentacao" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tipoMovimentacao" max="32767" attributes="0"/>
+                          <Component id="categoriaMovimentacao" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">

@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.MovimentacaoController;
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;;
+import java.time.ZoneId;import java.util.logging.Level;
+import java.util.logging.Logger;
+;
 import javax.swing.JOptionPane;
 
 /**
@@ -41,6 +39,64 @@ public class TelaEditaMovimentacao extends javax.swing.JFrame {
     }
     
     private void setMovimentacao() {
+        
+        MovimentacaoController controller = new MovimentacaoController();
+        
+        MovimentacaoFinanceira movimentacao;
+        
+        try {
+            movimentacao = controller.getMovimentacao(idMovimentacao);
+            
+            descricaoMovimentacao.setText(movimentacao.getDescricao());
+            dataMovimentacao.setDate(Date.valueOf(movimentacao.getData()));
+            valorMovimentacao.setText(String.valueOf(movimentacao.getValor()));
+
+            switch (movimentacao.getTipo()) {
+                case "entrada":
+                    tipoMovimentacao.setSelectedIndex(0);
+                    break;
+                case "saida":
+                    tipoMovimentacao.setSelectedIndex(1);
+                    break;
+            }
+
+            switch (movimentacao.getCategoria()) {
+                case "alimentação":
+                    categoriaMovimentacao.setSelectedIndex(0);
+                    break;
+                case "cartão de crédito":
+                    categoriaMovimentacao.setSelectedIndex(1);
+                    break;
+                case "despesa doméstica - aluguel":
+                    categoriaMovimentacao.setSelectedIndex(2);
+                    break;
+                case "despesa doméstica - água":
+                    categoriaMovimentacao.setSelectedIndex(3);
+                    break;
+                case "despesa doméstica - luz":
+                    categoriaMovimentacao.setSelectedIndex(4);
+                    break;
+                case "despesa doméstica - intenet":
+                    categoriaMovimentacao.setSelectedIndex(5);
+                    break;
+                case "saúde":
+                    categoriaMovimentacao.setSelectedIndex(6);
+                    break;
+                case "pessoal":
+                    categoriaMovimentacao.setSelectedIndex(7);
+                    break;
+                case "outros":
+                    categoriaMovimentacao.setSelectedIndex(8);
+                    break;
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaEditaMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TelaEditaMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaEditaMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -73,7 +129,7 @@ public class TelaEditaMovimentacao extends javax.swing.JFrame {
         jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Movimentações");
+        setTitle("Ediçao de Movimentações");
         setBounds(new java.awt.Rectangle(520, 275, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
@@ -179,12 +235,9 @@ public class TelaEditaMovimentacao extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(categoriaMovimentacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tipoMovimentacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(valorMovimentacao)))
+                            .addComponent(valorMovimentacao)
+                            .addComponent(tipoMovimentacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(categoriaMovimentacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)

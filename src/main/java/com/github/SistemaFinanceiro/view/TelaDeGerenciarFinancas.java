@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.0
+ * @version 1.1
  * @since 8.0
  */
 public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
@@ -81,6 +81,7 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciar Financas");
         setBounds(new java.awt.Rectangle(375, 275, 0, 0));
+        setLocation(new java.awt.Point(0, 0));
         setResizable(false);
 
         jLabel1.setText("Data Inicial");
@@ -220,6 +221,8 @@ public class TelaDeGerenciarFinancas extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         MovimentacaoFinanceira movimentacao = movimentacoes.get(jTable1.getSelectedRow());
+        TelaEditaMovimentacao editMov = new TelaEditaMovimentacao(idUsuario, movimentacao.getId());
+        editMov.setVisible(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     /**
