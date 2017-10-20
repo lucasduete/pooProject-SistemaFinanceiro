@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Dfile.encoding=latin1 -classpath %classpath com.github.SistemaFinanceiro.view.TelaDeLogin</exec.args>
+                <exec.args>-Dfile.encoding=latin1 -classpath %classpath com.github.SistemaFinanceiro.view.TelaLogin</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
