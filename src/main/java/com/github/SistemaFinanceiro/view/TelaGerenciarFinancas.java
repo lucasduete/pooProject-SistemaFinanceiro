@@ -11,14 +11,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.4
+ * @version 1.5
  * @since 8.0
  */
 public class TelaGerenciarFinancas extends javax.swing.JFrame {
@@ -197,10 +196,6 @@ public class TelaGerenciarFinancas extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        
-        if(dataFim.getDate() != null && dataInicio.getDate() != null)
-            return;
-        
         MovimentacaoController controller = new MovimentacaoController();
         LocalDate dataInicial = null;
         LocalDate dataFinal = null;
@@ -217,6 +212,15 @@ public class TelaGerenciarFinancas extends javax.swing.JFrame {
         }
         
         try {
+            
+            for(int i = 0; i < movimentacoes.size(); i++) {
+                jTable1.setValueAt(null, i, 0);
+                jTable1.setValueAt(null, i, 1);
+                jTable1.setValueAt(null, i, 2);
+                jTable1.setValueAt(null, i, 3);
+                jTable1.setValueAt(null, i, 4);
+            }
+            
             movimentacoes = controller.encontrarPorData(idUsuario, dataInicial, dataFinal);
             
             for(int i = 0; i < movimentacoes.size(); i++) {

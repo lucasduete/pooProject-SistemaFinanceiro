@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
  * Financeiras como o Metodo para Salvar e Listar por Data.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.3
+ * @version 1.4
  * @since 8.0
  */
 
