@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.1
+ * @version 1.2
  * @since 8.0
  */
 public class TelaPerfil extends javax.swing.JFrame {
@@ -37,7 +37,7 @@ public class TelaPerfil extends javax.swing.JFrame {
 
     private void setPerfil() {
         try {
-            Usuario user = new UsuarioController().getUsuario(idUsuario);
+            Usuario user = new UsuarioController().getById(idUsuario);
             
             nomeCadastro.setText(user.getNome());
             emailcadastro.setText(user.getEmail());

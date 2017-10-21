@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.2
+ * @version 1.3
  * @since 8.0
  */
 public class TelaEditaMovimentacao extends javax.swing.JFrame {
@@ -40,12 +40,12 @@ public class TelaEditaMovimentacao extends javax.swing.JFrame {
     
     private void setMovimentacao() {
         
-        MovimentacaoController controller = new MovimentacaoController();
+        MovimentacaoController controller = new MovimentacaoController(idUsuario);
         
         MovimentacaoFinanceira movimentacao;
         
         try {
-            movimentacao = controller.getMovimentacao(idMovimentacao);
+            movimentacao = controller.getById(idMovimentacao);
             
             descricaoMovimentacao.setText(movimentacao.getDescricao());
             dataMovimentacao.setDate(Date.valueOf(movimentacao.getData()));
@@ -300,7 +300,7 @@ public class TelaEditaMovimentacao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Preencha todos os Dados", "Dados Invalidos", JOptionPane.ERROR_MESSAGE);
         } else {
             
-            MovimentacaoController controller = new MovimentacaoController();
+            MovimentacaoController controller = new MovimentacaoController(idUsuario);
             
             String descricao = descricaoMovimentacao.getText();
             LocalDate data = dataMovimentacao.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -316,7 +316,7 @@ public class TelaEditaMovimentacao extends javax.swing.JFrame {
                     data, valor, tipo, categoria, idUsuario);
             
             try {
-                controller.atualizarMovimentacao(movimentacao);
+                controller.atualizar(movimentacao);
                 
                 JOptionPane.showMessageDialog(null, "Movimentaçao Atualiza com Sucesso.", 
                         "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -362,10 +362,10 @@ public class TelaEditaMovimentacao extends javax.swing.JFrame {
     private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
         // TODO add your handling code here:
         
-        MovimentacaoController controller = new MovimentacaoController();
+        MovimentacaoController controller = new MovimentacaoController(idUsuario);
         
             try {
-                controller.deletarMovimentacao(
+                controller.remover(
                         new MovimentacaoFinanceira(idMovimentacao, null, 
                                 null, null, null, null, idUsuario)
                 );

@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.5
+ * @version 1.6
  * @since 8.0
  */
 public class TelaGerenciarFinancas extends javax.swing.JFrame {
@@ -41,10 +41,10 @@ public class TelaGerenciarFinancas extends javax.swing.JFrame {
     
     private void setTable() {
         
-        MovimentacaoController controller = new MovimentacaoController();
+        MovimentacaoController controller = new MovimentacaoController(idUsuario);
         
         try {
-            movimentacoes = controller.encontrarPorUsuario(idUsuario);
+            movimentacoes = controller.listarByUsuario(idUsuario);
             
             for(int i = 0; i < movimentacoes.size(); i++) {
                 jTable1.setValueAt(movimentacoes.get(i).getDescricao(), i, 0);
@@ -196,7 +196,7 @@ public class TelaGerenciarFinancas extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        MovimentacaoController controller = new MovimentacaoController();
+        MovimentacaoController controller = new MovimentacaoController(idUsuario);
         LocalDate dataInicial = null;
         LocalDate dataFinal = null;
         Instant instant = null;

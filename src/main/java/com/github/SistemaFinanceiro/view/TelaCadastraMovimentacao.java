@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.2
+ * @version 1.3
  * @since 8.0
  */
 public class TelaCadastraMovimentacao extends javax.swing.JFrame {
@@ -224,7 +224,7 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Preencha todos os Dados", "Dados Invalidos", JOptionPane.ERROR_MESSAGE);
         } else {
             
-            MovimentacaoController controller = new MovimentacaoController();
+            MovimentacaoController controller = new MovimentacaoController(idUsuario);
             
             String descricao = descricaoMovimentacao.getText();
             LocalDate data = dataMovimentacao.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -240,7 +240,7 @@ public class TelaCadastraMovimentacao extends javax.swing.JFrame {
                     data, valor, tipo, categoria, idUsuario);
             
             try {
-                controller.salvarMovimentacao(movimentacao);
+                controller.salvar(movimentacao);
                 
                 this.dispose();
             } catch (IOException ex) {
