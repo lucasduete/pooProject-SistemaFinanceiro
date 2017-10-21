@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * de Backup, Realizando assim todo o CRUD em Arquivos Binarios para o 
  * Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.3
+ * @version 1.6
  * @since 8.0
  */
 public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
@@ -72,6 +72,11 @@ public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
     public boolean salvar(MovimentacaoFinanceira movimentacao) 
             throws ClassNotFoundException, IOException, SQLException {
         List<MovimentacaoFinanceira> movimentacoes = listar();
+        
+        int size = movimentacoes.size();
+        movimentacao.setId(
+                movimentacoes.get(size).getId() + 1
+        );
         
         if (movimentacoes.add(movimentacao)) {
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(transactions));

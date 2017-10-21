@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * de Backup, Realizando assim todo o CRUD em Arquivos Binarios para o 
  * Objeto Usuario.
  * @author Lucas Duete e Kaique Augusto.
- * @version 1.4
+ * @version 1.6
  * @since 8.0
  */
 public class UsuarioArquivoDao implements UserDaoInterface {
