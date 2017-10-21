@@ -1,6 +1,5 @@
 package com.github.SistemaFinanceiro.interfaces;
 
-import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -14,10 +13,12 @@ public interface DaoInterface<T extends Serializable> {
     
     public final String PATHNAME = "./Backup";
     
-    public boolean salvar(T obj)  throws ClassNotFoundException, IOException, SQLException;
+    public boolean salvar(T obj) 
+            throws ClassNotFoundException, IOException, SQLException;
     public List<T> listar() throws ClassNotFoundException, IOException, SQLException;
     public boolean remover(T obj) throws ClassNotFoundException, IOException, SQLException;
-    public boolean atualizar(T obj) throws ClassNotFoundException, IOException, SQLException;
+    public boolean atualizar(T obj) 
+            throws ClassNotFoundException, IOException, SQLException;
     public T getById(int id) throws IOException, ClassNotFoundException, SQLException;
     
 }

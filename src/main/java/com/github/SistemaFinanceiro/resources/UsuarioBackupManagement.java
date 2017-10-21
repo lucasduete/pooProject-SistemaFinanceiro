@@ -2,6 +2,7 @@ package com.github.SistemaFinanceiro.resources;
 
 import com.github.SistemaFinanceiro.dao.UsuarioArquivoDao;
 import com.github.SistemaFinanceiro.dao.UsuarioBancoDao;
+import com.github.SistemaFinanceiro.exceptions.UniqueException;
 import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import com.github.SistemaFinanceiro.interfaces.UserDaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
@@ -39,7 +40,8 @@ public class UsuarioBackupManagement implements SGBDErrosInterface, UserDaoInter
     }
     
     @Override
-    public boolean salvar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+    public boolean salvar(Usuario user) 
+            throws ClassNotFoundException, IOException, SQLException, UniqueException {
         OP_INSERT = true;
         usuariosSalvar.push(user);
         atualizarBD(1);
@@ -60,7 +62,8 @@ public class UsuarioBackupManagement implements SGBDErrosInterface, UserDaoInter
     }
 
     @Override
-    public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+    public boolean atualizar(Usuario user) 
+            throws ClassNotFoundException, IOException, SQLException, UniqueException {
         OP_UPDATE = true;
         usuariosAtualizar.push(user);
         atualizarBD(3);

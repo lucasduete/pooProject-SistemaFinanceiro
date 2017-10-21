@@ -1,5 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
+import com.github.SistemaFinanceiro.exceptions.UniqueException;
 import com.github.SistemaFinanceiro.interfaces.UserDaoInterface;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -57,8 +58,17 @@ public class UsuarioArquivoDao implements UserDaoInterface {
      */
 
     @Override
-    public boolean salvar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+    public boolean salvar(Usuario user) 
+            throws ClassNotFoundException, IOException, SQLException, UniqueException {
         List<Usuario> usuarios = listar();
+        
+        int size = usuarios.size();
+        user.setId (
+                usuarios.get(size).getId() + 1
+            );
+        
+        if(emailUnico(user.getEmail()))
+            throw new UniqueException();
         
         if (usuarios.add(user)) {
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(users));
@@ -125,8 +135,12 @@ public class UsuarioArquivoDao implements UserDaoInterface {
      */
 
     @Override
-    public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+    public boolean atualizar(Usuario user) 
+            throws ClassNotFoundException, IOException, SQLException, UniqueException {
         List<Usuario> usuarios = listar();
+        
+        if(emailUnico(user.getEmail()))
+            throw new UniqueException();
         
         for(int i = 0; i < usuarios.size(); i++) {
             if(usuarios.get(i).getId() == user.getId()) {
@@ -188,5 +202,14 @@ public class UsuarioArquivoDao implements UserDaoInterface {
         return -1;
     }
     
+    private boolean emailUnico(String email) throws IOException, ClassNotFoundException, SQLException {
+        List<Usuario> users = listar();
+        
+        for (Usuario user: users)
+            if (user.getEmail().equals(email))
+                return false;        
+        
+        return true;
+    }
     
 }

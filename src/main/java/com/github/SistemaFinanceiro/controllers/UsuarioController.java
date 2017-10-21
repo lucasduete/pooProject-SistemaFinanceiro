@@ -1,9 +1,9 @@
 package com.github.SistemaFinanceiro.controllers;
 
-import com.github.SistemaFinanceiro.dao.UsuarioArquivoDao;
 import com.github.SistemaFinanceiro.dao.UsuarioBancoDao;
 import com.github.SistemaFinanceiro.exceptions.AtualizacaoUsuarioInvalidaException;
 import com.github.SistemaFinanceiro.exceptions.FailDaoException;
+import com.github.SistemaFinanceiro.exceptions.UniqueException;
 import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import com.github.SistemaFinanceiro.interfaces.UserDaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
@@ -44,7 +44,8 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
     }
 
     @Override
-    public boolean salvar(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+    public boolean salvar(Usuario user) 
+            throws ClassNotFoundException, IOException, SQLException, UniqueException {
         return usuarioDao.salvar(user);
     }
 
@@ -60,7 +61,8 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
 
     @Override
     @Deprecated
-    public boolean atualizar(Usuario user) throws ClassNotFoundException, IOException, SQLException {        
+    public boolean atualizar(Usuario user) 
+            throws ClassNotFoundException, IOException, SQLException, UniqueException {        
         return usuarioDao.atualizar(user);
     }
 
@@ -75,7 +77,8 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
     }
     
     public boolean atualizarSafe(Usuario user) 
-            throws ClassNotFoundException, IOException, SQLException, AtualizacaoUsuarioInvalidaException {
+            throws  ClassNotFoundException, IOException, SQLException, AtualizacaoUsuarioInvalidaException, 
+                    UniqueException {
         
         if (! (validarSenha(user.getId(), user.getPassword())))
             throw new AtualizacaoUsuarioInvalidaException("Senha Antiga Invalida");
@@ -84,7 +87,8 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
     }
     
     public boolean atualizarSafe(Usuario user, String novaSenha, String antigaSenha) 
-            throws ClassNotFoundException, IOException, SQLException, AtualizacaoUsuarioInvalidaException {
+            throws  ClassNotFoundException, IOException, SQLException, AtualizacaoUsuarioInvalidaException,
+                    UniqueException {
         
         if (! (validarSenha(user.getId(), antigaSenha)))
             throw new AtualizacaoUsuarioInvalidaException("Senha Antiga Invalida");
