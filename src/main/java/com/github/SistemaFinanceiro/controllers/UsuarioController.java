@@ -1,32 +1,46 @@
 package com.github.SistemaFinanceiro.controllers;
 
+import com.github.SistemaFinanceiro.dao.UsuarioArquivoDao;
 import com.github.SistemaFinanceiro.dao.UsuarioBancoDao;
 import com.github.SistemaFinanceiro.exceptions.AtualizacaoUsuarioInvalidaException;
+import com.github.SistemaFinanceiro.exceptions.FailDaoException;
+import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import com.github.SistemaFinanceiro.interfaces.UserDaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  * Esta Classe Encapsula todos os Metodos de Controle de Usurios 
  * como o Metodo para Salvar e Autenticar.
  * @author Lucas Duete
- * @version 2.0
+ * @version 2.1
  * @since 8.0
  */
 
-public class UsuarioController implements UserDaoInterface {
+public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
     
     public UserDaoInterface usuarioDao;
+    private static boolean ERROR_BD = false;
     
     public UsuarioController () {
         try {
             usuarioDao = new UsuarioBancoDao();
+            
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco", 
-                    "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+            
+            try {            
+                instanciaError(ex);
+                
+            } catch (FailDaoException ex1) {
+                JOptionPane.showMessageDialog(null, "Falha Total de Sistema",
+                        "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
     }
 
@@ -84,6 +98,26 @@ public class UsuarioController implements UserDaoInterface {
         Usuario user = usuarioDao.getById(Id);
         
         return (user.getPassword().equals(password));
+    }
+    
+    private void instanciaError(Exception ex) throws FailDaoException {
+        
+        if (!ex.getMessage().contains(ERROR_GERAL))
+                return;
+        
+        try {
+            
+            if (ERROR_BD == false) {
+                JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco, Usando Backups",
+                        "TEMPORAL ERROR", JOptionPane.INFORMATION_MESSAGE);
+                ERROR_BD = true;
+            }
+            
+            usuarioDao = new UsuarioArquivoDao();
+            
+        } catch (IOException ex1) {
+            throw new FailDaoException();
+        }
     }
     
 }

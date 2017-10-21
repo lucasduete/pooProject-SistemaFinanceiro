@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * de Backup, Realizando assim todo o CRUD em Arquivos Binarios para o 
  * Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.1
+ * @version 1.3
  * @since 8.0
  */
 public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
@@ -34,27 +34,27 @@ public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
      * contendo respectivamente a pasta de Backup e o Arquivo de 
      * Backup dos Usuarios. Neste metodo tambem sao verificados 
      * se tais Arquivos Existem e Caso Bao os Mesmos sao Criados.
-     * @param nomeUser String que Contem o Nome do Usuario que Esta Realizando 
+     * @param idUsuario Integer que Contem o ID do Usuario que Esta Realizando 
      * Operacoes sobre os Arquivos Binarios.
+     * @throws NullDirectoryException Disparado Quando O Diretorio de Backups 
+     * for Deletado em Tempo de Execuçao.
+     * @throws IOException Disparado Caso Haja Algum Erro de I/O.
      */
     
-    public MovimentacaoArquivoDao(String nomeUser) {
+    public MovimentacaoArquivoDao(Integer idUsuario) throws NullDirectoryException, IOException {
         diretorio = new File(PATHNAME);
-        transactions = new File(PATHNAME + "/" + nomeUser.hashCode() + ".bin");
+        transactions = new File(PATHNAME + "/" + idUsuario.hashCode() + ".bin");
         
-        
-        try {
-            if(!diretorio.exists())
-                throw new NullDirectoryException("Diretorio Nao Encontrado ao Gerenciar Movimentacoes para "
-                        + "usuario: " + nomeUser);
+        if(!diretorio.exists())
+            throw new NullDirectoryException("Diretorio Nao Encontrado ao Gerenciar Movimentacoes "
+                    + "para usuario: " + idUsuario);
             
-            if(!transactions.exists())
-                transactions.createNewFile();
+        if(!transactions.exists())
+            transactions.createNewFile();
         
-        } catch (NullDirectoryException | IOException ex) {
-            JOptionPane.showMessageDialog(null, "Falha no Backup do Banco",
-                        "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        JOptionPane.showMessageDialog(null, "Falha no Backup do Banco",
+            "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+        
     }
     
     /**
@@ -183,6 +183,27 @@ public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
                 return movimentacao;
         
         return null;
+    }
+    
+    
+    /**
+     * Este Metodo Encapsula o Acesso aos Arquivos de Backup Realizando a
+     * Operacao de Listagem de Todas as Movimentacoes Financeiras de um Usuario no Arquivo 
+     * Binario.
+     * @param idUsuario Int que Possui o Id do Usuario que Tera suas Movimentacoes Retornadas.
+     * @return ArrayList de Objetos do Tipo MovimentacaoFinanceira que Contem Todas as Movimentacoes 
+     * Financeiras que Estao no Arquivo Binario Referente a um Usuario.
+     * @throws ClassNotFoundException Disparado por Falta de Biblioteca.
+     * @throws IOException Disparado Caso Haja Algum Erro de I/O.
+     * @throws SQLException Nunca e Disparado, Necessario por Implementar a Interface DaoInteface.
+     * @deprecated Pois possui a Mesma Funcionalidade do Metodo Listar() Desta Classe
+     */
+    
+    @Override
+    @Deprecated
+    public List<MovimentacaoFinanceira> listarByUsuario(int idUsuario) 
+            throws ClassNotFoundException, IOException, SQLException {
+        return listar();
     }
     
 }

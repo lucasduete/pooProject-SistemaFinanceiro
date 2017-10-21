@@ -1,11 +1,15 @@
 package com.github.SistemaFinanceiro.controllers;
 
+import com.github.SistemaFinanceiro.dao.MovimentacaoArquivoDao;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import com.github.SistemaFinanceiro.dao.MovimentacaoBancoDao;
+import com.github.SistemaFinanceiro.exceptions.FailDaoException;
+import com.github.SistemaFinanceiro.exceptions.NullDirectoryException;
 import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
+import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,25 +19,35 @@ import javax.swing.JOptionPane;
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
  * Financeiras como o Metodo para Salvar e Listar por Data.
  * @author Lucas Duete e Kaique Augusto
- * @version 2.0
+ * @version 2.2
  * @since 8.0
  */
 
-public class MovimentacaoController implements MovimentacaoDaoInterface {
+public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErrosInterface {
     
-    private MovimentacaoBancoDao movimentacaoDao;
+    private MovimentacaoDaoInterface movimentacaoDao;
+    private static boolean ERROR_BD = false;
     
     /**
      * Construtor Padrao da Classe MovimentacaoController Onde e Instanciada a um Objeto do 
      * Tipo MovimentacaoBancoDao para Realizar as Operacoes em Banco.
+     * @param idUsuario Integer que Contem o ID do Usuario que Esta Realizando 
+     * Operaçoes.
      */
     
-    public MovimentacaoController() {
+    public MovimentacaoController(int idUsuario) {
         try {
             movimentacaoDao = new MovimentacaoBancoDao();
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco", 
-                    "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+            
+            try {
+                instanciaError(ex, idUsuario);
+                
+            } catch (FailDaoException ex1) {
+                JOptionPane.showMessageDialog(null, "Falha Total e Acesso aos Dados de Sistema",
+                        "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
     }
 	
@@ -141,7 +155,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface {
      * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
      */
     
-    public List<MovimentacaoFinanceira> encontrarPorUsuario(int idUsuario) 
+    @Override
+    public List<MovimentacaoFinanceira> listarByUsuario(int idUsuario) 
             throws ClassNotFoundException, IOException, SQLException{
             
         return movimentacaoDao.listarByUsuario(idUsuario);
@@ -198,4 +213,24 @@ public class MovimentacaoController implements MovimentacaoDaoInterface {
         return movimentacoes;
     }
 
+    private void instanciaError(Exception ex, int idUsuario) throws FailDaoException {
+        
+        if (!ex.getMessage().contains(ERROR_GERAL))
+                return;
+        
+        try {
+            
+            if (ERROR_BD == false) {
+                JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco, Usando Backups",
+                        "TEMPORAL ERROR", JOptionPane.INFORMATION_MESSAGE);
+                ERROR_BD = true;
+            }
+            
+            movimentacaoDao = new MovimentacaoArquivoDao(idUsuario);
+            
+        } catch (NullDirectoryException | IOException ex1) {
+            throw new FailDaoException();
+        }
+    }
+    
 }

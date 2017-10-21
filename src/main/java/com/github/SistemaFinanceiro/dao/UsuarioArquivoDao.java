@@ -12,20 +12,19 @@ import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  * Esta Classe Contem os Metodos que Encapsulam o Acesso aos Arquivos
  * de Backup, Realizando assim todo o CRUD em Arquivos Binarios para o 
  * Objeto Usuario.
  * @author Lucas Duete e Kaique Augusto.
- * @version 1.2
+ * @version 1.4
  * @since 8.0
  */
 public class UsuarioArquivoDao implements UserDaoInterface {
     
     private final File diretorio;
-    private File users;
+    private final File users;
     
     /**
      * Construtor da Classe, 
@@ -33,9 +32,10 @@ public class UsuarioArquivoDao implements UserDaoInterface {
      * contendo respectivamente a pasta de Backup e o Arquivo de 
      * Backup dos Usuarios. Neste metodo tambem sao verificados 
      * se tais Arquivos Existem e Caso Bao os Mesmos sao Criados.
+     * @throws IOException Disparado Caso Haja Algum Erro de I/O ao Criar o Arquivo de Backups.
      */
     
-    public UsuarioArquivoDao() {
+    public UsuarioArquivoDao() throws IOException {
         diretorio = new File(PATHNAME);
         users = new File(PATHNAME + "/users.bin");
         
@@ -43,12 +43,7 @@ public class UsuarioArquivoDao implements UserDaoInterface {
                 diretorio.mkdir();
         
         if (!users.exists())
-            try {
                 users.createNewFile();
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Falha no Backup do Banco",
-                        "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
-            }
     }
     
     /**

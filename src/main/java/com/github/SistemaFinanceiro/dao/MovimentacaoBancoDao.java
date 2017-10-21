@@ -18,7 +18,7 @@ import java.util.List;
  * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
  * Realizando Assim todo o CRUD para o Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.3
+ * @version 1.4
  * @since 8.0
  */
 public class MovimentacaoBancoDao implements MovimentacaoDaoInterface {
@@ -197,6 +197,7 @@ public class MovimentacaoBancoDao implements MovimentacaoDaoInterface {
      * Banco de Dados ou uma Operaçao no Mesmo
      */
     
+    @Override
     public List<MovimentacaoFinanceira> listarByUsuario(int idUsuario) 
                 throws ClassNotFoundException, IOException, SQLException {
                 
