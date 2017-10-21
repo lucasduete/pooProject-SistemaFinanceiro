@@ -1,7 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
-import com.github.SistemaFinanceiro.interfaces.AutenticacaoInterface;
-import com.github.SistemaFinanceiro.interfaces.DaoInterface;
+import com.github.SistemaFinanceiro.interfaces.UserDaoInterface;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,10 +19,10 @@ import javax.swing.JOptionPane;
  * de Backup, Realizando assim todo o CRUD em Arquivos Binarios para o 
  * Objeto Usuario.
  * @author Lucas Duete e Kaique Augusto.
- * @version 1.0
+ * @version 1.2
  * @since 8.0
  */
-public class UsuarioArquivoDao implements DaoInterface<Usuario>, AutenticacaoInterface{
+public class UsuarioArquivoDao implements UserDaoInterface {
     
     private final File diretorio;
     private File users;

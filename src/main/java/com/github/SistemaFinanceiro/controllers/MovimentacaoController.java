@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import com.github.SistemaFinanceiro.dao.MovimentacaoBancoDao;
+import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,13 +15,13 @@ import javax.swing.JOptionPane;
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
  * Financeiras como o Metodo para Salvar e Listar por Data.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.5
+ * @version 2.0
  * @since 8.0
  */
 
-public class MovimentacaoController {
+public class MovimentacaoController implements MovimentacaoDaoInterface {
     
-    private MovimentacaoBancoDao bancoDao;
+    private MovimentacaoBancoDao movimentacaoDao;
     
     /**
      * Construtor Padrao da Classe MovimentacaoController Onde e Instanciada a um Objeto do 
@@ -29,7 +30,7 @@ public class MovimentacaoController {
     
     public MovimentacaoController() {
         try {
-            bancoDao = new MovimentacaoBancoDao();
+            movimentacaoDao = new MovimentacaoBancoDao();
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco", 
                     "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
@@ -48,11 +49,85 @@ public class MovimentacaoController {
      * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
      */
     
-    public boolean salvarMovimentacao(MovimentacaoFinanceira movimentacao) 
+    @Override
+    public boolean salvar(MovimentacaoFinanceira movimentacao) 
             throws ClassNotFoundException, IOException, SQLException {
-        return bancoDao.salvar(movimentacao);
+        return movimentacaoDao.salvar(movimentacao);
     }
     
+    /**
+     * Este Metodo Realiza a Operaçao de Listagem de Todas as Movimentacoes F
+     * inanceiras Salvas no Banco de Dados e nos Backups.
+     * @return ArrayList de Objetos MovimentacaoFinanceira, Retorna uma Lista Vazia Caso Nao Haja 
+     * Nenhuma Movimentacao Salva.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     * @deprecated Pois Lista Todas as Movimentaçoes de Todos os Usuarios.
+     */
+
+    @Override
+    @Deprecated
+    public List<MovimentacaoFinanceira> listar() 
+            throws ClassNotFoundException, IOException, SQLException {                
+        return movimentacaoDao.listar();
+    }
+        
+    /**
+     * Este Metodo Realiza a Atualizacao de uma Movimentacao Tanto no Banco de Dados como no 
+     * Backup em Arquivos Binarios.
+     * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que contem os novos dados 
+     * de uma Movimentacao para ser Atualizada no Banco de Dados e no Backup.
+     * @return True Se Foi Possivel Atualizar a Movimentacao, False Se Nao foi Possivel Atualizar a Movimentacao.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     */
+    
+    @Override
+    public boolean atualizar(MovimentacaoFinanceira movimentacao)
+                throws ClassNotFoundException, IOException, SQLException {
+        return movimentacaoDao.atualizar(movimentacao);
+    }
+	
+    /**
+     * Este Metodo Realiza a Remocao de uma Movimentacao Tanto no Banco de Dados como no 
+     * Backup em Arquivos Binarios.
+     * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que contem a Movimentacao que sera Removida
+     * do Banco de Dados e Do Backup.
+     * @return True Se Foi Possivel Deletar a Movimentacao, False Se Nao foi Possivel Remover a Movimentacao.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     */
+    
+    @Override
+    public boolean remover(MovimentacaoFinanceira movimentacao) 
+            throws ClassNotFoundException, IOException, SQLException {
+	return movimentacaoDao.remover(movimentacao);
+    }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco de Dados Retornando Todas as 
+     * Informaçoes sobre uma Movimentacao Financeira Salva no Banco de Dados.
+     * @param idMovimentacao Variavel Inteira que contem o Id da Movimentacao Financeira cuja 
+     * qual Deseja-se as Informaçoes.
+     * @return Objeto do Tipo MovimentacaoFinanceira Preenchida com Todas as Informaçoes Referentes 
+     * aquela Movimentacao Salva no Banco com tal Id.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     */
+    
+    @Override
+    public MovimentacaoFinanceira getById(int idMovimentacao) 
+            throws ClassNotFoundException, IOException, SQLException {        
+        return movimentacaoDao.getById(idMovimentacao);        
+    }
     
     /**
      * Este Metodo Lista todas as Movimentacoes Cadastradas de um Usuario.
@@ -69,7 +144,7 @@ public class MovimentacaoController {
     public List<MovimentacaoFinanceira> encontrarPorUsuario(int idUsuario) 
             throws ClassNotFoundException, IOException, SQLException{
             
-        return bancoDao.listarByUsuario(idUsuario);
+        return movimentacaoDao.listarByUsuario(idUsuario);
     }
     
     /**
@@ -93,7 +168,7 @@ public class MovimentacaoController {
     public List<MovimentacaoFinanceira> encontrarPorData(int idUsuario, LocalDate dataInicio, LocalDate dataFim) 
             throws ClassNotFoundException, IOException, SQLException{
             
-        List<MovimentacaoFinanceira> transactions = bancoDao.listarByUsuario(idUsuario);
+        List<MovimentacaoFinanceira> transactions = movimentacaoDao.listarByUsuario(idUsuario);
         List<MovimentacaoFinanceira> movimentacoes = new ArrayList<>();
     
         
@@ -121,58 +196,6 @@ public class MovimentacaoController {
         }
             
         return movimentacoes;
-    }
-        
-    /**
-     * Este Metodo Realiza a Atualizacao de uma Movimentacao Tanto no Banco de Dados como no 
-     * Backup em Arquivos Binarios.
-     * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que contem os novos dados 
-     * de uma Movimentacao para ser Atualizada no Banco de Dados e no Backup.
-     * @return True Se Foi Possivel Atualizar a Movimentacao, False Se Nao foi Possivel Atualizar a Movimentacao.
-     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
-     * a Aplicaçao.
-     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
-     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
-     */
-    
-    public boolean atualizarMovimentacao(MovimentacaoFinanceira movimentacao)
-                throws ClassNotFoundException, IOException, SQLException {
-        return bancoDao.atualizar(movimentacao);
-    }
-	
-    /**
-     * Este Metodo Realiza a Remocao de uma Movimentacao Tanto no Banco de Dados como no 
-     * Backup em Arquivos Binarios.
-     * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que contem a Movimentacao que sera Removida
-     * do Banco de Dados e Do Backup.
-     * @return True Se Foi Possivel Deletar a Movimentacao, False Se Nao foi Possivel Remover a Movimentacao.
-     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
-     * a Aplicaçao.
-     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
-     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
-     */
-    
-    public boolean deletarMovimentacao(MovimentacaoFinanceira movimentacao) 
-            throws ClassNotFoundException, IOException, SQLException {
-	return bancoDao.remover(movimentacao);
-    }
-    
-    /**
-     * Este Metodo Encapsula o Acesso ao Banco de Dados Retornando Todas as 
-     * Informaçoes sobre uma Movimentacao Financeira Salva no Banco de Dados.
-     * @param idMovimentacao Variavel Inteira que contem o Id da Movimentacao Financeira cuja 
-     * qual Deseja-se as Informaçoes.
-     * @return Objeto do Tipo MovimentacaoFinanceira Preenchida com Todas as Informaçoes Referentes 
-     * aquela Movimentacao Salva no Banco com tal Id.
-     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
-     * a Aplicaçao.
-     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
-     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
-     */
-    
-    public MovimentacaoFinanceira getMovimentacao(int idMovimentacao) 
-            throws ClassNotFoundException, IOException, SQLException {        
-        return bancoDao.getMovimentacao(idMovimentacao);        
     }
 
 }

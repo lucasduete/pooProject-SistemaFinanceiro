@@ -1,7 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
-import com.github.SistemaFinanceiro.interfaces.AutenticacaoInterface;
-import com.github.SistemaFinanceiro.interfaces.DaoInterface;
+import com.github.SistemaFinanceiro.interfaces.UserDaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,11 +18,11 @@ import java.util.List;
  * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
  * Realizando Assim todo o CRUD para o Objeto MovimentacaoFinanceira. 
  * @author Lucas Duete e Kaique Augusto
- * @version 1.0
+ * @version 1.2
  * @since 8.0
  */
 
-public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInterface{
+public class UsuarioBancoDao implements UserDaoInterface {
 
     private final Connection conn;
     

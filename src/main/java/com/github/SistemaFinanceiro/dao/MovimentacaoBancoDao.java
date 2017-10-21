@@ -1,6 +1,6 @@
 package com.github.SistemaFinanceiro.dao;
 
-import com.github.SistemaFinanceiro.interfaces.DaoInterface;
+import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,10 +18,10 @@ import java.util.List;
  * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
  * Realizando Assim todo o CRUD para o Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.1
+ * @version 1.3
  * @since 8.0
  */
-public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira> {
+public class MovimentacaoBancoDao implements MovimentacaoDaoInterface {
     
     private final Connection conn;
     
@@ -82,7 +82,7 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
      * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
      * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
      * Banco de Dados ou uma Operaçao no Mesmo
-     * @deprecated
+     * @deprecated Pois Lista Todas as Movimentaçoes de Todos os Usuarios.
      */
 
     @Override

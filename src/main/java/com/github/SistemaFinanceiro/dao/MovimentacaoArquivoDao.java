@@ -1,7 +1,7 @@
 package com.github.SistemaFinanceiro.dao;
 
-import com.github.SistemaFinanceiro.interfaces.DaoInterface;
 import com.github.SistemaFinanceiro.exceptions.NullDirectoryException;
+import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
 import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,10 +19,10 @@ import javax.swing.JOptionPane;
  * de Backup, Realizando assim todo o CRUD em Arquivos Binarios para o 
  * Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.0
+ * @version 1.1
  * @since 8.0
  */
-public class MovimentacaoArquivoDao implements DaoInterface<MovimentacaoFinanceira> {
+public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
     
     private final File diretorio;
     private final File transactions;
