@@ -298,6 +298,12 @@ public class TelaPerfil extends javax.swing.JFrame {
                 jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()
                 < 18  ) {
             JOptionPane.showMessageDialog(null, "Apenas Usuarios com +18 Anos Usar o Sistema", "Idade Invalida", JOptionPane.ERROR_MESSAGE);
+        }else if (!emailcadastro.getText().contains("@") ||
+                emailcadastro.getText().length() > 100 ||
+                nomeCadastro.getText().length() > 100 || 
+                senhaNova.getPassword().length > 32 ||
+                senhaAtual.getPassword().length > 32) {
+            JOptionPane.showMessageDialog(null, "Verifique os Dados e Tente Novamente", "Dados Invalidos", JOptionPane.ERROR_MESSAGE);
         } else {
             
             UsuarioController controller = new UsuarioController();

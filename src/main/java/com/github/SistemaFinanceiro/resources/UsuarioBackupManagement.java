@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * 
  * @author Lucas Duete
- * @version 1.0
+ * @version 1.2
  * @since 8.0
  */
 public class UsuarioBackupManagement implements SGBDErrosInterface, UserDaoInterface {
@@ -30,7 +30,7 @@ public class UsuarioBackupManagement implements SGBDErrosInterface, UserDaoInter
     private static final Stack<Usuario> usuariosRemover = new Stack<>();
     private static final Stack<Usuario> usuariosAtualizar = new Stack<>();
     
-    private final CountDownLatch loginLatch = new CountDownLatch (1);
+    private final CountDownLatch delay = new CountDownLatch (1);
     
     private final UsuarioArquivoDao usuarioDao;
     
@@ -91,35 +91,29 @@ public class UsuarioBackupManagement implements SGBDErrosInterface, UserDaoInter
                 
                     UsuarioBancoDao daoBanco = new UsuarioBancoDao();
 
-                    while(!usuariosSalvar.empty())
-                        switch (mode) {
-                            case 1: 
-                                daoBanco.salvar(usuariosSalvar.pop());
-                                break;
-                            case 2 :
-                                daoBanco.remover(usuariosSalvar.pop());
-                                break;
-                            case 3:
-                                daoBanco.atualizar(usuariosSalvar.pop());
-                                break;
-                        }
                     
                     switch (mode) {
-                            case 1: 
-                                OP_INSERT = false; 
-                                break;
-                            case 2 :
-                                OP_REMOVE = false; 
-                                break;
-                            case 3:
-                                OP_UPDATE = false; 
-                                break;
-                        }
+                        case 1: 
+                            while(!usuariosSalvar.empty())
+                                daoBanco.salvar(usuariosSalvar.pop());
+                            OP_INSERT = false; 
+                            break;
+                        case 2 :
+                            while(!usuariosRemover.empty())
+                                daoBanco.remover(usuariosRemover.pop());
+                            OP_REMOVE = false; 
+                            break;
+                        case 3:
+                            while(!usuariosAtualizar.empty())
+                                daoBanco.atualizar(usuariosAtualizar.pop());
+                            OP_UPDATE = false; 
+                            break;
+                    }
 
                 } catch (ClassNotFoundException | SQLException | IOException ex) {
                     try {
                         //Espera por 10 min
-                        loginLatch.await(10, TimeUnit.MINUTES);
+                        delay.await(10, TimeUnit.MINUTES);
 
                         run();
                     } catch (InterruptedException ex1) {

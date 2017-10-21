@@ -10,6 +10,7 @@ import com.github.SistemaFinanceiro.exceptions.FailDaoException;
 import com.github.SistemaFinanceiro.exceptions.NullDirectoryException;
 import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
 import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
+import com.github.SistemaFinanceiro.resources.MovimentacaoBackupManagement;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -226,7 +227,7 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
                 ERROR_BD = true;
             }
             
-            movimentacaoDao = new MovimentacaoArquivoDao(idUsuario);
+            movimentacaoDao = new MovimentacaoBackupManagement(idUsuario);
             
         } catch (NullDirectoryException | IOException ex1) {
             throw new FailDaoException();
