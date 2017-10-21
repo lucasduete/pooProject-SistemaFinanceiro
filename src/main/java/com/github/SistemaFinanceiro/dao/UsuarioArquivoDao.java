@@ -62,7 +62,7 @@ public class UsuarioArquivoDao implements UserDaoInterface {
         
         if (usuarios.add(user)) {
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(users));
-            outputStream.writeObject(user);
+            outputStream.writeObject(usuarios);
             outputStream.close();
         
             return true;

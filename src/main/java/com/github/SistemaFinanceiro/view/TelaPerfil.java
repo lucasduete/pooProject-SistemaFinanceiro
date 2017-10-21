@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Lucas Duete e Kaique Augusto
- * @version 1.2
+ * @version 1.3
  * @since 8.0
  */
 public class TelaPerfil extends javax.swing.JFrame {
@@ -52,7 +52,7 @@ public class TelaPerfil extends javax.swing.JFrame {
                     break;
             }
             
-            senhaAtual.setText(user.getPassword());
+            senhaAtual.setText("");
             senhaNova.setText("");
             
             } catch (IOException ex) {
@@ -297,7 +297,7 @@ public class TelaPerfil extends javax.swing.JFrame {
         } else if(LocalDate.now().getYear() -
                 jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()
                 < 18  ) {
-            JOptionPane.showMessageDialog(null, "Apenas Usuarios com +18 Anos podem se Cadastrar", "Idade Invalida", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Apenas Usuarios com +18 Anos Usar o Sistema", "Idade Invalida", JOptionPane.ERROR_MESSAGE);
         } else {
             
             UsuarioController controller = new UsuarioController();
@@ -317,7 +317,7 @@ public class TelaPerfil extends javax.swing.JFrame {
                 else
                     controller.atualizarSafe(user, novaSenha, velhaSenha);
                 
-                JOptionPane.showMessageDialog(null, "Cadastro Concluido Com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Perfil Atualizado Com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
                 this.dispose();
             } catch (AtualizacaoUsuarioInvalidaException ex) {
                 ex.printStackTrace();

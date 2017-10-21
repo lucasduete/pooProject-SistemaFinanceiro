@@ -7,11 +7,10 @@ import com.github.SistemaFinanceiro.exceptions.FailDaoException;
 import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import com.github.SistemaFinanceiro.interfaces.UserDaoInterface;
 import com.github.SistemaFinanceiro.model.Usuario;
+import com.github.SistemaFinanceiro.resources.UsuarioBackupManagement;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,7 +36,7 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
                 instanciaError(ex);
                 
             } catch (FailDaoException ex1) {
-                JOptionPane.showMessageDialog(null, "Falha Total de Sistema",
+                JOptionPane.showMessageDialog(null, "Falha Total de Acesso aos Dados de Sistema",
                         "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
             }
             
@@ -113,7 +112,9 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
                 ERROR_BD = true;
             }
             
-            usuarioDao = new UsuarioArquivoDao();
+            
+            usuarioDao = new UsuarioBackupManagement();
+            
             
         } catch (IOException ex1) {
             throw new FailDaoException();
