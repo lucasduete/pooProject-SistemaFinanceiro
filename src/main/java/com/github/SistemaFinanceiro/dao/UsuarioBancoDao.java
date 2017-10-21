@@ -173,6 +173,58 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
         
         return aux;
     }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Busca por um 
+     * Usuario Especifico Salvo no Banco de Dados.
+     * @param idUsuario Variavel Inteira que Contem o ID do Usuario do Qual Sera Retornado as 
+     * suas informaçoes.
+     * @return Objeto do Tipo Usuario Preenchido com as Informaçoes Acossiadas a Id Informada.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo
+     */
+    
+    @Override
+    public Usuario getById(int idUsuario) throws IOException, ClassNotFoundException, SQLException {
+        Usuario user = new Usuario();
+
+        String sql = "SELECT * FROM Usuario WHERE Id = ?;";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        
+        stmt.setInt(1, idUsuario);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if(rs.next()) {
+            Date data = rs.getDate("DataNasc");
+            Instant instant = Instant.ofEpochMilli(data.getTime());
+            user.setId(rs.getInt("Id"));
+            user.setEmail(rs.getString("Email"));
+            user.setNome(rs.getString("Nome"));
+            user.setDataNasc(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            user.setSexo(rs.getString("Sexo"));
+            user.setPassword(rs.getString("Password"));
+        }
+        
+        return user;
+    }
+    
+    /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Atutenticaçao 
+     * de um Usuario com Base no Banco de Dados.
+     * @param email String que Contem o Email do Usuario que Esta Tentando Realizar Login
+     * @param password String que Contem a Senha do Usuario que Esta Tentando Realizar Login
+     * @return Int que Contem o Id do Usuario que Fez Login, Caso Seja -1 Entao as Credenciais 
+     * sao Invalidas.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo.
+     */
 
     @Override
     public int userLogin(String email, String password) throws IOException, ClassNotFoundException, SQLException {
@@ -195,30 +247,6 @@ public class UsuarioBancoDao implements DaoInterface<Usuario>, AutenticacaoInter
         return aux;
     }
     
-    
-    public Usuario getUsuario(int Id) throws IOException, ClassNotFoundException, SQLException {
-        Usuario user = new Usuario();
-
-        String sql = "SELECT * FROM Usuario WHERE Id = ?;";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        
-        stmt.setInt(1, Id);
-
-        ResultSet rs = stmt.executeQuery();
-
-        if(rs.next()) {
-            Date data = rs.getDate("DataNasc");
-            Instant instant = Instant.ofEpochMilli(data.getTime());
-            user.setId(rs.getInt("Id"));
-            user.setEmail(rs.getString("Email"));
-            user.setNome(rs.getString("Nome"));
-            user.setDataNasc(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
-            user.setSexo(rs.getString("Sexo"));
-            user.setPassword(rs.getString("Password"));
-        }
-        
-        return user;
-    }
 }
    
 

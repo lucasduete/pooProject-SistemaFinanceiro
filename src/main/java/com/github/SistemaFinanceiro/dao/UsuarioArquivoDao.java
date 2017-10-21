@@ -150,6 +150,28 @@ public class UsuarioArquivoDao implements DaoInterface<Usuario>, AutenticacaoInt
     }
     
     /**
+     * Este Metodo Encapsula as Arquivos de Backup Realizando a Operaçao de Busca por um 
+     * Usuario Especifico Salvo no Backup.
+     * @param idUsuario Variavel Inteira que Contem o ID do Usuario do Qual Sera Retornado as 
+     * suas informaçoes.
+     * @return Objeto do Tipo Usuario Preenchido com as Informaçoes Acossiadas a Id Informada.
+     * @throws ClassNotFoundException Disparado por Falta de Biblioteca.
+     * @throws IOException Disparado Caso Haja Algum Erro de I/O.
+     * @throws SQLException Nunca e Disparado, Necessario por Implementar a Interface DaoInteface.
+     */
+    
+    @Override
+    public Usuario getById(int idUsuario) throws IOException, ClassNotFoundException, SQLException {
+        List<Usuario> usuarios = listar();
+        
+        for(Usuario user: usuarios) 
+            if(user.getId() == idUsuario)
+                return user;
+        
+        return null;
+    }
+    
+    /**
      * Este Metodo Encapsula o Acesso aos Arquivos de Backup Realizando a
      * Operacao de Autenticaçao de um Usuario. 
      * @param email String que contem o Email do Usuario que Sera Autenticado

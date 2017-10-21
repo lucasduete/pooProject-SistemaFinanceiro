@@ -69,7 +69,8 @@ public class MovimentacaoArquivoDao implements DaoInterface<MovimentacaoFinancei
      */
 
     @Override
-    public boolean salvar(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
+    public boolean salvar(MovimentacaoFinanceira movimentacao) 
+            throws ClassNotFoundException, IOException, SQLException {
         List<MovimentacaoFinanceira> movimentacoes = listar();
         
         if (movimentacoes.add(movimentacao)) {
@@ -114,7 +115,8 @@ public class MovimentacaoArquivoDao implements DaoInterface<MovimentacaoFinancei
      */
 
     @Override
-    public boolean remover(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
+    public boolean remover(MovimentacaoFinanceira movimentacao) 
+            throws ClassNotFoundException, IOException, SQLException {
         List<MovimentacaoFinanceira> movimentacoes = listar();
         
         if(movimentacoes.remove(movimentacao)) {
@@ -140,7 +142,8 @@ public class MovimentacaoArquivoDao implements DaoInterface<MovimentacaoFinancei
      */
     
     @Override
-    public boolean atualizar(MovimentacaoFinanceira movimentacao) throws ClassNotFoundException, IOException, SQLException {
+    public boolean atualizar(MovimentacaoFinanceira movimentacao) 
+            throws ClassNotFoundException, IOException, SQLException {
         List<MovimentacaoFinanceira> movimentacoes = listar();
        
         for(int i = 0; i < movimentacoes.size(); i++) {
@@ -156,6 +159,30 @@ public class MovimentacaoArquivoDao implements DaoInterface<MovimentacaoFinancei
         }
         
         return false;
+    }
+    
+    /**
+     * Este Metodo Encapsula as Arquivos de Backup Realizando a Operaçao de Busca por uma 
+     * Movimentacao Financeira Especifica Salva no Backup.
+     * @param idMovimentacao Variavel Inteira que Contem o ID da Movimentacao Financeira da Qual 
+     * Sera Retornado as suas informaçoes.
+     * @return Objeto do Tipo MovimentacaoFinanceira Preenchido com as Informaçoes 
+     * Acossiadas a Id Informada.
+     * @throws ClassNotFoundException Disparado por Falta de Biblioteca.
+     * @throws IOException Disparado Caso Haja Algum Erro de I/O.
+     * @throws SQLException Nunca e Disparado, Necessario por Implementar a Interface DaoInteface.
+     */
+    
+    @Override
+    public MovimentacaoFinanceira getById(int idMovimentacao) 
+            throws IOException, ClassNotFoundException, SQLException {
+        List<MovimentacaoFinanceira> movimentacoes = listar();
+        
+        for(MovimentacaoFinanceira movimentacao: movimentacoes) 
+            if(movimentacao.getId() == idMovimentacao)
+                return movimentacao;
+        
+        return null;
     }
     
 }

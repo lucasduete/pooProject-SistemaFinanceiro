@@ -158,6 +158,32 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
     }
     
     /**
+     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Busca por uma 
+     * Movimentacao Financeira Especifica Salva no Banco de Dados.
+     * @param idMovimentacao Variavel Inteira que Contem o ID da Movimentaçao da Qual Sera Retornada as 
+     * informaçoes.
+     * @return Objeto do Tipo MovimentacaoFinanceira Preenchido com as Informaçoes 
+     * Acossiadas a Id Informada.
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
+     * Banco de Dados ou uma Operaçao no Mesmo
+     */
+    
+    @Override
+    public MovimentacaoFinanceira getById(int idMovimentacao) 
+                throws ClassNotFoundException, IOException, SQLException {
+                
+        String sql = "SELECT * FROM Movimentacao_Financeira WHERE Id = ?";
+        
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, idMovimentacao);
+        
+        return getMovimentacoes(stmt).get(0);
+    }
+    
+    /**
      * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Listagem de Todas 
      * as Referentes a um Usuario Movimentacoes Financeiras Salvas no Banco de Dados.
      * @param idUsuario Variavel Inteira que Contem o ID do Usuario do Qual Seram Listadas as 
@@ -180,31 +206,6 @@ public class MovimentacaoBancoDao implements DaoInterface<MovimentacaoFinanceira
         stmt.setInt(1, idUsuario);
         
         return getMovimentacoes(stmt);
-    }
-    
-    /**
-     * Este Metodo Encapsula o Acesso ao Banco Realizando a Operaçao de Busca por uma 
-     * Movimentacao Financeira Especifica Salva no Banco de Dados.
-     * @param idMovimentacao Variavel Inteira que Contem o ID da Movimentaçao da Qual Sera Retornada as 
-     * informaçoes.
-     * @return Objeto do Tipo MovimentacaoFinanceira Preenchido com as Informaçoes 
-     * Acossiadas a Id Informada.
-     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
-     * a Aplicaçao.
-     * @throws IOException Nunca e Disparada, Necessaria por Implementar a Interface DaoInterface.
-     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Conexao com o 
-     * Banco de Dados ou uma Operaçao no Mesmo
-     */
-    
-    public MovimentacaoFinanceira getMovimentacao(int idMovimentacao) 
-                throws ClassNotFoundException, IOException, SQLException {
-                
-        String sql = "SELECT * FROM Movimentacao_Financeira WHERE Id = ?";
-        
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, idMovimentacao);
-        
-        return getMovimentacoes(stmt).get(0);
     }
     
     /**
