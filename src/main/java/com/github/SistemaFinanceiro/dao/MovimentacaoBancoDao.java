@@ -18,7 +18,7 @@ import java.util.List;
  * Esta Classe Comtem os Metodos que Encapsulam o Acesso ao Banco de Dados 
  * Realizando Assim todo o CRUD para o Objeto MovimentacaoFinanceira.
  * @author Lucas Duete e Kaique Augusto
- * @version 1.4
+ * @version 2.0
  * @since 8.0
  */
 public class MovimentacaoBancoDao implements MovimentacaoDaoInterface {

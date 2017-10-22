@@ -10,10 +10,20 @@ import com.github.SistemaFinanceiro.exceptions.NullDirectoryException;
 import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
 import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import com.github.SistemaFinanceiro.resources.MovimentacaoBackupManagement;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
@@ -231,6 +241,100 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
         } catch (NullDirectoryException | IOException ex1) {
             throw new FailDaoException();
         }
+    }
+    
+    public String gerarGrafico(List<MovimentacaoFinanceira> movimentacoes, String tipo) 
+            throws SQLException, FileNotFoundException, IOException {
+        
+        DefaultPieDataset dataSet = new DefaultPieDataset();
+        double soma = 0;
+        String graphicName = movimentacoes.hashCode() + tipo + ".png";
+        
+        for(MovimentacaoFinanceira mf: movimentacoes) {
+            soma = 0;
+            for (MovimentacaoFinanceira m: movimentacoes) {                
+                if(m.getCategoria().equals(mf.getCategoria()) && m.getTipo().toLowerCase().equals(tipo.toLowerCase())) {
+                    soma += m.getValor();
+                }
+            }
+            
+            dataSet.setValue(mf.getCategoria(), soma);
+            
+        }
+
+        // cria o gráfico
+        JFreeChart grafico = ChartFactory.createPieChart("Relatorio de " + tipo + "s", dataSet, true, true, false);
+        
+        OutputStream arquivo = new FileOutputStream(graphicName);
+        ChartUtilities.writeChartAsPNG(arquivo, grafico, 245, 300);
+        arquivo.close();
+        
+        return graphicName;
+        
+    }
+    
+    public String gerarGraficoPorData(List<MovimentacaoFinanceira> movimentacoes, String tipo, 
+            LocalDate dataInicio, LocalDate dataFim) throws SQLException, FileNotFoundException, IOException {
+        
+        DefaultPieDataset dataSet = new DefaultPieDataset();
+        double soma = 0;
+        String graphicName = movimentacoes.hashCode() + tipo + ".png";
+        
+        if (dataInicio == null && dataFim == null) {
+            gerarGrafico(movimentacoes, tipo);
+            return graphicName;
+        }else if (dataInicio == null) {
+            for(MovimentacaoFinanceira mf: movimentacoes) {
+                soma = 0;
+                for (MovimentacaoFinanceira m: movimentacoes) {
+                    if(m.getCategoria().equals(mf.getCategoria()) 
+                            && m.getTipo().toLowerCase().equals(tipo.toLowerCase())
+                            && (mf.getData().isBefore(dataFim) || mf.getData().isEqual(dataFim))) {
+                        soma += mf.getValor();
+                    }
+                }
+
+                dataSet.setValue(mf.getCategoria(), soma);
+            }
+        } else if (dataFim == null) {
+            for(MovimentacaoFinanceira mf: movimentacoes) {
+                soma = 0;
+                for (MovimentacaoFinanceira m: movimentacoes) {
+                    if(m.getCategoria().equals(mf.getCategoria()) 
+                            && m.getTipo().toLowerCase().equals(tipo.toLowerCase())
+                            && (mf.getData().isAfter(dataInicio) || mf.getData().isEqual(dataInicio))) {
+                        soma += mf.getValor();
+                    }
+                }
+
+                dataSet.setValue(mf.getCategoria(), soma);
+            }
+        } else {
+            for(MovimentacaoFinanceira mf: movimentacoes) {
+                soma = 0;
+                for (MovimentacaoFinanceira m: movimentacoes) {
+                    if(m.getCategoria().equals(mf.getCategoria()) 
+                            && m.getTipo().toLowerCase().equals(tipo.toLowerCase())
+                            && (mf.getData().isAfter(dataInicio) || mf.getData().isEqual(dataFim)) 
+                            && (mf.getData().isBefore(dataFim) || mf.getData().isEqual(dataInicio))
+                    ) {
+                        soma += mf.getValor();
+                    }
+                }
+
+                dataSet.setValue(mf.getCategoria(), soma);
+            }
+        }
+
+        // cria o gráfico
+        JFreeChart grafico = ChartFactory.createPieChart("Relatorio de " + tipo + "s", dataSet, true, true, false);
+        
+        OutputStream arquivo = new FileOutputStream(graphicName);
+        ChartUtilities.writeChartAsPNG(arquivo, grafico, 245, 300);
+        arquivo.close();
+        
+        return graphicName;
+        
     }
     
 }

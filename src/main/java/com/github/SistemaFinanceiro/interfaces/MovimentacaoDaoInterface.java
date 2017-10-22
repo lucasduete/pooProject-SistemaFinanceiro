@@ -9,6 +9,7 @@ import com.github.SistemaFinanceiro.model.MovimentacaoFinanceira;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -20,7 +21,5 @@ public interface MovimentacaoDaoInterface extends DaoInterface<MovimentacaoFinan
     
     public List<MovimentacaoFinanceira> listarByUsuario(int idUsuario) 
             throws ClassNotFoundException, IOException, SQLException;
-    
-    
     
 }
