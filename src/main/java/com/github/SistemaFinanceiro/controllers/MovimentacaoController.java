@@ -10,15 +10,12 @@ import com.github.SistemaFinanceiro.exceptions.NullDirectoryException;
 import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
 import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import com.github.SistemaFinanceiro.resources.MovimentacaoBackupManagement;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -29,7 +26,7 @@ import org.jfree.data.general.DefaultPieDataset;
  * Esta Classe Encapsula todos os Metodos de Controle de Movimentacoes 
  * Financeiras como o Metodo para Salvar e Listar por Data.
  * @author Lucas Duete e Kaique Augusto
- * @version 2.2
+ * @version 2.5
  * @since 8.0
  */
 
@@ -40,7 +37,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     
     /**
      * Construtor Padrao da Classe MovimentacaoController Onde e Instanciada a um Objeto do 
-     * Tipo MovimentacaoBancoDao para Realizar as Operacoes em Banco.
+     * Tipo MovimentacaoDao para Realizar as Operacoes em Banco e, em Caso de Erro, 
+     * Gerencia-se o BackupManagement.
      * @param idUsuario Integer que Contem o ID do Usuario que Esta Realizando 
      * Operaçoes.
      */
@@ -62,8 +60,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     }
 	
     /**
-     * Este Metodo Realiza a Salva de uma Nova Movimentacao Tanto no Banco de Dados como no 
-     * Backup em Arquivos Binarios.
+     * Este Metodo Realiza a Operaçao de Salvar de uma Nova Movimentacao Tanto no Banco de 
+     * Dados como no Backup em Arquivos Binarios.
      * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que Contem a Movimentacao que 
      * sera Salva.
      * @return True Se Foi Possivel Salvar a Movimentacao, False Se Nao foi Possivel Salvar a Movimentacao.
@@ -80,10 +78,10 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     }
     
     /**
-     * Este Metodo Realiza a Operaçao de Listagem de Todas as Movimentacoes F
-     * inanceiras Salvas no Banco de Dados e nos Backups.
-     * @return ArrayList de Objetos MovimentacaoFinanceira, Retorna uma Lista Vazia Caso Nao Haja 
-     * Nenhuma Movimentacao Salva.
+     * Este Metodo Realiza a Operaçao de Listagem de Todas as Movimentacoes Financeiras 
+     * Salvas no Banco de Dados e nos Backups.
+     * @return ArrayList de Objetos do TipoMovimentacaoFinanceira, Retorna uma Lista Vazia Caso 
+     * Nao Haja Nenhuma Movimentacao Salva.
      * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
      * a Aplicaçao.
      * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
@@ -99,8 +97,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     }
         
     /**
-     * Este Metodo Realiza a Atualizacao de uma Movimentacao Tanto no Banco de Dados como no 
-     * Backup em Arquivos Binarios.
+     * Este Metodo Realiza a Operaçao de Atualizacao de uma Movimentacao Tanto no Banco de Dados 
+     * como no Backup em Arquivos Binarios.
      * @param movimentacao Objeto do Tipo MovimentacaoFinanceira que contem os novos dados 
      * de uma Movimentacao para ser Atualizada no Banco de Dados e no Backup.
      * @return True Se Foi Possivel Atualizar a Movimentacao, False Se Nao foi Possivel Atualizar a Movimentacao.
@@ -222,29 +220,23 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
             
         return movimentacoes;
     }
-
-    private void instanciaError(Exception ex, int idUsuario) throws FailDaoException {
-        
-        if (!ex.getMessage().contains(ERROR_GERAL))
-                return;
-        
-        try {
-            
-            if (ERROR_BD == false) {
-                JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco, Usando Backups",
-                        "TEMPORAL ERROR", JOptionPane.INFORMATION_MESSAGE);
-                ERROR_BD = true;
-            }
-            
-            movimentacaoDao = new MovimentacaoBackupManagement(idUsuario);
-            
-        } catch (NullDirectoryException | IOException ex1) {
-            throw new FailDaoException();
-        }
-    }
+    
+    /**
+     * Gera um Grafico do Tipo Pizza com Base numa Lista de Movimentacoes Financeiras Retornando 
+     * o Endereço do Grafico Gerado.
+     * @param movimentacoes Lista de Objetos do Tipo Movimentaçao Financeira Pelas Quais Sera 
+     * Gerada o Grafico.
+     * @param tipo String que Contem o Tipo de Grafico ("Entrada" para Grafico de um Relatorio de Entrada 
+     * e "Saída" para Grafico de um Relatorio de Saida).
+     * @return String Contendo o Endereço Para o Grafico Gerado
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     */
     
     public String gerarGrafico(List<MovimentacaoFinanceira> movimentacoes, String tipo) 
-            throws SQLException, FileNotFoundException, IOException {
+            throws SQLException, ClassNotFoundException, IOException {
         
         DefaultPieDataset dataSet = new DefaultPieDataset();
         double soma = 0;
@@ -273,8 +265,28 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
         
     }
     
+    /**
+     * Gera um Grafico do Tipo Pizza com Base numa Lista de Movimentacoes Financeira em um Intervalo 
+     * de Tempo Retornando o Endereço do Grafico Gerado, Caso DataInicio Seja Null e Data Fim Nao e Gerado Grafico 
+     * com Todas as Movimentacoes Antes da Data de Fim, Caso Data de Fim Seja Null mas Data Inicio  nao 
+     * e Retornado Grafico com Tdas as Movimentacoes Depois da Data de Inicio, Caso Ambos Null e Gerado Grafico 
+     * Com Todas as Movimentacoes e Caso Ambos Sejam Preenchidos e Gerado um Grafico Com as Movimentacoes Neste
+     * Intervalo.
+     * @param movimentacoes Lista de Objetos do Tipo Movimentaçao Financeira Pelas Quais Sera 
+     * Gerada o Grafico.
+     * @param tipo String que Contem o Tipo de Grafico ("Entrada" para Grafico de um Relatorio de Entrada
+     * @param dataInicio LocalDate que Contem a Data de Inicio do Intervalo de Tempo Estipulado.
+     * @param dataFim LocalDate que Contem a Data de Termino do Intervalo de Tempo Estipulado.
+     * e "Saída" para Grafico de um Relatorio de Saida).
+     * @return String Contendo o Endereço Para o Grafico Gerado
+     * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
+     * a Aplicaçao.
+     * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
+     * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
+     */
+    
     public String gerarGraficoPorData(List<MovimentacaoFinanceira> movimentacoes, String tipo, 
-            LocalDate dataInicio, LocalDate dataFim) throws SQLException, FileNotFoundException, IOException {
+            LocalDate dataInicio, LocalDate dataFim) throws SQLException, ClassNotFoundException, IOException {
         
         DefaultPieDataset dataSet = new DefaultPieDataset();
         double soma = 0;
@@ -335,6 +347,35 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
         
         return graphicName;
         
+    }
+    
+    /**
+     * Metodo Privado Que Instancia um BackupManagement Com Base na Analise de uma Exception.
+     * @param ex Objeto do Tipo Exception que Contem a Exception Disparada que Sera Analizada.
+     * @param idUsuario Variavel Inteira que Contem o Id do Usuario que Esta Instanciando o 
+     * Controller.
+     * @throws FailDaoException Disparada Quando Nao For Possivel Acessar Nem o Banco de Dados 
+     * Nem os Arquivos de Backup.
+     */
+    
+    private void instanciaError(Exception ex, int idUsuario) throws FailDaoException {
+        
+        if (!ex.getMessage().contains(ERROR_GERAL))
+                return;
+        
+        try {
+            
+            if (ERROR_BD == false) {
+                JOptionPane.showMessageDialog(null, "Falha na Conexão com o Banco, Usando Backups",
+                        "TEMPORAL ERROR", JOptionPane.INFORMATION_MESSAGE);
+                ERROR_BD = true;
+            }
+            
+            movimentacaoDao = new MovimentacaoBackupManagement(idUsuario);
+            
+        } catch (NullDirectoryException | IOException ex1) {
+            throw new FailDaoException();
+        }
     }
     
 }
