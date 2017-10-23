@@ -63,11 +63,15 @@ public class UsuarioArquivoDao implements UserDaoInterface {
         List<Usuario> usuarios = listar();
         
         int size = usuarios.size();
-        user.setId (
+        
+        if(size == 0)
+            user.setId(1);
+        else 
+            user.setId (
                 usuarios.get(size).getId() + 1
             );
         
-        if(emailUnico(user.getEmail()))
+        if(!emailUnico(user.getEmail()))
             throw new UniqueException();
         
         if (usuarios.add(user)) {
@@ -202,13 +206,22 @@ public class UsuarioArquivoDao implements UserDaoInterface {
         return -1;
     }
     
+    /**
+     * Metodo que Verifica Se Este Email ja Esta Sendo Usado.
+     * @param email String que Contem o Email a Ser Cadastrado.
+     * @return True se o Email nao Esta Cadastrado Logo e Unico, False Caso o Email Nao Esteja Disponivel
+     * @throws ClassNotFoundException Disparado por Falta de Biblioteca.
+     * @throws IOException Disparado Caso Haja Algum Erro de I/O.
+     * @throws SQLException Nunca e Disparado, Necessario por Implementar a Interface DaoInteface.
+     */
+    
     private boolean emailUnico(String email) throws IOException, ClassNotFoundException, SQLException {
-        List<Usuario> users = listar();
+        List<Usuario> usuarios = listar();
         
-        for (Usuario user: users)
+        for (Usuario user: usuarios)
             if (user.getEmail().equals(email))
                 return false;        
-        
+
         return true;
     }
     

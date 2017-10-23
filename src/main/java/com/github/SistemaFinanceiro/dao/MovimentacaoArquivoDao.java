@@ -81,9 +81,13 @@ public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
         List<MovimentacaoFinanceira> movimentacoes = listar();
         
         int size = movimentacoes.size();
-        movimentacao.setId(
+        
+        if(size ==0)
+            movimentacao.setId(1);
+        else 
+            movimentacao.setId(
                 movimentacoes.get(size).getId() + 1
-        );
+            );
         
         if (movimentacoes.add(movimentacao)) {
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(transactions));

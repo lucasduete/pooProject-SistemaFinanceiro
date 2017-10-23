@@ -249,7 +249,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
                 }
             }
             
-            dataSet.setValue(mf.getCategoria(), soma);
+            if(mf.getTipo().toLowerCase().equals(tipo.toLowerCase()))
+                dataSet.setValue(mf.getCategoria(), soma);
             
         }
 
@@ -305,7 +306,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
                     }
                 }
 
-                dataSet.setValue(mf.getCategoria(), soma);
+                if(mf.getTipo().toLowerCase().equals(tipo.toLowerCase()))
+                    dataSet.setValue(mf.getCategoria(), soma);
             }
         } else if (dataFim == null) {
             for(MovimentacaoFinanceira mf: movimentacoes) {
@@ -318,7 +320,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
                     }
                 }
 
-                dataSet.setValue(mf.getCategoria(), soma);
+                if(mf.getTipo().toLowerCase().equals(tipo.toLowerCase()))
+                    dataSet.setValue(mf.getCategoria(), soma);
             }
         } else {
             for(MovimentacaoFinanceira mf: movimentacoes) {
@@ -333,7 +336,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
                     }
                 }
 
-                dataSet.setValue(mf.getCategoria(), soma);
+                if(mf.getTipo().toLowerCase().equals(tipo.toLowerCase()))
+                    dataSet.setValue(mf.getCategoria(), soma);
             }
         }
 
