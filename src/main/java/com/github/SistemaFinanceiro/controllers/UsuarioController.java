@@ -1,5 +1,6 @@
 package com.github.SistemaFinanceiro.controllers;
 
+import com.github.SistemaFinanceiro.dao.UsuarioArquivoDao;
 import com.github.SistemaFinanceiro.dao.UsuarioBancoDao;
 import com.github.SistemaFinanceiro.exceptions.AtualizacaoUsuarioInvalidaException;
 import com.github.SistemaFinanceiro.exceptions.FailDaoException;
@@ -65,6 +66,11 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
     @Override
     public boolean salvar(Usuario user) 
             throws ClassNotFoundException, IOException, SQLException, UniqueException {
+        
+        if(!ERROR_BD)
+            if(usuarioDao.salvar(user))
+                return new UsuarioArquivoDao().salvar(user);
+        
         return usuarioDao.salvar(user);
     }
     
@@ -103,6 +109,11 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
     @Deprecated
     public boolean atualizar(Usuario user) 
             throws ClassNotFoundException, IOException, SQLException, UniqueException {        
+        
+        if(!ERROR_BD)
+            if(usuarioDao.atualizar(user))
+                return new UsuarioArquivoDao().atualizar(user);
+        
         return usuarioDao.atualizar(user);
     }
     
@@ -120,6 +131,10 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
     
     @Override
     public boolean remover(Usuario user) throws ClassNotFoundException, IOException, SQLException {
+        if(!ERROR_BD)
+            if(usuarioDao.remover(user))
+                return new UsuarioArquivoDao().remover(user);
+        
         return usuarioDao.remover(user);
     }
     
@@ -181,6 +196,10 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
         if (! (validarSenha(user.getId(), user.getPassword())))
             throw new AtualizacaoUsuarioInvalidaException("Senha Antiga Invalida");
         
+        if(!ERROR_BD)
+            if(usuarioDao.atualizar(user))
+                return new UsuarioArquivoDao().atualizar(user);
+        
         return usuarioDao.atualizar(user);
     }
     
@@ -210,6 +229,10 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
             throw new AtualizacaoUsuarioInvalidaException("Senha Antiga Invalida");
         
         user.setPassword(novaSenha);
+        if(!ERROR_BD)
+            if(usuarioDao.atualizar(user))
+                return new UsuarioArquivoDao().atualizar(user);
+        
         return usuarioDao.atualizar(user);
     }
     

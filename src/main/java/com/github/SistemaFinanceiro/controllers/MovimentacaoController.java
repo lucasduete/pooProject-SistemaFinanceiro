@@ -1,5 +1,6 @@
 package com.github.SistemaFinanceiro.controllers;
 
+import com.github.SistemaFinanceiro.dao.MovimentacaoArquivoDao;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -33,6 +36,7 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     
     private MovimentacaoDaoInterface movimentacaoDao;
     private static boolean ERROR_BD = false;
+    private final int idUsuario;
     
     /**
      * Construtor Padrao da Classe MovimentacaoController Onde e Instanciada a um Objeto do 
@@ -55,6 +59,8 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
                         "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
             }
             
+        } finally {
+            this.idUsuario = idUsuario;
         }
     }
 	
@@ -73,6 +79,15 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     @Override
     public boolean salvar(MovimentacaoFinanceira movimentacao) 
             throws ClassNotFoundException, IOException, SQLException {
+        
+        if(!ERROR_BD)
+            if(movimentacaoDao.salvar(movimentacao))
+                try {
+                    return new MovimentacaoArquivoDao(idUsuario).salvar(movimentacao);
+                } catch (NullDirectoryException ex) {
+                    return false;
+                }
+        
         return movimentacaoDao.salvar(movimentacao);
     }
     
@@ -110,6 +125,14 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     @Override
     public boolean atualizar(MovimentacaoFinanceira movimentacao)
                 throws ClassNotFoundException, IOException, SQLException {
+        if(!ERROR_BD)
+            if(movimentacaoDao.atualizar(movimentacao))
+                try {
+                    return new MovimentacaoArquivoDao(idUsuario).atualizar(movimentacao);
+                } catch (NullDirectoryException ex) {
+                    return false;
+                }
+        
         return movimentacaoDao.atualizar(movimentacao);
     }
 	
@@ -128,7 +151,15 @@ public class MovimentacaoController implements MovimentacaoDaoInterface, SGBDErr
     @Override
     public boolean remover(MovimentacaoFinanceira movimentacao) 
             throws ClassNotFoundException, IOException, SQLException {
-	return movimentacaoDao.remover(movimentacao);
+	if(!ERROR_BD)
+            if(movimentacaoDao.remover(movimentacao))
+                try {
+                    return new MovimentacaoArquivoDao(idUsuario).remover(movimentacao);
+                } catch (NullDirectoryException ex) {
+                    return false;
+                }
+        
+        return movimentacaoDao.remover(movimentacao);
     }
     
     /**
