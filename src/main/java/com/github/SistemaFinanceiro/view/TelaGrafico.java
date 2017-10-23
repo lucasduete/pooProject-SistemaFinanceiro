@@ -192,7 +192,7 @@ public class TelaGrafico extends javax.swing.JFrame {
             jLabel3.setIcon(new javax.swing.ImageIcon(
                     new MovimentacaoController(idUsuario)
                             .gerarGraficoPorData(movimentacoes, "entrada", dataInicial, dataFinal)));
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException | IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Nao Foi Possivel Gerar Relatorios de Entrada.",
                     "INTERNAL ERROR", JOptionPane.ERROR_MESSAGE);
@@ -202,7 +202,7 @@ public class TelaGrafico extends javax.swing.JFrame {
             jLabel4.setIcon(new javax.swing.ImageIcon(
                     new MovimentacaoController(idUsuario)
                             .gerarGraficoPorData(movimentacoes, "saida", dataInicial, dataFinal)));
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException | IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Nao Foi Possivel Gerar Relatorios de Saida.",
                     "INTERNAL ERROR", JOptionPane.ERROR_MESSAGE);
