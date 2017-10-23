@@ -36,9 +36,9 @@ public class TelaInicial extends javax.swing.JFrame {
         
         try {
             MovimentacaoController controller = new MovimentacaoController(idUsuario);
-            jLabel4.setIcon(new javax.swing.ImageIcon(controller.gerarGrafico(
+            jLabel3.setIcon(new javax.swing.ImageIcon(controller.gerarGrafico(
                     new MovimentacaoController(idUsuario).listarByUsuario(idUsuario), "entrada")));
-            jLabel4.setText("");
+            jLabel3.setText("");
         
         } catch (ClassNotFoundException | IOException | SQLException ex) {
             ex.printStackTrace();
@@ -52,9 +52,9 @@ public class TelaInicial extends javax.swing.JFrame {
         
         try {
             MovimentacaoController controller = new MovimentacaoController(idUsuario);
-            jLabel3.setIcon(new javax.swing.ImageIcon(controller.gerarGrafico(
+            jLabel4.setIcon(new javax.swing.ImageIcon(controller.gerarGrafico(
                     new MovimentacaoController(idUsuario).listarByUsuario(idUsuario), "saída")));
-            jLabel3.setText("");
+            jLabel4.setText("");
         
         } catch (ClassNotFoundException | IOException | SQLException ex) {
             ex.printStackTrace();

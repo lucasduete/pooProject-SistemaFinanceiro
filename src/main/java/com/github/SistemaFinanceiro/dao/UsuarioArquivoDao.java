@@ -68,7 +68,7 @@ public class UsuarioArquivoDao implements UserDaoInterface {
             user.setId(1);
         else 
             user.setId (
-                usuarios.get(size).getId() + 1
+                usuarios.get(size - 1).getId() + 1
             );
         
         if(!emailUnico(user.getEmail()))

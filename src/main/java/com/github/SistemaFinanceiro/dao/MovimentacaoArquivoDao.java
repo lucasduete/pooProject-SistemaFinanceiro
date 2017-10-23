@@ -57,11 +57,7 @@ public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
                     + "para usuario: " + idUsuario);
             
         if(!transactions.exists())
-            transactions.createNewFile();
-        
-        JOptionPane.showMessageDialog(null, "Falha no Backup do Banco",
-            "SEVERAL ERROR", JOptionPane.ERROR_MESSAGE);
-        
+            transactions.createNewFile();       
     }
     
     /**
@@ -82,11 +78,11 @@ public class MovimentacaoArquivoDao implements MovimentacaoDaoInterface {
         
         int size = movimentacoes.size();
         
-        if(size ==0)
+        if(size == 0)
             movimentacao.setId(1);
         else 
             movimentacao.setId(
-                movimentacoes.get(size).getId() + 1
+                movimentacoes.get(size - 1).getId() + 1
             );
         
         if (movimentacoes.add(movimentacao)) {
