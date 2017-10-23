@@ -1,16 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.github.SistemaFinanceiro.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author lucasduete
+ * Esta Interface Define Todos os Metodos que uma Classe de Controller de SGBD 
+ * e Backups Deve Implementar Assim como Todos os Atributos que Elas Devem 
+ * Conhecer.
+ * @author Lucas Duete
+ * @version 1.0
+ * @since 8.0
  */
 public interface SGBDErrosInterface {
     
