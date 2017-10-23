@@ -55,6 +55,7 @@ public class UsuarioArquivoDao implements UserDaoInterface {
      * @throws ClassNotFoundException Disparado por Falta de Biblioteca.
      * @throws IOException Disparado Caso Haja Algum Erro de I/O.
      * @throws SQLException Nunca e Disparado, Necessario por Implementar a Interface DaoInteface.
+     * @throws UniqueException Disparada Quando o Email Informado Ja Esta em Uso.
      */
 
     @Override
@@ -136,6 +137,7 @@ public class UsuarioArquivoDao implements UserDaoInterface {
      * @throws ClassNotFoundException Disparado por Falta de Biblioteca.
      * @throws IOException Disparado Caso Haja Algum Erro de I/O.
      * @throws SQLException Nunca e Disparado, Necessario por Implementar a Interface DaoInteface.
+     * @throws UniqueException Disparada Quando o Email Inserido Ja Esta em Uso.
      */
 
     @Override

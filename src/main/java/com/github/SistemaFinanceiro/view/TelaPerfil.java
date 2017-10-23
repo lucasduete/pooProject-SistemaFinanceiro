@@ -2,6 +2,7 @@ package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.UsuarioController;
 import com.github.SistemaFinanceiro.exceptions.AtualizacaoUsuarioInvalidaException;
+import com.github.SistemaFinanceiro.exceptions.UniqueException;
 import com.github.SistemaFinanceiro.model.Usuario;
 import java.io.IOException;
 import java.sql.Date;
@@ -337,7 +338,10 @@ public class TelaPerfil extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
-            } 
+            } catch (UniqueException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Email Informado Ja Esta em Uso", "Email Indisponivel", JOptionPane.INFORMATION_MESSAGE);
+            }
         }        
     }//GEN-LAST:event_salvarCadastroActionPerformed
 

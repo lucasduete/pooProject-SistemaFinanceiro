@@ -2,8 +2,8 @@ package com.github.SistemaFinanceiro.exceptions;
 
 /*
  * Esta Classe Define um Exception de Tratamento Obrigatorio
- * que e Gerada ao Tentar Acessar o Diretorio de Backups porem
- * o mesmo nao existe
+ * que e Gerada ao Tentar Acessar o Diretorio de Backups porem o mesmo foi
+ * Tornado Inacessivel em Tempo de Execuçao da Aplicaçao.
  * @author Lucas Duete e Kaique Augusto
  * @version 1.0
  * @since 8.0
@@ -12,19 +12,21 @@ package com.github.SistemaFinanceiro.exceptions;
 public class NullDirectoryException extends Exception {
     
     /**
-     * Construtor da Classe Com Parametros onde Recebe uma Mensagem
-     * e Chama o Construtor de Exception com esta Mensagem
-     * @param msg e a Mensagem que sera Informada no StackTrace
+     * Construtor Padrao de NullDirectoryException que Chama o Construtor 
+     * da Super Classe Usando uma Mensagem Fornecida por que Instanciar a Classe.
+     * @param msg Mensagem Informada Por Quem Instancia a Classe e Sera Repassada ao 
+     * Contrutor da Super Classe.
      */
+    
     public NullDirectoryException(String msg) {
         super(msg);
     }
     
     /**
-     * Construtor da Classe Sem Parametros onde
-     * invoca-se o Construtor de Exception com uma mensagem padrao
-     * que sera Informada no StackTrace
+     * Construtor Padrao de NullDirectoryException que Chama o Construtor 
+     * da Super Classe Usando uma Mensagem Padrao que Define a Exception.
      */
+    
     public NullDirectoryException() {
         super("Diretorio de Backups nao encontrado.");
     }

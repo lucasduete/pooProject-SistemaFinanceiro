@@ -189,6 +189,8 @@ public class UsuarioController implements UserDaoInterface, SGBDErrosInterface {
      * Modificando-a por uma Nova, Tanto no Banco de Dados como no Backup em Arquivos Binarios.
      * @param user Objeto do Tipo Usuario que contem os novos dados de um Usuario 
      * para ser Atualizado no Banco de Dados e no Backup.
+     * @param novaSenha String que Contem a Nova Senha para Este Usuario.
+     * @param antigaSenha String que Contem a Senha Antiga deste Usuario.
      * @return True Se Foi Possivel Atualizar o Usuario, False Se Nao foi Possivel Atualizar o Usuario.
      * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
      * a Aplicaçao.

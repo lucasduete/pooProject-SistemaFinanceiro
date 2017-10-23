@@ -58,7 +58,7 @@ public class UsuarioBackupManagement implements SGBDErrosInterface, UserDaoInter
      * a Aplicaçao.
      * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.
      * @throws SQLException Disparada quando Ocorre Erro ao Realizar a Operacao no Banco de Dados.
-     * @throws UniqueException Disparada Qaundo e Violada a Restriçao de Unicidade do Email de um 
+     * @throws UniqueException Disparada Quando e Violada a Restriçao de Unicidade do Email de um 
      * Usuario.
      */
     

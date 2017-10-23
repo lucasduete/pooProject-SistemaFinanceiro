@@ -136,17 +136,11 @@ public class MovimentacaoBackupManagement implements SGBDErrosInterface, Movimen
     }
     
     /**
-     * Este Metodo Realiza a Uma Busca das Movimentacoes de um Usuario dentro de 
-     * um Intervalo de Tempo Estabelecido pelo Mesmo.
+     * Este Metodo Lista todas as Movimentacoes Cadastradas de um Usuario.
      * @param idUsuario Variavel Inteira que contem o Id do Usuario do qual sera procurado as 
      * movimentacoes.
-     * @param dataInicio Variavel do Tipo LocalDate que Indica o Valor Inicial do Intervalo de Busca, Caso Null nao 
-     * ha Data de Inicio Retornando-se Todas as Movimentacoes Antes da Data de Final
-     * @param dataFim Variavel do Tipo LocalDate que Indica o Valor Final do Intervalo de Busca, Caso Null nao 
-     * ha Data de Termino Retornando-se Todas as Movimentacoes Depois da Data de Inicio.
-     * @return ArrayList de Objetos do Tipo MovimentacaoFinanceira que Estam Neste Intervalo, Tal 
-     * Lista retorna Vazia quando Nao Existem Movimentacoes Neste Intervalo de Tempo e Retorna Todas as 
-     * Movimentacoes Caso DataInicio e DataFim Sejam Null.
+     * @return ArrayList de Objetos do Tipo MovimentacaoFinanceira deste Usuario, Tal 
+     * Lista retorna Vazia quando Nao Existem Movimentacoes Cadastradas para Tal Usuario.
      * @throws ClassNotFoundException Disparada quando Nao Foi Possivel Encontrar um Bliblioteca Necessaria para 
      * a Aplicaçao.
      * @throws IOException Disparada quando Ocorre Erro ao Fazer o Backup da Operacao em Arquivos.

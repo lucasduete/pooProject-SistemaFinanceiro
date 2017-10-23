@@ -1,7 +1,9 @@
 package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.UsuarioController;
+import com.github.SistemaFinanceiro.exceptions.UniqueException;
 import com.github.SistemaFinanceiro.model.Usuario;
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -267,6 +269,9 @@ public class TelaCadastro extends javax.swing.JFrame {
             
             try {
                 controller.salvar(user);
+                
+                JOptionPane.showMessageDialog(null, "Cadastro Concluido Com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+                this.dispose();
             } catch (IOException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Backups.", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
@@ -276,10 +281,11 @@ public class TelaCadastro extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Erro ao Acessar Servidor de Banco de Dados", "CRITICAL ERROR", JOptionPane.ERROR_MESSAGE);
-            } 
+            } catch (UniqueException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Email Informado Ja Esta em Uso", "Email Indisponivel", JOptionPane.INFORMATION_MESSAGE);
+            }
             
-            JOptionPane.showMessageDialog(null, "Cadastro Concluido Com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE);
-            this.dispose();
         }        
     }//GEN-LAST:event_salvarCadastroActionPerformed
 
