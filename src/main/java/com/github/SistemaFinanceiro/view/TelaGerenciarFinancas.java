@@ -144,6 +144,11 @@ public class TelaGerenciarFinancas extends javax.swing.JFrame {
         }
 
         jButton3.setText("Gráfico");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,7 +218,7 @@ public class TelaGerenciarFinancas extends javax.swing.JFrame {
         
         try {
             
-            for(int i = 0; i < movimentacoes.size(); i++) {
+            for(int i = 0; i <= movimentacoes.size(); i++) {
                 jTable1.setValueAt(null, i, 0);
                 jTable1.setValueAt(null, i, 1);
                 jTable1.setValueAt(null, i, 2);
@@ -275,6 +280,12 @@ public class TelaGerenciarFinancas extends javax.swing.JFrame {
             public void windowDeactivated(WindowEvent e) {}
         });
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        TelaGrafico grafico = new TelaGrafico(idUsuario, movimentacoes);
+        grafico.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

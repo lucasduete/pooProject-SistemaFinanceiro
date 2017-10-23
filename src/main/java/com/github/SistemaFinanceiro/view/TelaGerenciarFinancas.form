@@ -162,6 +162,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Gr&#xe1;fico"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="dataInicio">
     </Component>

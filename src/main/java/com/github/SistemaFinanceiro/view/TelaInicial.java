@@ -1,6 +1,8 @@
 package com.github.SistemaFinanceiro.view;
 
 import com.github.SistemaFinanceiro.controllers.MovimentacaoController;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -216,12 +218,64 @@ public class TelaInicial extends javax.swing.JFrame {
         
         TelaCadastraMovimentacao cadMovi = new TelaCadastraMovimentacao(idUsuario);
         cadMovi.setVisible(true);
+        
+        cadMovi.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+
+            @Override
+            public void windowClosing(WindowEvent e) {}
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                setGraficoEntradas();
+                setGraficoSaidas();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+
+            @Override
+            public void windowActivated(WindowEvent e) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
     }//GEN-LAST:event_btCadMovimentacoesActionPerformed
 
     private void btGerenciarFinanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarFinanActionPerformed
         // TODO add your handling code here:
         TelaGerenciarFinancas gerenFinan = new TelaGerenciarFinancas(idUsuario);
         gerenFinan.setVisible(true);
+        
+        gerenFinan.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+
+            @Override
+            public void windowClosing(WindowEvent e) {}
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                setGraficoEntradas();
+                setGraficoSaidas();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+
+            @Override
+            public void windowActivated(WindowEvent e) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
     }//GEN-LAST:event_btGerenciarFinanActionPerformed
 
     private void btGerenciarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarPerfilActionPerformed
@@ -241,7 +295,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        TelaLogin login = new TelaLogin();
+        TelaLogin login = new TelaLogin();        
         login.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
