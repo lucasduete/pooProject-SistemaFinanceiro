@@ -228,7 +228,7 @@ public class UsuarioBackupManagement implements SGBDErrosInterface, UserDaoInter
                     try {
                         //Espera por 10 min
                         delay.await(10, TimeUnit.MINUTES);
-
+                        
                         run();
                     } catch (InterruptedException ex1) {
                         ex.printStackTrace();
