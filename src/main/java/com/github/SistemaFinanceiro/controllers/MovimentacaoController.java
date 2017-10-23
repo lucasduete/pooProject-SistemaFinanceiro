@@ -10,7 +10,6 @@ import com.github.SistemaFinanceiro.exceptions.NullDirectoryException;
 import com.github.SistemaFinanceiro.interfaces.MovimentacaoDaoInterface;
 import com.github.SistemaFinanceiro.interfaces.SGBDErrosInterface;
 import com.github.SistemaFinanceiro.resources.MovimentacaoBackupManagement;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
